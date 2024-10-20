@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Winter (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Winter (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

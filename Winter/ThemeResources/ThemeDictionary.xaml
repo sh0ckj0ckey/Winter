@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!--<Color x:Key="APPLICATION_NORMAL_FR">#FFFFFF</Color>
+                    <BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_dark.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!--<Color x:Key="APPLICATION_NORMAL_FR">#000000</Color>
+                    <BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_light.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>
