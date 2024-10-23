@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:windowex="using:WinUIEx"
-    Title="宛听" MinWidth="720" MinHeight="560"
+    TaskBarIcon="Assets/Icon/Winter.ico"
+    Title="晚听" MinWidth="720" MinHeight="560"
     mc:Ignorable="d" Closed="OnMainWindowClosed">
     <!--TaskBarIcon="Assets/Icon/Winter.ico"-->
 

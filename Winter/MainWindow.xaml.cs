@@ -26,7 +26,7 @@ namespace Winter
         {
             this.InitializeComponent();
             this.SystemBackdrop = MainViewModel.Instance.AppSettings.BackdropIndex == 1 ? new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop() : new Microsoft.UI.Xaml.Media.MicaBackdrop();
-            //this.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon/Winter.ico"));
+            this.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon/Winter.ico"));
             this.PersistenceId = "HoneypotMainWindow";
             this.ExtendsContentIntoTitleBar = true;
             //this.SetTitleBar(AppTitleBar);
