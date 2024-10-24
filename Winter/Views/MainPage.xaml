@@ -47,7 +47,7 @@
                 <TextBlock Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
             </StackPanel>
 
-            <muxc:ProgressBar Grid.Row="2" Margin="0,0" Maximum="100" Value="70"/>
+            <muxc:ProgressBar Grid.Row="2" Margin="0,0" Maximum="100" Value="70" Background="{ThemeResource ControlElevationBorderBrush}"/>
 
             <Grid Grid.Row="3" MinHeight="96">
                 <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -59,10 +59,116 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        
-        <Grid Grid.Column="1">
-            <Border HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="1" Background="{ThemeResource ControlElevationBorderBrush}"/>
 
+        <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
+            <muxc:ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <muxc:StackPanel Orientation="Vertical" Margin="24" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <TextBlock Text="正在听" FontWeight="Bold" FontSize="18" Margin="0,2,0,16" HorizontalAlignment="Left"/>
+                    <Grid Background="{ThemeResource SystemAccentColorDark2}" Height="96" CornerRadius="4" HorizontalAlignment="Stretch">
+                        <muxc:ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <!--<muxc:ItemsRepeater Margin="0,0,16,16" HorizontalAlignment="Center">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Horizontal" Spacing="8"/>
+                                </muxc:ItemsRepeater.Layout>
+                            </muxc:ItemsRepeater>-->
+                            <StackPanel Orientation="Horizontal">
+                                <Button Padding="8" CornerRadius="4" Height="72" Width="196" Margin="8,0" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnSpacing="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border CornerRadius="2" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="56" Width="56" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <Border.Background>
+                                                    <ImageBrush Stretch="UniformToFill">
+                                                        <ImageBrush.ImageSource>
+                                                            <BitmapImage UriSource="/Assets/Test/1.jpg" DecodePixelType="Logical" DecodePixelHeight="112"/>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="第一次爱的人" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="王心凌" Opacity="0.7" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <Button Padding="8" CornerRadius="4" Height="72" Width="196" Margin="8,0" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnSpacing="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border CornerRadius="2" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="56" Width="56" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <Border.Background>
+                                                    <ImageBrush Stretch="UniformToFill">
+                                                        <ImageBrush.ImageSource>
+                                                            <BitmapImage UriSource="/Assets/Test/2.jpg" DecodePixelType="Logical" DecodePixelHeight="112"/>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="原来这才是真的你" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="王心凌" Opacity="0.7" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <Button Padding="8" CornerRadius="4" Height="72" Width="196" Margin="8,0" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnSpacing="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border CornerRadius="2" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="56" Width="56" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <Border.Background>
+                                                    <ImageBrush Stretch="UniformToFill">
+                                                        <ImageBrush.ImageSource>
+                                                            <BitmapImage UriSource="/Assets/Test/3.jpg" DecodePixelType="Logical" DecodePixelHeight="112"/>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="我很好，那么你呢？" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="王心凌" Opacity="0.7" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <Button Padding="8" CornerRadius="4" Height="72" Width="196" Margin="8,0" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ColumnSpacing="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border CornerRadius="2" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="56" Width="56" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <Border.Background>
+                                                    <ImageBrush Stretch="UniformToFill">
+                                                        <ImageBrush.ImageSource>
+                                                            <BitmapImage UriSource="/Assets/Test/4.jpg" DecodePixelType="Logical" DecodePixelHeight="112"/>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="下一页的我" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="王心凌" Opacity="0.7" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </muxc:ScrollViewer>
+                    </Grid>
+                </muxc:StackPanel>
+            </muxc:ScrollViewer>
         </Grid>
     </Grid>
 </Page>
