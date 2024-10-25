@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.UI.Dispatching;
@@ -11,7 +8,7 @@ namespace Winter
 {
     public static class Program
     {
-        private static App _app;
+        private static App? _app;
 
         [STAThread]
         public static void Main(string[] args)
@@ -34,25 +31,21 @@ namespace Winter
 
         private static async Task<bool> DecideRedirection()
         {
-            AppInstance keyInstance = AppInstance.FindOrRegisterForKey("HONEYPOT-C04ACD32-2B0A-46F0-BCE5-C17601EF5579");
+            AppInstance keyInstance = AppInstance.FindOrRegisterForKey("WINTER-90243CFA-FDE1-4513-9D22-ED828D9082D9");
             AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
 
             bool isRedirect = false;
             if (keyInstance.IsCurrent)
             {
-                keyInstance.Activated += OnActivated;
+                keyInstance.Activated += (_, _) => { _app?.ShowMainWindow(); };
             }
             else
             {
                 isRedirect = true;
                 await keyInstance.RedirectActivationToAsync(args);
             }
-            return isRedirect;
-        }
 
-        private static void OnActivated(object sender, AppActivationArguments args)
-        {
-            _app?.ShowMainWindow();
+            return isRedirect;
         }
     }
 

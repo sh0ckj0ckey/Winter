@@ -18,18 +18,18 @@ namespace Winter
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
-        private UISettings _uiSettings;
+        private UISettings? _uiSettings;
 
-        private Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue = null;
+        private readonly Microsoft.UI.Dispatching.DispatcherQueue? _dispatcherQueue = null;
 
         public MainWindow()
         {
             this.InitializeComponent();
             this.SystemBackdrop = MainViewModel.Instance.AppSettings.BackdropIndex == 1 ? new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop() : new Microsoft.UI.Xaml.Media.MicaBackdrop();
             this.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon/Winter.ico"));
-            this.PersistenceId = "HoneypotMainWindow";
+            this.PersistenceId = "WinterMainWindow";
             this.ExtendsContentIntoTitleBar = true;
-            //this.SetTitleBar(AppTitleBar);
+            this.SetTitleBar(AppTitleBar);
 
             _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
@@ -78,7 +78,7 @@ namespace Winter
             {
                 if (MainViewModel.Instance.AppSettings.AppearanceIndex == 0)
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
+                    _dispatcherQueue!.TryEnqueue(() =>
                     {
                         SwitchAppTheme();
                     });
