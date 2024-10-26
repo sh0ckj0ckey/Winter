@@ -11,7 +11,7 @@ namespace Winter.ViewModels
 
         public SettingsService AppSettings { get; set; } = new SettingsService();
 
-        public PlaylistViewModel PlaylistVM { get; set; } = new PlaylistViewModel();
+        public PlaylistsViewModel PlaylistsVM { get; set; } = new PlaylistsViewModel();
 
         /// <summary>
         /// 控制主窗口根据当前的主题进行切换

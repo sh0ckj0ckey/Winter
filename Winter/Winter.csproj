@@ -80,6 +80,7 @@
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-400.png" />
 	  <None Remove="Assets\Test\cover.jpg" />
 	  <None Remove="ThemeResources\ThemeDictionary.xaml" />
+	  <None Remove="Views\Controls\PlaylistsControl.xaml" />
 	  <None Remove="Views\MainPage.xaml" />
 	</ItemGroup>
 
@@ -114,6 +115,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\Controls\PlaylistsControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>
