@@ -13,9 +13,9 @@
     xmlns:ctrl="using:Winter.Views.Controls"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="340"/>
+            <ColumnDefinition MinWidth="340" MaxWidth="480"/>
             <ColumnDefinition Width="2.7*"/>
         </Grid.ColumnDefinitions>
 
@@ -108,7 +108,6 @@
                 <TextBlock Grid.Row="0" Text="歌单" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
                 <ctrl:PlaylistsControl Grid.Row="1" Margin="0,4,0,18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
-
         </Grid>
     </Grid>
 </Page>
