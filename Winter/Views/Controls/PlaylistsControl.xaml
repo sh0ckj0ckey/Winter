@@ -39,7 +39,7 @@
             <DataTemplate x:DataType="models:PlaylistItem">
                 <Grid x:Name="CardGrid" CornerRadius="4" ToolTipService.ToolTip="{x:Bind Title,Mode=OneWay}"
                       BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Background="{x:Bind BackgroundColor,Mode=OneWay}" 
-                      PointerEntered="CardGrid_PointerEntered" PointerExited="CardGrid_PointerExited">
+                      PointerEntered="CardGrid_PointerEntered" PointerExited="CardGrid_PointerExited" PointerPressed="CardGrid_PointerPressed">
                     
                     <Grid.RenderTransform>
                         <TranslateTransform x:Name="TranslationName" Y="0"/>
@@ -56,6 +56,13 @@
                             <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.2">
                                 <DoubleAnimation.EasingFunction>
                                     <CircleEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                        <Storyboard x:Name="PointerPressedStoryboard">
+                            <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <BackEase EasingMode="EaseOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>

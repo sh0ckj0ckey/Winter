@@ -70,23 +70,7 @@ namespace Winter.Views.Controls
             {
                 if (sender is Grid grid)
                 {
-                    Storyboard? sb = grid.Resources["PointerPressStoryboard"] as Storyboard;
-                    sb?.Begin();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
-        private void CardGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Grid grid)
-                {
-                    Storyboard? sb = grid.Resources["PointerReleaseStoryboard"] as Storyboard;
+                    Storyboard? sb = grid.Resources["PointerPressedStoryboard"] as Storyboard;
                     sb?.Begin();
                 }
             }
