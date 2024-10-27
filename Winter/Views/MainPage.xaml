@@ -106,7 +106,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="歌单" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
-                <ctrl:PlaylistsControl Grid.Row="1" Margin="0,4,0,18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <ctrl:PlaylistsControl Grid.Row="1" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </Grid>
     </Grid>
