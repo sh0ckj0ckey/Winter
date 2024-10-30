@@ -29,13 +29,20 @@
             </Grid.RowDefinitions>
 
             <!--标题栏-->
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" Margin="24,24,24,16" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Image Height="28" Width="28" VerticalAlignment="Center">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="24,24,24,16" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image Height="32" Width="32" VerticalAlignment="Center">
                     <Image.Source>
-                        <BitmapImage UriSource="/Assets/Icon/winter.png" DecodePixelType="Logical" DecodePixelHeight="56"/>
+                        <BitmapImage UriSource="/Assets/Icon/winter.png" DecodePixelType="Logical" DecodePixelHeight="64"/>
                     </Image.Source>
                 </Image>
-                <TextBlock Text="晚听" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock Text="晚听" FontSize="20" FontWeight="Bold" VerticalAlignment="Center">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#C23970" Offset="0"/>
+                            <GradientStop Color="#8CC23970" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
             </StackPanel>
 
             <!--界面切换-->
