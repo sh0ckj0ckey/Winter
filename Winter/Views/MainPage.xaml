@@ -117,7 +117,23 @@
 
             <!--音乐库-->
             <TextBlock Grid.Row="3" Text="音乐库" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
-
+            <controls:Segmented Grid.Row="3" SelectedIndex="0" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <controls:SegmentedItem>
+                    <controls:SegmentedItem.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
+                    </controls:SegmentedItem.Icon>
+                </controls:SegmentedItem>
+                <controls:SegmentedItem>
+                    <controls:SegmentedItem.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE93C;"/>
+                    </controls:SegmentedItem.Icon>
+                </controls:SegmentedItem>
+                <controls:SegmentedItem>
+                    <controls:SegmentedItem.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
+                    </controls:SegmentedItem.Icon>
+                </controls:SegmentedItem>
+            </controls:Segmented>
         </Grid>
     </Grid>
 </Page>
