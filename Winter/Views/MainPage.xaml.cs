@@ -1,6 +1,7 @@
 using System;
 using Microsoft.UI.Xaml.Controls;
 using Winter.ViewModels;
+using Winter.Views.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,6 +41,12 @@ namespace Winter.Views
             this.InitializeComponent();
 
             App.MainWindow.SwitchAppTheme();
+        }
+
+        private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            PlaylistContainer.Child = new PlaylistsControl(MainViewModel!.PlaylistsVM);
+            MusicLibraryContainer.Child = new MusicLibraryControl(MainViewModel!.MusicLibraryVM);
         }
     }
 }

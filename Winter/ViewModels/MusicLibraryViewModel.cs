@@ -9,6 +9,7 @@ using Windows.Storage.Search;
 using Windows.Storage;
 using Winter.Models;
 using Windows.Storage.FileProperties;
+using System.Collections.ObjectModel;
 
 namespace Winter.ViewModels
 {
@@ -20,11 +21,11 @@ namespace Winter.ViewModels
         public bool Loading
         {
             get => _loading;
-            set => SetProperty(ref _loading, value);
+            private set => SetProperty(ref _loading, value);
         }
         private bool _loading = false;
 
-        public List<MusicItem> AllMusic { get; set; } = new();
+        public ObservableCollection<MusicItem> AllMusic { get; set; } = new();
 
         public async void LoadMusicLibrary()
         {

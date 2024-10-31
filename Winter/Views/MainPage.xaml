@@ -11,7 +11,8 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:models="using:Winter.Models" 
     xmlns:ctrl="using:Winter.Views.Controls"
-    mc:Ignorable="d" NavigationCacheMode="Required">
+    mc:Ignorable="d" NavigationCacheMode="Required"
+    Loaded="Page_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,8 +39,8 @@
                 <TextBlock Text="晚听" FontSize="20" FontWeight="Bold" VerticalAlignment="Center">
                     <TextBlock.Foreground>
                         <LinearGradientBrush>
-                            <GradientStop Color="#C23970" Offset="0"/>
-                            <GradientStop Color="#8CC23970" Offset="1"/>
+                            <GradientStop Color="#EF63A5" Offset="0"/>
+                            <GradientStop Color="#8CEF63A5" Offset="1"/>
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
@@ -106,12 +107,12 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <!--歌单-->
             <TextBlock Grid.Row="0" Text="歌单" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
-            <ctrl:PlaylistsControl Grid.Row="1" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Border x:Name="PlaylistContainer" Grid.Row="1" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
             <Border Grid.Row="2" Height="1" HorizontalAlignment="Stretch" Background="{ThemeResource ControlElevationBorderBrush}"/>
 
@@ -134,6 +135,7 @@
                     </controls:SegmentedItem.Icon>
                 </controls:SegmentedItem>
             </controls:Segmented>
+            <Border x:Name="MusicLibraryContainer" Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>
 </Page>

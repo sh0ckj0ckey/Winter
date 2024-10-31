@@ -5,10 +5,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Winter.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:models="using:Winter.Models"
     mc:Ignorable="d">
 
     <Grid>
-
+        <ListView ItemsSource="{x:Bind _viewModel.AllMusic,Mode=OneWay}" Padding="4,0,4,8">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:MusicItem">
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind Title}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Artist}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind Album}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind Duration}" TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

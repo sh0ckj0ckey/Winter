@@ -23,11 +23,11 @@ namespace Winter.Views.Controls
 {
     public sealed partial class PlaylistsControl : UserControl
     {
-        private MainViewModel? MainViewModel = null;
+        private PlaylistsViewModel? _viewModel = null;
 
-        public PlaylistsControl()
+        public PlaylistsControl(PlaylistsViewModel viewModel)
         {
-            MainViewModel = MainViewModel.Instance;
+            _viewModel = viewModel;
 
             this.InitializeComponent();
         }

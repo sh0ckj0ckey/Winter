@@ -16,7 +16,7 @@
         <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
     </UserControl.Resources>
 
-    <ListView ItemsSource="{x:Bind MainViewModel.PlaylistsVM.Playlists,Mode=TwoWay}"
+    <ListView ItemsSource="{x:Bind _viewModel.Playlists,Mode=TwoWay}"
               ScrollViewer.HorizontalScrollMode="Auto"
               ScrollViewer.HorizontalScrollBarVisibility="Hidden"
               ScrollViewer.VerticalScrollMode="Disabled"
