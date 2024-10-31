@@ -39,7 +39,7 @@ namespace Winter.Views
 
             this.InitializeComponent();
 
-            MainViewModel.Instance.ActSwitchAppTheme?.Invoke();
+            App.MainWindow.SwitchAppTheme();
         }
     }
 }

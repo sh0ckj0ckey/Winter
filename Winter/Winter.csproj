@@ -80,6 +80,7 @@
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-400.png" />
 	  <None Remove="Assets\Test\cover.jpg" />
 	  <None Remove="ThemeResources\ThemeDictionary.xaml" />
+	  <None Remove="Views\Controls\MusicLibraryControl.xaml" />
 	  <None Remove="Views\Controls\PlaylistsControl.xaml" />
 	  <None Remove="Views\MainPage.xaml" />
 	</ItemGroup>
@@ -109,6 +110,11 @@
   -->
 	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<ProjectCapability Include="Msix" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\Controls\MusicLibraryControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="ThemeResources\ThemeDictionary.xaml">

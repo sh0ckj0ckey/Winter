@@ -13,7 +13,7 @@ namespace Winter
     {
         private readonly Microsoft.UI.Dispatching.DispatcherQueue? _dispatcherQueue = null;
 
-        public static WindowEx MainWindow { get; } = new MainWindow();
+        public static MainWindow MainWindow { get; } = new MainWindow();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

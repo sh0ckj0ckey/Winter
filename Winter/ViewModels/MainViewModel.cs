@@ -11,28 +11,20 @@ namespace Winter.ViewModels
 
         public SettingsService AppSettings { get; set; } = new SettingsService();
 
-        public PlaylistsViewModel PlaylistsVM { get; set; } = new PlaylistsViewModel();
+        /// <summary>
+        /// 歌单
+        /// </summary>
+        public PlaylistsViewModel PlaylistsVM { get; set; } = new();
 
         /// <summary>
-        /// 控制主窗口根据当前的主题进行切换
+        /// 音乐库
         /// </summary>
-        public Action? ActSwitchAppTheme { get; set; } = null;
-
-        /// <summary>
-        /// 控制主窗口根据当前的设置更改背景材质
-        /// </summary>
-        public Action? ActChangeBackdrop { get; set; } = null;
+        public MusicLibraryViewModel MusicLibraryVM { get; set; } = new();
 
         /// <summary>
         /// 弹出提示框
         /// </summary>
         public Action<string, string>? ActShowTipDialog { get; set; } = null;
-
-        public MainViewModel()
-        {
-            this.AppSettings.OnAppearanceSettingChanged += (index) => { ActSwitchAppTheme?.Invoke(); };
-            this.AppSettings.OnBackdropSettingChanged += (index) => { ActChangeBackdrop?.Invoke(); };
-        }
 
         /// <summary>
         /// 弹出对话框提示用户特定内容

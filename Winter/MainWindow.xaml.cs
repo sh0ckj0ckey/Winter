@@ -33,8 +33,12 @@ namespace Winter
 
             _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
-            MainViewModel.Instance.ActSwitchAppTheme = this.SwitchAppTheme;
-            MainViewModel.Instance.ActChangeBackdrop = () =>
+            MainViewModel.Instance.AppSettings.OnAppearanceSettingChanged = (_) =>
+            {
+                SwitchAppTheme();
+            };
+
+            MainViewModel.Instance.AppSettings.OnBackdropSettingChanged = (_) =>
             {
                 this.SystemBackdrop = MainViewModel.Instance.AppSettings.BackdropIndex == 1 ?
                                       new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop() :
@@ -43,8 +47,6 @@ namespace Winter
 
             // 监听系统主题变化
             ListenThemeColorChange();
-
-            Debug.WriteLine("MainWindow Initialized");
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace Winter
         /// <summary>
         /// 切换应用程序的主题
         /// </summary>
-        private void SwitchAppTheme()
+        public void SwitchAppTheme()
         {
             try
             {
