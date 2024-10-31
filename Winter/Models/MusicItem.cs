@@ -19,7 +19,7 @@ namespace Winter.Models
         /// <summary>
         /// 时长
         /// </summary>
-        public double Duration { get; set; } = 0;
+        public string Duration { get; set; } = "";
 
         /// <summary>
         /// 艺术家

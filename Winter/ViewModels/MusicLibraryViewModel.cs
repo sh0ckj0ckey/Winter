@@ -49,10 +49,10 @@ namespace Winter.ViewModels
 
                 this.AllMusic.Add(new MusicItem
                 {
-                    Title = musicProperties.Title,
+                    Title = string.IsNullOrWhiteSpace(musicProperties.Title) ? file.DisplayName : musicProperties.Title,
                     Artist = musicProperties.Artist,
                     Album = musicProperties.Album,
-                    Duration = musicProperties.Duration.TotalSeconds,
+                    Duration = musicProperties.Duration.ToString(@"mm\:ss"),
                 });
             }
         }
