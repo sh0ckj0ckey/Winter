@@ -6,16 +6,16 @@
         <ResourceDictionary x:Key="Dark">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <!--<Color x:Key="APPLICATION_NORMAL_FR">#FFFFFF</Color>
-                    <BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_dark.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
+                    <SolidColorBrush x:Key="APP_ACCENT_BK" Color="{ThemeResource SystemAccentColorLight2}"/>
+                    <!--<BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_dark.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <!--<Color x:Key="APPLICATION_NORMAL_FR">#000000</Color>
-                    <BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_light.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
+                    <SolidColorBrush x:Key="APP_ACCENT_BK" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    <!--<BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_light.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

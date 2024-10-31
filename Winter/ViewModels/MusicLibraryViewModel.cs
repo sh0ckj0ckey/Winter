@@ -10,6 +10,9 @@ using Windows.Storage;
 using Winter.Models;
 using Windows.Storage.FileProperties;
 using System.Collections.ObjectModel;
+using Winter.Helpers;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace Winter.ViewModels
 {
@@ -25,35 +28,75 @@ namespace Winter.ViewModels
         }
         private bool _loading = false;
 
-        public ObservableCollection<MusicItem> AllMusic { get; set; } = new();
+        private List<MusicItem> _allMusic { get; } = new();
+
+        /// <summary>
+        /// 按拼音排序的歌曲列表
+        /// </summary>
+        public ObservableCollection<MusicGroup> MusicGroupedByPinyin { get; } = new();
 
         public async void LoadMusicLibrary()
         {
-            this.AllMusic.Clear();
+            Loading = true;
 
-            // 获取音乐库的存储文件夹
-            StorageFolder musicFolder = KnownFolders.MusicLibrary;
-
-            // 创建一个查询选项以查找所有音乐文件
-            var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ".mp3", ".wav", ".aac", ".flac" });
-            var query = musicFolder.CreateFileQueryWithOptions(queryOptions);
-
-            // 获取所有音乐文件
-            var files = await query.GetFilesAsync();
-
-            // 遍历每个文件，获取其属性
-            foreach (StorageFile file in files)
+            try
             {
-                MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
-                StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 200, ThumbnailOptions.UseCurrentScale);
+                _allMusic.Clear();
+                MusicGroupedByPinyin.Clear();
 
-                this.AllMusic.Add(new MusicItem
+                // 获取音乐库的存储文件夹
+                StorageFolder musicFolder = KnownFolders.MusicLibrary;
+
+                // 创建一个查询选项以查找所有音乐文件
+                var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ".mp3", ".wav", ".aac", ".flac" });
+                var query = musicFolder.CreateFileQueryWithOptions(queryOptions);
+
+                // 获取所有音乐文件
+                var files = await query.GetFilesAsync();
+
+                // 遍历每个文件，获取其属性
+                foreach (StorageFile file in files)
                 {
-                    Title = string.IsNullOrWhiteSpace(musicProperties.Title) ? file.DisplayName : musicProperties.Title,
-                    Artist = musicProperties.Artist,
-                    Album = musicProperties.Album,
-                    Duration = musicProperties.Duration.ToString(@"mm\:ss"),
-                });
+                    MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
+                    StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 200, ThumbnailOptions.UseCurrentScale);
+
+                    var musicItem = new MusicItem
+                    {
+                        Title = string.IsNullOrWhiteSpace(musicProperties.Title) ? file.DisplayName : musicProperties.Title,
+                        Artist = musicProperties.Artist,
+                        Album = musicProperties.Album,
+                        Duration = musicProperties.Duration.ToString(@"mm\:ss"),
+                    };
+
+                    // 取首字母用于排序
+                    musicItem.FirstLetter = PinyinHelper.GetFirstSpell(musicItem.Title);
+
+                    _allMusic.Add(musicItem);
+                }
+
+                // 按照首字母分组
+                var orderedList =
+                    (from item in _allMusic
+                     group item by item.FirstLetter into newItems
+                     select
+                     new MusicGroup
+                     {
+                         Key = newItems.Key,
+                         GroupedMusic = new(newItems.ToList())
+                     }).OrderBy(x => x.Key).ToList();
+
+                foreach (var item in orderedList)
+                {
+                    MusicGroupedByPinyin.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex);
+            }
+            finally
+            {
+                Loading = false;
             }
         }
     }

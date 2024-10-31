@@ -30,5 +30,7 @@ namespace Winter.Models
         /// 专辑
         /// </summary>
         public string Album { get; set; } = "";
+
+        public char FirstLetter { get; set; } = '#';
     }
 }
