@@ -23,13 +23,13 @@ namespace Winter.Helpers
         /// </summary>
         /// <param name="strChinese"></param>
         /// <returns></returns>
-        public static char GetFirstSpell(string strChinese)
+        public static string GetFirstSpell(string strChinese)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(strChinese))
                 {
-                    return '#';
+                    return "#";
                 }
 
                 strChinese = strChinese.Trim();
@@ -37,13 +37,13 @@ namespace Winter.Helpers
                 // 数字
                 if (Regex.IsMatch(strChinese, "^[0-9]"))
                 {
-                    return '#';
+                    return "#";
                 }
 
                 // 英文
                 if (Regex.IsMatch(strChinese.Trim(), "^[a-zA-Z]"))
                 {
-                    return strChinese.ToUpper()[0];
+                    return strChinese.ToUpper()[0].ToString();
                 }
 
                 // 特殊
@@ -53,44 +53,44 @@ namespace Winter.Helpers
                     case 'á':
                     case 'ǎ':
                     case 'à':
-                        return 'A';
+                        return "A";
                     case 'ō':
                     case 'ó':
                     case 'ǒ':
                     case 'ò':
-                        return 'O';
+                        return "O";
                     case 'ē':
                     case 'é':
                     case 'ě':
                     case 'è':
                     case 'ê':
-                        return 'E';
+                        return "E";
                     case 'ī':
                     case 'í':
                     case 'ǐ':
                     case 'ì':
-                        return 'I';
+                        return "I";
                     case 'ū':
                     case 'ú':
                     case 'ǔ':
                     case 'ù':
-                        return 'U';
+                        return "U";
                     case 'ǖ':
                     case 'ǘ':
                     case 'ǚ':
                     case 'ǜ':
                     case 'ü':
-                        return 'V';
+                        return "V";
                 }
 
                 if (strChinese.Length > 0)
                 {
-                    var firstSpell = GetSpell(strChinese[0])[0];
+                    var firstSpell = GetSpell(strChinese[0])[0].ToString();
                     return firstSpell;
                 }
             }
             catch { }
-            return strChinese.Length > 0 ? strChinese[0] : '#';
+            return strChinese.Length > 0 ? strChinese[0].ToString() : "#";
         }
 
         private static string GetSpell(char chr)

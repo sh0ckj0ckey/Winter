@@ -14,26 +14,11 @@ namespace Winter.Models
         /// <summary>
         /// 索引
         /// </summary>
-        public char Key { get; set; } = '#';
-
-        /// <summary>
-        /// 封面路径
-        /// </summary>
-        public string Cover { get; set; } = "";
-
-        /// <summary>
-        /// 封面图
-        /// </summary>
-        public BitmapImage? CoverImage
-        {
-            get => _coverImage;
-            set => SetProperty(ref _coverImage, value);
-        }
-        private BitmapImage? _coverImage = null;
+        public string Key { get; set; } = "#";
 
         /// <summary>
         /// 分组音乐
         /// </summary>
-        public ObservableCollection<MusicItem> GroupedMusic { get; set; } = new ObservableCollection<MusicItem>();
+        public ObservableCollection<MusicItem> GroupedMusic { get; set; } = new();
     }
 }

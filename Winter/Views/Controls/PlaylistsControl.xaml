@@ -9,96 +9,105 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:models="using:Winter.Models" 
     mc:Ignorable="d">
+
     <UserControl.Resources>
-        <!-- Overriding default ListViewItem colors for various states -->
         <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="Transparent"/>
         <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="Transparent"/>
         <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
     </UserControl.Resources>
 
-    <ListView ItemsSource="{x:Bind _viewModel.Playlists,Mode=TwoWay}"
-              ScrollViewer.HorizontalScrollMode="Auto"
-              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-              ScrollViewer.VerticalScrollMode="Disabled"
-              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-              ScrollViewer.IsHorizontalRailEnabled="True"
-              IsItemClickEnabled="True" SelectionMode="None" Padding="12,0"
-              CanDragItems="True" CanReorderItems="True" IsSwipeEnabled="False" AllowDrop="True">
-        <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-                <ItemsStackPanel Orientation="Horizontal"/>
-            </ItemsPanelTemplate>
-        </ListView.ItemsPanel>
-        <ListView.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="Margin" Value="4"/>
-                <Setter Property="Padding" Value="0"/>
-            </Style>
-        </ListView.ItemContainerStyle>
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="models:PlaylistItem">
-                <Grid x:Name="CardGrid" CornerRadius="4" ToolTipService.ToolTip="{x:Bind Title,Mode=OneWay}"
-                      BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Background="{x:Bind BackgroundColor,Mode=OneWay}" 
-                      PointerEntered="CardGrid_PointerEntered" PointerExited="CardGrid_PointerExited" PointerPressed="CardGrid_PointerPressed">
-                    
-                    <Grid.RenderTransform>
-                        <TranslateTransform x:Name="TranslationName" Y="0"/>
-                    </Grid.RenderTransform>
-                    <Grid.Resources>
-                        <Storyboard x:Name="PointerOverStoryboard">
-                            <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="-4" Duration="0:0:0.4">
-                                <DoubleAnimation.EasingFunction>
-                                    <CircleEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                        <Storyboard x:Name="PointerExitStoryboard">
-                            <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.2">
-                                <DoubleAnimation.EasingFunction>
-                                    <CircleEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                        <Storyboard x:Name="PointerPressedStoryboard">
-                            <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
-                                <DoubleAnimation.EasingFunction>
-                                    <BackEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </Grid.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="歌单" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
+        
+        <ListView Grid.Row="1" ItemsSource="{x:Bind _viewModel.Playlists,Mode=TwoWay}"
+                  ScrollViewer.HorizontalScrollMode="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ScrollViewer.VerticalScrollMode="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  ScrollViewer.IsHorizontalRailEnabled="True"
+                  IsItemClickEnabled="True" SelectionMode="None" Padding="12,0"
+                  CanDragItems="True" CanReorderItems="True" IsSwipeEnabled="False" AllowDrop="True">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:PlaylistItem">
+                    <Grid x:Name="CardGrid" CornerRadius="4" ToolTipService.ToolTip="{x:Bind Title,Mode=OneWay}"
+                          BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Background="{x:Bind BackgroundColor,Mode=OneWay}" 
+                          PointerEntered="CardGrid_PointerEntered" PointerExited="CardGrid_PointerExited" PointerPressed="CardGrid_PointerPressed">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Grid.Row="0" CornerRadius="4,4,0,0" Height="128" Width="128">
-                        <Border.Background>
-                            <ImageBrush Stretch="UniformToFill">
-                                <ImageBrush.ImageSource>
-                                    <BitmapImage UriSource="{x:Bind Cover,Mode=OneWay}" DecodePixelType="Logical" DecodePixelHeight="256"/>
-                                </ImageBrush.ImageSource>
-                            </ImageBrush>
-                        </Border.Background>
-                    </Border>
-                    <Grid Grid.Row="1" CornerRadius="0,0,4,4" Width="128" Background="{x:Bind BackgroundColor,Mode=OneWay}">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="TranslationName" Y="0"/>
+                        </Grid.RenderTransform>
+                        <Grid.Resources>
+                            <Storyboard x:Name="PointerOverStoryboard">
+                                <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="-4" Duration="0:0:0.4">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="PointerExitStoryboard">
+                                <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.2">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="PointerPressedStoryboard">
+                                <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
+                                    <DoubleAnimation.EasingFunction>
+                                        <BackEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </Grid.Resources>
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Margin="6,2,6,0" Foreground="{x:Bind ForegroundColor,Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
-                            <Run Text="{x:Bind Title,Mode=OneWay}"/>
-                        </TextBlock>
-                        <TextBlock Grid.Row="1" Margin="6,0,6,4" Foreground="{x:Bind ForegroundColor,Mode=OneWay}" FontSize="12" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
-                            <Run Text="共"/>
-                            <Run Text="{x:Bind Count,Mode=OneWay}" FontWeight="Medium"/>
-                            <Run Text="首歌"/>
-                        </TextBlock>
+                        <Border Grid.Row="0" CornerRadius="4,4,0,0" Height="128" Width="128">
+                            <Border.Background>
+                                <ImageBrush Stretch="UniformToFill">
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="{x:Bind Cover,Mode=OneWay}" DecodePixelType="Logical" DecodePixelHeight="256"/>
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Border.Background>
+                        </Border>
+                        <Grid Grid.Row="1" CornerRadius="0,0,4,4" Width="128" Background="{x:Bind BackgroundColor,Mode=OneWay}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Margin="6,2,6,0" Foreground="{x:Bind ForegroundColor,Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
+                                <Run Text="{x:Bind Title,Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" Margin="6,0,6,4" Foreground="{x:Bind ForegroundColor,Mode=OneWay}" FontSize="12" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
+                                <Run Text="共"/>
+                                <Run Text="{x:Bind Count,Mode=OneWay}" FontWeight="Medium"/>
+                                <Run Text="首歌"/>
+                            </TextBlock>
+                        </Grid>
+
                     </Grid>
-                    
-                </Grid>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 
 </UserControl>

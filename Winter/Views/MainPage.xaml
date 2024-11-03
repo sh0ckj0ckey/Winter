@@ -105,36 +105,16 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <!--歌单-->
-            <TextBlock Grid.Row="0" Text="歌单" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
-            <Border x:Name="PlaylistContainer" Grid.Row="1" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Border x:Name="PlaylistContainer" Grid.Row="0" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-            <Border Grid.Row="2" Height="1" HorizontalAlignment="Stretch" Background="{ThemeResource ControlElevationBorderBrush}"/>
+            <!--分割线-->
+            <Border Grid.Row="1" Height="1" HorizontalAlignment="Stretch" Background="{ThemeResource ControlElevationBorderBrush}"/>
 
             <!--音乐库-->
-            <TextBlock Grid.Row="3" Text="音乐库" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
-            <controls:Segmented Grid.Row="3" SelectedIndex="0" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <controls:SegmentedItem>
-                    <controls:SegmentedItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
-                    </controls:SegmentedItem.Icon>
-                </controls:SegmentedItem>
-                <controls:SegmentedItem>
-                    <controls:SegmentedItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE93C;"/>
-                    </controls:SegmentedItem.Icon>
-                </controls:SegmentedItem>
-                <controls:SegmentedItem>
-                    <controls:SegmentedItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
-                    </controls:SegmentedItem.Icon>
-                </controls:SegmentedItem>
-            </controls:Segmented>
             <Border x:Name="MusicLibraryContainer" Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>

@@ -17,11 +17,6 @@ namespace Winter.Models
         public string Title { get; set; } = "";
 
         /// <summary>
-        /// 时长
-        /// </summary>
-        public string Duration { get; set; } = "";
-
-        /// <summary>
         /// 艺术家
         /// </summary>
         public string Artist { get; set; } = "";
@@ -31,6 +26,29 @@ namespace Winter.Models
         /// </summary>
         public string Album { get; set; } = "";
 
-        public char FirstLetter { get; set; } = '#';
+        /// <summary>
+        /// 专辑艺术家
+        /// </summary>
+        public string AlbumArtist { get; set; } = "";
+
+        /// <summary>
+        /// 时长
+        /// </summary>
+        public string Duration { get; set; } = "";
+
+        /// <summary>
+        /// 年份
+        /// </summary>
+        public uint Year { get; set; } = 0;
+        
+        /// <summary>
+        /// 编号
+        /// </summary>
+        public uint TrackNumber { get; set; }
+
+        /// <summary>
+        /// 名称首字母
+        /// </summary>
+        public string FirstLetter { get; set; } = "#";
     }
 }

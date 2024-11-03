@@ -26,6 +26,10 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Content Remove="Assets\Icon\Winter_full.png" />
+	  <Content Remove="Assets\Icon\Winter_placeholder.png" />
+	</ItemGroup>
+	<ItemGroup>
 	  <None Remove="Assets\Icon\winter.ico" />
 	  <None Remove="Assets\Icon\winter.png" />
 	  <None Remove="Assets\Manifest\LargeTile.scale-100.png" />
