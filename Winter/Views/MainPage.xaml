@@ -102,20 +102,17 @@
         </Grid>
 
         <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <!--歌单-->
-            <Border x:Name="PlaylistContainer" Grid.Row="0" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
-            <!--分割线-->
-            <Border Grid.Row="1" Height="1" HorizontalAlignment="Stretch" Background="{ThemeResource ControlElevationBorderBrush}"/>
-
-            <!--音乐库-->
-            <Border x:Name="MusicLibraryContainer" Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Pivot Margin="0,36,0,0">
+                <PivotItem Header="歌单">
+                    <Border x:Name="PlaylistContainer" Grid.Row="0" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </PivotItem>
+                <PivotItem Header="音乐库">
+                    <Border x:Name="MusicLibraryContainer" Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </PivotItem>
+                <PivotItem Header="设置">
+                    
+                </PivotItem>
+            </Pivot>
         </Grid>
     </Grid>
 </Page>

@@ -20,14 +20,7 @@
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Grid.Row="0" Text="音乐库" FontWeight="Bold" FontSize="18" Margin="20,26,20,12" HorizontalAlignment="Left"/>
-
-        <controls:Segmented Grid.Row="0" SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <controls:Segmented SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
             <controls:SegmentedItem>
                 <controls:SegmentedItem.Icon>
                     <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
