@@ -1,9 +1,14 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using Windows.Foundation;
 using Windows.UI.ViewManagement;
+using Winter.Services.Interfaces;
 using Winter.ViewModels;
 using Winter.Views;
 using WinUIEx;
@@ -20,33 +25,49 @@ namespace Winter
     {
         private UISettings? _uiSettings;
 
-        private readonly Microsoft.UI.Dispatching.DispatcherQueue? _dispatcherQueue = null;
+        private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
+
+        private readonly ISettingsService _settingsService;
 
         public MainWindow()
         {
+            _settingsService = App.Current.Services.GetRequiredService<ISettingsService>();
+
             this.InitializeComponent();
-            this.SystemBackdrop = MainViewModel.Instance.AppSettings.BackdropIndex == 1 ? new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop() : new Microsoft.UI.Xaml.Media.MicaBackdrop();
-            this.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon/Winter.ico"));
             this.PersistenceId = "WinterMainWindow";
             this.ExtendsContentIntoTitleBar = true;
             this.SetTitleBar(AppTitleBar);
 
+            string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets/Icon/Winter.ico");
+            this.SetIcon(iconPath);
+            this.SetTaskBarIcon(Icon.FromFile(iconPath));
+
+            UpdateAppBackdrop();
+
             _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
-            MainViewModel.Instance.AppSettings.OnAppearanceSettingChanged = (_) =>
+            _settingsService.AppearanceSettingChanged += (_, _) =>
             {
-                SwitchAppTheme();
+                UpdateAppTheme();
             };
 
-            MainViewModel.Instance.AppSettings.OnBackdropSettingChanged = (_) =>
+            _settingsService.BackdropSettingChanged += (_, _) =>
             {
-                this.SystemBackdrop = MainViewModel.Instance.AppSettings.BackdropIndex == 1 ?
-                                      new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop() :
-                                      new Microsoft.UI.Xaml.Media.MicaBackdrop();
+                UpdateAppBackdrop();
             };
 
             // 监听系统主题变化
             ListenThemeColorChange();
+
+            // 首次启动设置默认窗口尺寸
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (localSettings.Values["firstRun"] == null)
+            {
+                localSettings.Values["firstRun"] = true;
+                this.Height = 680;
+                this.Width = 960;
+                this.CenterOnScreen();
+            }
         }
 
         /// <summary>
@@ -58,6 +79,8 @@ namespace Winter
         {
             // 初始导航页面
             MainFrame.Navigate(typeof(MainPage));
+
+            UpdateAppTheme();
         }
 
         /// <summary>
@@ -78,39 +101,41 @@ namespace Winter
             _uiSettings = new UISettings();
             _uiSettings.ColorValuesChanged += (s, args) =>
             {
-                if (MainViewModel.Instance.AppSettings.AppearanceIndex == 0)
+                if (_settingsService.AppearanceIndex == 0)
                 {
                     _dispatcherQueue!.TryEnqueue(() =>
                     {
-                        SwitchAppTheme();
+                        UpdateAppTheme();
                     });
                 }
             };
         }
 
         /// <summary>
-        /// 切换应用程序的主题
+        /// 更新应用程序的主题
         /// </summary>
-        public void SwitchAppTheme()
+        private void UpdateAppTheme()
         {
             try
             {
-                // 设置标题栏颜色
+                // 设置标题栏颜色 主题 0-System 1-Dark 2-Light
                 bool isLight = true;
-                if (MainViewModel.Instance.AppSettings.AppearanceIndex == 0) // 主题 0-System 1-Dark 2-Light
+                if (_settingsService.AppearanceIndex == 0)
                 {
                     var color = _uiSettings?.GetColorValue(UIColorType.Foreground) ?? Colors.Black;
+
+                    // g越小，颜色越深
                     var g = color.R * 0.299 + color.G * 0.587 + color.B * 0.114;
-                    isLight = g < 100; // g越小，颜色越深
+                    isLight = g < 100;
                 }
                 else
                 {
-                    isLight = MainViewModel.Instance.AppSettings.AppearanceIndex == 2;
+                    isLight = _settingsService.AppearanceIndex == 2;
                 }
 
                 // 修改标题栏按钮颜色
                 // TitleBarHelper.UpdateTitleBar(App.MainWindow, isLight ? ElementTheme.Light : ElementTheme.Dark);
-                var titleBar = App.MainWindow.AppWindow.TitleBar;
+                var titleBar = App.Current.MainWindow.AppWindow.TitleBar;
                 // Set active window colors
                 // Note: No effect when app is running on Windows 10 since color customization is not supported.
                 titleBar.ForegroundColor = isLight ? Colors.Black : Colors.White;
@@ -130,13 +155,13 @@ namespace Winter
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
                 // 设置应用程序颜色
-                if (App.MainWindow.Content is FrameworkElement rootElement)
+                if (App.Current.MainWindow.Content is FrameworkElement rootElement)
                 {
-                    if (MainViewModel.Instance.AppSettings.AppearanceIndex == 1)
+                    if (_settingsService.AppearanceIndex == 1)
                     {
                         rootElement.RequestedTheme = ElementTheme.Dark;
                     }
-                    else if (MainViewModel.Instance.AppSettings.AppearanceIndex == 2)
+                    else if (_settingsService.AppearanceIndex == 2)
                     {
                         rootElement.RequestedTheme = ElementTheme.Light;
                     }
@@ -146,7 +171,17 @@ namespace Winter
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { System.Diagnostics.Trace.WriteLine(ex); }
+        }
+
+        /// <summary>
+        /// 更新应用程序的背景
+        /// </summary>
+        private void UpdateAppBackdrop()
+        {
+            this.SystemBackdrop = _settingsService.BackdropIndex == 1 ?
+                new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop() :
+                new Microsoft.UI.Xaml.Media.MicaBackdrop();
         }
     }
 }

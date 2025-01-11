@@ -1,4 +1,10 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
+using Winter.Helpers;
+using Winter.Services;
+using Winter.Services.Interfaces;
+using Winter.ViewModels;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -11,9 +17,17 @@ namespace Winter
     /// </summary>
     public partial class App : Application
     {
-        private readonly Microsoft.UI.Dispatching.DispatcherQueue? _dispatcherQueue = null;
+        /// <summary>
+        /// Gets the current <see cref="App"/> instance in use
+        /// </summary>
+        public new static App Current => (App)Application.Current;
 
-        public static MainWindow MainWindow { get; } = new MainWindow();
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; }
+
+        public MainWindow MainWindow { get; } = new MainWindow();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -21,12 +35,30 @@ namespace Winter
         /// </summary>
         public App()
         {
+            Services = ConfigureServices();
+
             this.InitializeComponent();
 
-            _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
-
-            UnhandledException += (s, e) => { e.Handled = true; };
+            UnhandledException += (s, e) =>
+            {
+                System.Diagnostics.Trace.WriteLine(e);
+                e.Handled = true;
+            };
         }
+
+        /// <summary>
+        /// Configures the services for the application.
+        /// </summary>
+        private static IServiceProvider ConfigureServices()
+        {
+            return new ServiceCollection()
+                .AddSingleton<IContentDialogService, ContentDialogService>()
+                .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton<PlaylistsViewModel>()
+                .AddSingleton<MusicLibraryViewModel>()
+                .BuildServiceProvider();
+        }
+
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -34,25 +66,16 @@ namespace Winter
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            // 首次启动设置默认窗口尺寸
-            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            if (localSettings.Values["firstRun"] == null)
-            {
-                localSettings.Values["firstRun"] = true;
-                MainWindow.Height = 960;
-                MainWindow.Width = 1280;
-                MainWindow.CenterOnScreen();
-            }
-
             MainWindow.Activate();
         }
 
         public void ShowMainWindow()
         {
-            _dispatcherQueue!.TryEnqueue(() =>
+            Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().TryEnqueue(() =>
             {
                 MainWindow.Restore();
                 MainWindow.BringToFront();
+                MainWindow.Activate();
             });
         }
     }

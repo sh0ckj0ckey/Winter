@@ -20,7 +20,12 @@
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <controls:Segmented SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:Segmented Grid.Row="0" SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
             <controls:SegmentedItem>
                 <controls:SegmentedItem.Icon>
                     <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>

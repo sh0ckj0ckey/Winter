@@ -44,9 +44,8 @@ namespace Winter
                 isRedirect = true;
                 await keyInstance.RedirectActivationToAsync(args);
             }
-
             return isRedirect;
         }
-    }
 
+    }
 }
