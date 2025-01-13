@@ -1,4 +1,3 @@
-using CommunityToolkit.WinUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Winter.ViewModels;
@@ -11,17 +10,15 @@ namespace Winter.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MusicLibraryPage : Page
+    public sealed partial class MusicPlaylistsPage : Page
     {
-        private readonly MusicLibraryViewModel _viewModel;
+        private readonly MusicPlaylistsViewModel _viewModel;
 
-        public MusicLibraryPage()
+        public MusicPlaylistsPage()
         {
-            _viewModel = App.Current.Services.GetRequiredService<MusicLibraryViewModel>();
+            _viewModel = App.Current.Services.GetRequiredService<MusicPlaylistsViewModel>();
 
             this.InitializeComponent();
-
-            _viewModel.LoadMusicLibrary();
         }
     }
 }

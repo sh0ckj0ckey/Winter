@@ -1,15 +1,10 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI;
-using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Winter.Services.Interfaces;
-using Winter.ViewModels;
 using Winter.Views;
 using WinUIEx;
 
@@ -23,9 +18,7 @@ namespace Winter
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
-        private UISettings? _uiSettings;
-
-        private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
+        private readonly UISettings _uiSettings;
 
         private readonly ISettingsService _settingsService;
 
@@ -44,8 +37,6 @@ namespace Winter
 
             UpdateAppBackdrop();
 
-            _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
-
             _settingsService.AppearanceSettingChanged += (_, _) =>
             {
                 UpdateAppTheme();
@@ -57,7 +48,18 @@ namespace Winter
             };
 
             // 监听系统主题变化
-            ListenThemeColorChange();
+            var dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+            _uiSettings = new UISettings();
+            _uiSettings.ColorValuesChanged += (s, args) =>
+            {
+                if (_settingsService.AppearanceIndex == 0)
+                {
+                    dispatcherQueue.TryEnqueue(() =>
+                    {
+                        UpdateAppTheme();
+                    });
+                }
+            };
 
             // 首次启动设置默认窗口尺寸
             var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -94,24 +96,6 @@ namespace Winter
         }
 
         /// <summary>
-        /// 监听系统颜色设置变更，处理主题为"跟随系统"时主题切换
-        /// </summary>
-        private void ListenThemeColorChange()
-        {
-            _uiSettings = new UISettings();
-            _uiSettings.ColorValuesChanged += (s, args) =>
-            {
-                if (_settingsService.AppearanceIndex == 0)
-                {
-                    _dispatcherQueue!.TryEnqueue(() =>
-                    {
-                        UpdateAppTheme();
-                    });
-                }
-            };
-        }
-
-        /// <summary>
         /// 更新应用程序的主题
         /// </summary>
         private void UpdateAppTheme()
@@ -135,7 +119,7 @@ namespace Winter
 
                 // 修改标题栏按钮颜色
                 // TitleBarHelper.UpdateTitleBar(App.MainWindow, isLight ? ElementTheme.Light : ElementTheme.Dark);
-                var titleBar = App.Current.MainWindow.AppWindow.TitleBar;
+                var titleBar = this.AppWindow.TitleBar;
                 // Set active window colors
                 // Note: No effect when app is running on Windows 10 since color customization is not supported.
                 titleBar.ForegroundColor = isLight ? Colors.Black : Colors.White;
@@ -155,7 +139,7 @@ namespace Winter
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
                 // 设置应用程序颜色
-                if (App.Current.MainWindow.Content is FrameworkElement rootElement)
+                if (this.Content is FrameworkElement rootElement)
                 {
                     if (_settingsService.AppearanceIndex == 1)
                     {

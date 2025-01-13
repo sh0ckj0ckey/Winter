@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Windows.Storage.Search;
 using Windows.Storage;
-using Winter.Models;
 using Windows.Storage.FileProperties;
-using System.Collections.ObjectModel;
+using Windows.Storage.Search;
 using Winter.Helpers;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
+using Winter.Models;
 
 namespace Winter.ViewModels
 {
     public class MusicLibraryViewModel : ObservableObject
     {
+        private bool _loading = false;
+
+        private int _groupType = 0;
+
         /// <summary>
         /// 是否正在加载音乐库
         /// </summary>
@@ -26,7 +27,6 @@ namespace Winter.ViewModels
             get => _loading;
             private set => SetProperty(ref _loading, value);
         }
-        private bool _loading = false;
 
         /// <summary>
         /// 列表分组依据
@@ -52,9 +52,11 @@ namespace Winter.ViewModels
                 }
             }
         }
-        private int _groupType = 0;
 
-        private List<MusicItem> _allMusic { get; } = new();
+        /// <summary>
+        /// 所有的歌曲
+        /// </summary>
+        private readonly List<MusicItem> _allMusic = [];
 
         /// <summary>
         /// 排序的歌曲列表
@@ -68,11 +70,13 @@ namespace Winter.ViewModels
 
         public async void LoadMusicLibrary()
         {
-            Loading = true;
+            this.Loading = true;
 
             try
             {
                 _allMusic.Clear();
+
+                Debug.WriteLine("Loading music library...");
 
                 // 获取音乐库的存储文件夹
                 StorageFolder musicFolder = KnownFolders.MusicLibrary;
@@ -85,41 +89,47 @@ namespace Winter.ViewModels
                 var files = await query.GetFilesAsync();
 
                 // 遍历每个文件，获取其属性
-                foreach (StorageFile file in files)
+                var tasks = files.Select(async file =>
                 {
-                    MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
-                    StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 200, ThumbnailOptions.UseCurrentScale);
-
-                    var musicItem = new MusicItem
+                    try
                     {
-                        Title = string.IsNullOrWhiteSpace(musicProperties.Title) ? file.DisplayName : musicProperties.Title,
-                        Album = string.IsNullOrWhiteSpace(musicProperties.Album) ? "未知专辑" : musicProperties.Album,
-                        AlbumArtist = string.IsNullOrWhiteSpace(musicProperties.AlbumArtist) ? "未知艺术家" : musicProperties.AlbumArtist,
-                        Duration = musicProperties.Duration.ToString(@"mm\:ss"),
-                        Year = musicProperties.Year,
-                        TrackNumber = musicProperties.TrackNumber,
-                    };
+                        MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
+                        // StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 200, ThumbnailOptions.UseCurrentScale);
 
-                    string artist = string.Join("&", musicProperties.Producers);
-                    musicItem.Artist = string.IsNullOrWhiteSpace(artist) ? (string.IsNullOrWhiteSpace(musicProperties.Artist) ? "未知艺术家" : musicProperties.Artist) : artist;
+                        var musicItem = new MusicItem
+                        {
+                            Title = string.IsNullOrWhiteSpace(musicProperties.Title) ? file.DisplayName : musicProperties.Title,
+                            Album = string.IsNullOrWhiteSpace(musicProperties.Album) ? "未知专辑" : musicProperties.Album,
+                            AlbumArtist = string.IsNullOrWhiteSpace(musicProperties.AlbumArtist) ? "未知艺术家" : musicProperties.AlbumArtist,
+                            Duration = musicProperties.Duration.ToString(@"mm\:ss"),
+                            Year = musicProperties.Year,
+                            TrackNumber = musicProperties.TrackNumber,
+                        };
 
-                    musicItem.FirstLetter = PinyinHelper.GetFirstSpell(musicItem.Title);
+                        string artist = string.Join("&", musicProperties.Producers);
+                        musicItem.Artist = string.IsNullOrWhiteSpace(artist) ? (string.IsNullOrWhiteSpace(musicProperties.Artist) ? "未知艺术家" : musicProperties.Artist) : artist;
 
-                    _allMusic.Add(musicItem);
-                }
+                        musicItem.FirstLetter = PinyinHelper.GetFirstSpell(musicItem.Title);
 
-                if (GroupType == 0)
+                        return musicItem;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return null;
+                    }
+                }).ToList();
+
+                var musicItems = await Task.WhenAll(tasks);
+
+                _allMusic.Clear();
+
+                if (musicItems is not null)
                 {
-                    GroupMusicByTitle();
+                    _allMusic.AddRange(musicItems.Where(item => item != null)!);
                 }
-                else if (GroupType == 1)
-                {
-                    GroupMusicByArtist();
-                }
-                else if (GroupType == 2)
-                {
-                    GroupMusicByAlbum();
-                }
+
+                Debug.WriteLine("Loaded music library.");
             }
             catch (Exception ex)
             {
@@ -127,7 +137,20 @@ namespace Winter.ViewModels
             }
             finally
             {
-                Loading = false;
+                this.Loading = false;
+
+                if (this.GroupType == 0)
+                {
+                    GroupMusicByTitle();
+                }
+                else if (this.GroupType == 1)
+                {
+                    GroupMusicByArtist();
+                }
+                else if (this.GroupType == 2)
+                {
+                    GroupMusicByAlbum();
+                }
             }
         }
 
@@ -135,8 +158,12 @@ namespace Winter.ViewModels
         {
             try
             {
-                Loading = true;
-                GroupedMusic.Clear();
+                if (this.Loading)
+                {
+                    return;
+                }
+
+                this.GroupedMusic.Clear();
 
                 // 按照首字母分组
                 var orderedByPinyinList =
@@ -151,16 +178,12 @@ namespace Winter.ViewModels
 
                 foreach (var item in orderedByPinyinList)
                 {
-                    GroupedMusic.Add(item);
+                    this.GroupedMusic.Add(item);
                 }
             }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex);
-            }
-            finally
-            {
-                Loading = false;
             }
         }
 
@@ -168,8 +191,12 @@ namespace Winter.ViewModels
         {
             try
             {
-                Loading = true;
-                GroupedMusic.Clear();
+                if (this.Loading)
+                {
+                    return;
+                }
+
+                this.GroupedMusic.Clear();
 
                 // 按照艺术家分组
                 var orderedByArtistList =
@@ -184,16 +211,12 @@ namespace Winter.ViewModels
 
                 foreach (var item in orderedByArtistList)
                 {
-                    GroupedMusic.Add(item);
+                    this.GroupedMusic.Add(item);
                 }
             }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex);
-            }
-            finally
-            {
-                Loading = false;
             }
         }
 
@@ -201,8 +224,12 @@ namespace Winter.ViewModels
         {
             try
             {
-                Loading = true;
-                MusicAlbums.Clear();
+                if (this.Loading)
+                {
+                    return;
+                }
+
+                this.MusicAlbums.Clear();
 
                 var orderedByArtistList =
                     (from item in _allMusic
@@ -217,16 +244,12 @@ namespace Winter.ViewModels
 
                 foreach (var item in orderedByArtistList)
                 {
-                    MusicAlbums.Add(item);
+                    this.MusicAlbums.Add(item);
                 }
             }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex);
-            }
-            finally
-            {
-                Loading = false;
             }
         }
     }

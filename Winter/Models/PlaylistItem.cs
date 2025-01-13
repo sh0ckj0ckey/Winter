@@ -7,6 +7,10 @@ namespace Winter.Models
     /// </summary>
     public class PlaylistItem : ObservableObject
     {
+        private string _title = "";
+        private string _cover = "";
+        private int _count = 0;
+
         /// <summary>
         /// 标题
         /// </summary>
@@ -15,7 +19,6 @@ namespace Winter.Models
             get => _title;
             set => SetProperty(ref _title, value);
         }
-        private string _title = "";
 
         /// <summary>
         /// 封面
@@ -25,7 +28,6 @@ namespace Winter.Models
             get => _cover;
             set => SetProperty(ref _cover, value);
         }
-        private string _cover = "";
 
         /// <summary>
         /// 歌曲数量
@@ -35,26 +37,5 @@ namespace Winter.Models
             get => _count;
             set => SetProperty(ref _count, value);
         }
-        private int _count = 0;
-
-        /// <summary>
-        /// 封面背景颜色
-        /// </summary>
-        public string BackgroundColor
-        {
-            get => _backgroundColor;
-            set => SetProperty(ref _backgroundColor, value);
-        }
-        private string _backgroundColor = "#00000000";
-
-        /// <summary>
-        /// 封面字体颜色
-        /// </summary>
-        public string ForegroundColor
-        {
-            get => _foregroundColor;
-            set => SetProperty(ref _foregroundColor, value);
-        }
-        private string _foregroundColor = "#00000000";
     }
 }

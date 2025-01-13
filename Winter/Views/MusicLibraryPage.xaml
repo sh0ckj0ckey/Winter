@@ -6,10 +6,131 @@
     xmlns:local="using:Winter.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls" 
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+    xmlns:models="using:Winter.Models" 
+    mc:Ignorable="d" Background="Transparent" NavigationCacheMode="Required">
 
-    <Grid>
+    <Page.Resources>
+        <SolidColorBrush x:Key="ListViewHeaderItemDividerStroke" Color="Transparent"/>
+        <converters:DoubleToVisibilityConverter x:Key="LessThan2ToVisibilityConverter" LessThan="2"/>
+        <converters:DoubleToVisibilityConverter x:Key="GreaterThan1ToVisibilityConverter" GreaterThan="1"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
 
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <community:Segmented Grid.Row="0" SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <community:SegmentedItem>
+                <community:SegmentedItem.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
+                </community:SegmentedItem.Icon>
+            </community:SegmentedItem>
+            <community:SegmentedItem>
+                <community:SegmentedItem.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
+                </community:SegmentedItem.Icon>
+            </community:SegmentedItem>
+            <community:SegmentedItem>
+                <community:SegmentedItem.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE93C;"/>
+                </community:SegmentedItem.Icon>
+            </community:SegmentedItem>
+        </community:Segmented>
+
+        <Grid Grid.Row="1" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
+            <Grid Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan2ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.Resources>
+                    <CollectionViewSource x:Name="GroupedMusicCollectionViewSource" Source="{x:Bind _viewModel.GroupedMusic,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="GroupedMusic"/>
+                </Grid.Resources>
+                <controls:SemanticZoom>
+                    <controls:SemanticZoom.ZoomedInView>
+                        <ListView x:Name="GroupedMusicList" Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                               ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}">
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate x:DataType="models:MusicGroup">
+                                            <TextBlock Margin="6,0,0,0" Text="{x:Bind Key}" Foreground="{ThemeResource APP_ACCENT_BK}" FontWeight="Medium" FontSize="14"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:MusicItem">
+                                    <Grid ColumnSpacing="16" Margin="24,16,12,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="4*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind Title}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Artist}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Album}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind Duration}" FontSize="13" HorizontalAlignment="Right" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </controls:SemanticZoom.ZoomedInView>
+                    <controls:SemanticZoom.ZoomedOutView>
+                        <ListView Padding="2,8,4,8" ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View.CollectionGroups,Mode=OneWay}"
+                               SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="ICollectionViewGroup">
+                                    <TextBlock Text="{x:Bind Group.(models:MusicGroup.Key)}" FontWeight="Medium" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </controls:SemanticZoom.ZoomedOutView>
+                </controls:SemanticZoom>
+            </Grid>
+
+            <Grid Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.Resources>
+                    <CollectionViewSource x:Name="AlbumCollectionViewSource" Source="{x:Bind _viewModel.MusicAlbums,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="Music"/>
+                </Grid.Resources>
+                <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind AlbumCollectionViewSource.View,Mode=OneWay}">
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate x:DataType="models:MusicAlbum">
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="2" Margin="6,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Text="{x:Bind Title}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <TextBlock FontSize="14" Opacity="0.5" FontWeight="Medium" Text="{x:Bind Year}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:MusicItem">
+                            <Grid ColumnSpacing="16" Margin="24,16,12,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{x:Bind Title}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="1" Text="{x:Bind Artist}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="2" Text="{x:Bind Album}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="3" Text="{x:Bind Duration}" FontSize="13" HorizontalAlignment="Right" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=False}">
+            <controls:ProgressRing IsActive="{x:Bind _viewModel.Loading,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
     </Grid>
 </Page>

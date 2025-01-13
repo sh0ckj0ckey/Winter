@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Winter.Models
+﻿namespace Winter.Models
 {
     /// <summary>
     /// 音乐库列表项
@@ -40,7 +34,7 @@ namespace Winter.Models
         /// 年份
         /// </summary>
         public uint Year { get; set; } = 0;
-        
+
         /// <summary>
         /// 编号
         /// </summary>

@@ -7,7 +7,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="APP_ACCENT_BK" Color="{ThemeResource SystemAccentColorLight2}"/>
-                    <!--<BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_dark.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -15,7 +14,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="APP_ACCENT_BK" Color="{ThemeResource SystemAccentColorDark1}"/>
-                    <!--<BitmapImage x:Key="ABOUT_GITHUB_IMG" UriSource="ms-appx:///Assets/Icon/icon_github_light.png" DecodePixelHeight="40" DecodePixelType="Logical"/>-->
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

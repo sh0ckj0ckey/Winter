@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Winter.Views.MusicPlaylistsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Winter.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Winter.Models"
+    mc:Ignorable="d" Background="Transparent" NavigationCacheMode="Required">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent"/>
+        <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent"/>
+        <SolidColorBrush x:Key="GridViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
+    </Page.Resources>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <GridView ItemsSource="{x:Bind _viewModel.Playlists,Mode=TwoWay}"
+                  ScrollViewer.HorizontalScrollMode="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ScrollViewer.VerticalScrollMode="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  ScrollViewer.IsHorizontalRailEnabled="True"
+                  IsItemClickEnabled="True" SelectionMode="None" Padding="12,0"
+                  CanDragItems="True" CanReorderItems="True" IsSwipeEnabled="False" AllowDrop="True">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:PlaylistItem">
+                    <Grid x:Name="CardGrid" CornerRadius="4" ToolTipService.ToolTip="{x:Bind Title,Mode=OneWay}"
+                          BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
+
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="TranslationName" Y="0"/>
+                        </Grid.RenderTransform>
+                        <Grid.Resources>
+                            <Storyboard x:Name="PointerOverStoryboard">
+                                <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="-4" Duration="0:0:0.4">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="PointerExitStoryboard">
+                                <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.2">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="PointerPressedStoryboard">
+                                <DoubleAnimation Storyboard.TargetName="TranslationName" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
+                                    <DoubleAnimation.EasingFunction>
+                                        <BackEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" CornerRadius="4,4,0,0" Height="128" Width="128">
+                            <Border.Background>
+                                <ImageBrush Stretch="UniformToFill">
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="{x:Bind Cover,Mode=OneWay}" DecodePixelType="Logical" DecodePixelHeight="256"/>
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Border.Background>
+                        </Border>
+                        <Grid Grid.Row="1" CornerRadius="0,0,4,4" Width="128">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Margin="6,2,6,0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
+                            <Run Text="{x:Bind Title,Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" Margin="6,0,6,4" FontSize="12" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
+                            <Run Text="共"/>
+                            <Run Text="{x:Bind Count,Mode=OneWay}" FontWeight="Medium"/>
+                            <Run Text="首歌"/>
+                            </TextBlock>
+                        </Grid>
+
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</Page>

@@ -6,30 +6,32 @@
     xmlns:local="using:Winter.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
-    xmlns:models="using:Winter.Models" 
-    xmlns:ctrl="using:Winter.Views.Controls"
-    mc:Ignorable="d" NavigationCacheMode="Required"
-    Loaded="Page_Loaded">
+    xmlns:community="using:CommunityToolkit.WinUI"
+    xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:views="using:Winter.Views"
+    mc:Ignorable="d" NavigationCacheMode="Required">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="340" MaxWidth="480"/>
+            <ColumnDefinition Width="*" MinWidth="340" MaxWidth="480"/>
             <ColumnDefinition Width="2.7*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!--标题栏-->
+            <!--Logo-->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="24,24,24,16" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Image Height="32" Width="32" VerticalAlignment="Center">
                     <Image.Source>
@@ -46,86 +48,25 @@
                 </TextBlock>
             </StackPanel>
 
-            <!--界面切换-->
-            <controls:Segmented Grid.Row="1" SelectedIndex="0" Margin="0,0,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <controls:SegmentedItem>
-                    <controls:SegmentedItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8D6;"/>
-                    </controls:SegmentedItem.Icon>
-                </controls:SegmentedItem>
-                <controls:SegmentedItem>
-                    <controls:SegmentedItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE90B;"/>
-                    </controls:SegmentedItem.Icon>
-                </controls:SegmentedItem>
-            </controls:Segmented>
-
-            <!--音量控制-->
-            <Button Grid.Row="1" Height="34" Width="38" Padding="0" Margin="18,0,0,0" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xE767;" FontSize="16" ToolTipService.ToolTip="音量" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Button.Flyout>
-                    <Flyout Placement="Right">
-                        <Grid Margin="-4,-12">
-                            <Slider Width="156" Maximum="100" Value="70" IsThumbToolTipEnabled="False"/>
-                        </Grid>
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
-
-            <!--正在播放-->
-            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <Border.Background>
-                        <ImageBrush Stretch="UniformToFill">
-                            <ImageBrush.ImageSource>
-                                <BitmapImage UriSource="/Assets/Test/cover.jpg" DecodePixelType="Logical" DecodePixelHeight="512"/>
-                            </ImageBrush.ImageSource>
-                        </ImageBrush>
-                    </Border.Background>
-                </Border>
-                <TextBlock Text="那年夏天宁静的海" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
-                <TextBlock Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
-            </StackPanel>
-
-            <!--进度条-->
-            <muxc:ProgressBar Grid.Row="3" Margin="0,0" Maximum="100" Value="70" Background="{ThemeResource ControlElevationBorderBrush}"/>
-
-            <!--控制栏-->
-            <Grid Grid.Row="4" MinHeight="96">
-                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xE8B1;" FontSize="16" ToolTipService.ToolTip="随机播放" Background="Transparent" BorderBrush="Transparent"/>
-                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xE622;" FontSize="14" ToolTipService.ToolTip="上一首" Background="Transparent" BorderBrush="Transparent"/>
-                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xF8AE;" FontSize="16" ToolTipService.ToolTip="暂停" Background="Transparent"/>
-                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xE623;" FontSize="14" ToolTipService.ToolTip="下一首" Background="Transparent" BorderBrush="Transparent"/>
-                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xE8EE;" FontSize="16" ToolTipService.ToolTip="循环" Background="Transparent" BorderBrush="Transparent"/>
-                </StackPanel>
-            </Grid>
+            <!--播放器-->
+            <views:MusicPlayerView Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
 
-        <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
-            <Border x:Name="SelectorBarNonClientAreaBorder" Background="Transparent" Width="256" Height="34" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}" community:UIElementExtensions.ClipToBounds="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <SelectorBar Margin="0,16,0,0" SelectionChanged="SelectorBar_SelectionChanged">
-                <SelectorBarItem Text="歌单" IsSelected="True"/>
-                <SelectorBarItem Text="音乐库" />
-                <SelectorBarItem Text="设置" />
-            </SelectorBar>
-            
-            <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False"/>
-            
-            <Pivot>
-                <PivotItem>
-                    <PivotItem.Header>
-                        <TextBlock Text="" FontWeight="Bold"/>
-                    </PivotItem.Header>
-                    <Border x:Name="PlaylistContainer" Grid.Row="0" Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                </PivotItem>
-                <PivotItem Header="">
-                    <Border x:Name="MusicLibraryContainer" Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                </PivotItem>
-                <PivotItem Header="">
-                    
-                </PivotItem>
-            </Pivot>
+            <!--页面导航-->
+            <communityControls:Segmented x:Name="MainNavSegmented" Grid.Row="0" Margin="12,18,4,0" SelectionMode="Single"
+                                         SelectionChanged="Segmented_SelectionChanged" Style="{StaticResource PivotSegmentedStyle}">
+                <communityControls:SegmentedItem Content="歌单" FontSize="24" FontWeight="Normal"/>
+                <communityControls:SegmentedItem Content="音乐库" FontSize="24" FontWeight="Normal"/>
+                <communityControls:SegmentedItem Content="设置" FontSize="24" FontWeight="Normal"/>
+            </communityControls:Segmented>
+
+            <Frame x:Name="MainFrame" Grid.Row="1" IsNavigationStackEnabled="False"/>
         </Grid>
     </Grid>
 </Page>

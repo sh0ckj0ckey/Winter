@@ -6,10 +6,99 @@
     xmlns:local="using:Winter.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d" Background="Transparent" NavigationCacheMode="Required">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--<Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,8,0,0" Height="1" Background="{ThemeResource ControlElevationBorderBrush}"/>-->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
+            <StackPanel Orientation="Vertical" Margin="16,20,20,0" Spacing="4">
+                <community:SettingsCard>
+                    <community:SettingsCard.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="72" Width="72" Margin="0,-4">
+                                <Image.Source>
+                                    <BitmapImage DecodePixelHeight="144" DecodePixelType="Logical" UriSource="ms-appx:///Assets/Icon/Winter_full.png"/>
+                                </Image.Source>
+                            </Image>
+                            <StackPanel Margin="12,0,0,0" Spacing="0" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="晚听" FontSize="16" FontWeight="Bold"/>
+                                <TextBlock Text="本地音乐播放器" FontSize="12" Opacity="0.7"/>
+                                <TextBlock Text="{x:Bind _appVersion}" FontSize="12" Opacity="0.5"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </community:SettingsCard.Header>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="GoToStoreButton_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock Text="🌸" FontSize="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="打分评价" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </community:SettingsCard>
+                <TextBlock Text="个性化" Margin="4,12,0,6" FontWeight="Bold" FontSize="16"/>
+                <community:SettingsCard Header="主题" Description="选择 &quot;晚听&quot; 的外观">
+                    <community:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE771;"/>
+                    </community:SettingsCard.HeaderIcon>
+                    <ComboBox x:Name="ThemeComboBox" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128"
+                              SelectedIndex="{x:Bind _settingsService.AppearanceIndex,Mode=TwoWay}">
+                        <ComboBoxItem Content="跟随系统"/>
+                        <ComboBoxItem Content="深色"/>
+                        <ComboBoxItem Content="浅色"/>
+                    </ComboBox>
+                </community:SettingsCard>
+                <community:SettingsCard Header="背景" Description="选择 &quot;晚听&quot; 的背景材质">
+                    <community:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE727;"/>
+                    </community:SettingsCard.HeaderIcon>
+                    <ComboBox x:Name="BackdropComboBox" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128"
+                              SelectedIndex="{x:Bind _settingsService.BackdropIndex,Mode=TwoWay}">
+                        <ComboBoxItem Content="云母"/>
+                        <ComboBoxItem Content="亚克力"/>
+                    </ComboBox>
+                </community:SettingsCard>
+                <TextBlock Text="关于" Margin="4,12,0,6" FontWeight="Bold" FontSize="16"/>
+                <community:SettingsCard Header="与我联系" Description="如果您遇到问题或有任何建议">
+                    <community:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xED15;"/>
+                    </community:SettingsCard.HeaderIcon>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Height="34">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Image Width="20" Height="20" Margin="0,0,0,0">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="ms-appx:///Assets/Icon/icon_mail.png" DecodePixelHeight="40" DecodePixelType="Logical"/>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock Text="发送邮件" VerticalAlignment="Center" FontSize="13" Margin="8,0,2,0"/>
+                            </StackPanel>
+                            <Button.Flyout>
+                                <Flyout>
+                                    <HyperlinkButton NavigateUri="mailto:yaoyiming123@live.com">
+                                        <TextBlock FontWeight="Medium" Text="yaoyiming123@live.com"/>
+                                    </HyperlinkButton>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
+                </community:SettingsCard>
+                <community:SettingsCard Header="源代码" Description="前往 GitHub 查看源代码">
+                    <community:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE943;"/>
+                    </community:SettingsCard.HeaderIcon>
+                    <Button Height="34" Click="GitHubButton_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <BitmapIcon UriSource="ms-appx:///Assets/Icon/icon_github.png" Width="20" ShowAsMonochrome="True"/>
+                            <TextBlock Text="GitHub 存储库" VerticalAlignment="Center" FontSize="13" Margin="8,0,2,0"/>
+                        </StackPanel>
+                    </Button>
+                </community:SettingsCard>
+                <TextBlock Text="© NoMewing." Opacity="0.5" FontFamily="Consolas" FontSize="13" Margin="4,4,0,8"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

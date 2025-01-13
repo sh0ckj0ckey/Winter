@@ -1,4 +1,5 @@
 using System;
+using CommunityToolkit.WinUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -8,8 +9,6 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Windows.Foundation;
 using Winter.Services;
 using Winter.Services.Interfaces;
-using Winter.ViewModels;
-using Winter.Views.Controls;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -22,60 +21,63 @@ namespace Winter.Views
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MainViewModel? MainViewModel = null;
-
-        private ContentDialog? _tipsContentDialog = null;
-
-        int _previousSelectedIndex = 0;
+        private int _previousSelectedIndex = 0;
 
         public MainPage()
         {
-            MainViewModel = MainViewModel.Instance;
-
             if (App.Current.Services.GetService<IContentDialogService>() is ContentDialogService contentDialogService)
             {
                 contentDialogService.XamlRootGetter = () => this.XamlRoot;
                 contentDialogService.ElementThemeGetter = () => this.RequestedTheme;
             }
 
+            this.Loaded += (_, _) =>
+            {
+                // 设置标题栏允许交互的区域
+                SetNonClientArea();
+
+                // 导航至默认页面
+                MainNavSegmented.SelectedIndex = 0;
+            };
+
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Segmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PlaylistContainer.Child = new PlaylistsControl(MainViewModel!.PlaylistsVM);
-            MusicLibraryContainer.Child = new MusicLibraryControl(MainViewModel!.MusicLibraryVM);
-
-            SetNonClientArea();
-        }
-
-        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            SelectorBarItem selectedItem = sender.SelectedItem;
-            int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
-            Type pageType = currentSelectedIndex switch
+            if (sender is Segmented segmented)
             {
-                1 => typeof(MusicLibraryPage),
-                2 => typeof(SettingsPage),
-                _ => typeof(PlaylistsPage),
-            };
+                int selectedIndex = segmented.SelectedIndex;
+                Type pageType = selectedIndex switch
+                {
+                    0 => typeof(MusicPlaylistsPage),
+                    1 => typeof(MusicLibraryPage),
+                    2 => typeof(SettingsPage),
+                    _ => typeof(MusicPlaylistsPage)
+                };
 
-            var slideNavigationTransitionEffect = currentSelectedIndex - _previousSelectedIndex > 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
+                var slideNavigationTransitionEffect = selectedIndex - _previousSelectedIndex >= 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
 
-            ContentFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
+                MainFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
 
-            _previousSelectedIndex = currentSelectedIndex;
+                _previousSelectedIndex = selectedIndex;
+            }
         }
 
         private void SetNonClientArea()
         {
             try
             {
-                Window window = App.MainWindow;
+                if (App.Current.MainWindow is null)
+                {
+                    throw new InvalidOperationException("Main window is not initialized");
+                }
+
+                Window window = App.Current.MainWindow;
                 var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
 
-                GeneralTransform transformTxtBox = SelectorBarNonClientAreaBorder.TransformToVisual(null);
-                Rect bounds = transformTxtBox.TransformBounds(new Rect(0, 0, SelectorBarNonClientAreaBorder.ActualWidth, SelectorBarNonClientAreaBorder.ActualHeight));
+                GeneralTransform transformTxtBox = MainNavSegmented.TransformToVisual(null);
+                Rect bounds = transformTxtBox.TransformBounds(new Rect(0, 0, MainNavSegmented.ActualWidth, MainNavSegmented.ActualHeight));
 
                 float scale = (float)HwndExtensions.GetDpiForWindow(window.GetWindowHandle()) / 96f;
 
@@ -94,5 +96,6 @@ namespace Winter.Views
                 System.Diagnostics.Trace.WriteLine(ex.Message);
             }
         }
+
     }
 }

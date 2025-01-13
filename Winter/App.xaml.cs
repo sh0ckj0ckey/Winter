@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
-using Winter.Helpers;
 using Winter.Services;
 using Winter.Services.Interfaces;
 using Winter.ViewModels;
@@ -17,6 +16,8 @@ namespace Winter
     /// </summary>
     public partial class App : Application
     {
+        private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
+
         /// <summary>
         /// Gets the current <see cref="App"/> instance in use
         /// </summary>
@@ -27,7 +28,7 @@ namespace Winter
         /// </summary>
         public IServiceProvider Services { get; }
 
-        public MainWindow MainWindow { get; } = new MainWindow();
+        public MainWindow? MainWindow { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -36,6 +37,8 @@ namespace Winter
         public App()
         {
             Services = ConfigureServices();
+
+            _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
             this.InitializeComponent();
 
@@ -54,8 +57,9 @@ namespace Winter
             return new ServiceCollection()
                 .AddSingleton<IContentDialogService, ContentDialogService>()
                 .AddSingleton<ISettingsService, SettingsService>()
-                .AddSingleton<PlaylistsViewModel>()
-                .AddSingleton<MusicLibraryViewModel>()
+                .AddSingleton<MusicPlayerViewModel>()
+                .AddTransient<MusicPlaylistsViewModel>()
+                .AddTransient<MusicLibraryViewModel>()
                 .BuildServiceProvider();
         }
 
@@ -66,16 +70,17 @@ namespace Winter
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            MainWindow = new MainWindow();
             MainWindow.Activate();
         }
 
         public void ShowMainWindow()
         {
-            Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread().TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
-                MainWindow.Restore();
-                MainWindow.BringToFront();
-                MainWindow.Activate();
+                MainWindow?.Restore();
+                MainWindow?.BringToFront();
+                MainWindow?.Activate();
             });
         }
     }
