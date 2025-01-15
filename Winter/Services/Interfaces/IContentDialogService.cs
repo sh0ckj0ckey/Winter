@@ -2,7 +2,7 @@
 
 namespace Winter.Services.Interfaces
 {
-    interface IContentDialogService
+    public interface IContentDialogService
     {
         Task ShowDialogAsync(string title, string content, string closeButtonText);
     }

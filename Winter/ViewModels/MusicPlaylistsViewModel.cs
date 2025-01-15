@@ -1,105 +1,85 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Winter.Models;
+using Winter.Models.MusicLibrary;
+using Winter.Services;
+using Winter.Services.Interfaces;
 
 namespace Winter.ViewModels
 {
-    public class MusicPlaylistsViewModel
+    public class MusicPlaylistsViewModel : ObservableObject
     {
-        /// <summary>
-        /// 正在播放的音乐列表
-        /// </summary>
-        public ObservableCollection<PlayingItem> PlayingList { get; set; } = new()
-        {
-            new PlayingItem()
-            {
-                Title = "第一次爱的人",
-                Duration = 233,
-                Artist = "王心凌",
-                Album = "爱你",
-            },
-            new PlayingItem()
-            {
-                Title = "原来这才是真的你",
-                Duration = 263,
-                Artist = "王心凌",
-                Album = "Magic Cyndi",
-            },
-            new PlayingItem()
-            {
-                Title = "我很好，那么你呢？",
-                Duration = 233,
-                Artist = "王心凌",
-                Album = "心电心",
-            },
-            new PlayingItem()
-            {
-                Title = "下一页的我",
-                Duration = 349,
-                Artist = "王心凌",
-                Album = "黏黏黏黏",
-            },
-            new PlayingItem()
-            {
-                Title = "忘了我也不错",
-                Duration = 269,
-                Artist = "王心凌",
-                Album = "爱不爱",
-            },
-            new PlayingItem()
-            {
-                Title = "從未到過的地方",
-                Duration = 233,
-                Artist = "王心凌",
-                Album = "第十个王心凌",
-            },
-            new PlayingItem()
-            {
-                Title = "在青春迷失的咖啡館",
-                Duration = 217,
-                Artist = "王心凌",
-                Album = "CYNDILOVES2SING",
-            },
-            new PlayingItem()
-            {
-                Title = "最想你的",
-                Duration = 258,
-                Artist = "王心凌",
-                Album = "BITE BACK",
-            },
-        };
+        private readonly IMusicPlaylistsService _musicPlaylistsService;
 
-        public ObservableCollection<PlaylistItem> Playlists { get; set; } = new()
+        private bool _loading = false;
+
+        /// <summary>
+        /// 是否正在加载歌单列表
+        /// </summary>
+        public bool Loading
         {
-            new PlaylistItem()
+            get => _loading;
+            private set => SetProperty(ref _loading, value);
+        }
+
+        /// <summary>
+        /// 歌单列表
+        /// </summary>
+        public ObservableCollection<LibraryPlaylistItem> Playlists { get; } = new();
+
+        public MusicPlaylistsViewModel(IMusicPlaylistsService musicPlaylistsService)
+        {
+            _musicPlaylistsService = musicPlaylistsService;
+        }
+
+        public async void LoadMusicPlaylists()
+        {
+            this.Loading = true;
+            
+            try
             {
-                Title = "爱你",
-                Cover = "ms-appx:///Assets/Test/1.jpg",
-                Count = 18,
-            },
-            new PlaylistItem()
+                await _musicPlaylistsService.LoadMusicPlaylistsAsync();
+            }
+            catch (Exception ex)
             {
-                Title = "Magic Cyndi",
-                Cover = "ms-appx:///Assets/Test/2.jpg",
-                Count = 25,
-            },
-            new PlaylistItem()
+                Trace.WriteLine(ex);
+            }
+            finally
             {
-                Title = "心电心",
-                Cover = "ms-appx:///Assets/Test/3.jpg",
-                Count = 12,
-            },
-            new PlaylistItem()
+                this.Loading = false;
+
+                GroupPlaylistsByTitle();
+            }
+        }
+
+        private void GroupPlaylistsByTitle()
+        {
+            try
             {
-                Title = "爱不爱",
-                Cover = "ms-appx:///Assets/Test/5.jpg",
-                Count = 21,
-            },
-            new PlaylistItem()
+                if (this.Loading)
+                {
+                    return;
+                }
+
+                this.Playlists.Clear();
+
+                var allPlaylists = _musicPlaylistsService.GetAllPlaylistItems();
+
+                // 按照首字母分组
+                var orderedByPinyinList = allPlaylists.OrderBy(x => x.TitleFirstLetter).ToList();
+
+                foreach (var item in orderedByPinyinList)
+                {
+                    this.Playlists.Add(item);
+                }
+            }
+            catch (Exception ex)
             {
-                Title = "CYNDILOVES2SING",
-                Cover = "ms-appx:///Assets/Test/7.jpg",
-                Count = 15,
-            },
-        };
+                Trace.WriteLine(ex);
+            }
+        }
     }
 }

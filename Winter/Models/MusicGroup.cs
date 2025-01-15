@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Winter.Models.MusicLibrary;
 
 namespace Winter.Models
 {
@@ -12,6 +13,6 @@ namespace Winter.Models
         /// <summary>
         /// 分组音乐
         /// </summary>
-        public ObservableCollection<MusicItem> GroupedMusic { get; set; } = new();
+        public ObservableCollection<LibraryMusicItem> GroupedMusic { get; set; } = new();
     }
 }

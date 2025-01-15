@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Winter.Services.Interfaces
 {
-    interface ISettingsService : INotifyPropertyChanged
+    public interface ISettingsService : INotifyPropertyChanged
     {
         event EventHandler<int>? AppearanceSettingChanged;
 

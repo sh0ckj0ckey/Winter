@@ -1,48 +1,53 @@
-﻿namespace Winter.Models
+﻿namespace Winter.Models.MusicLibrary
 {
     /// <summary>
-    /// 音乐库列表项
+    /// 音乐库音乐项
     /// </summary>
-    public class MusicItem
+    public class LibraryMusicItem
     {
         /// <summary>
-        /// 标题
+        /// 音乐标题首字母
+        /// </summary>
+        public string TitleFirstLetter { get; set; } = "#";
+
+        /// <summary>
+        /// 音乐文件路径
+        /// </summary>
+        public string MusicFilePath { get; set; } = "";
+
+        /// <summary>
+        /// 音乐标题
         /// </summary>
         public string Title { get; set; } = "";
 
         /// <summary>
-        /// 艺术家
+        /// 参与艺术家
         /// </summary>
         public string Artist { get; set; } = "";
 
         /// <summary>
-        /// 专辑
+        /// 所属专辑标题
         /// </summary>
         public string Album { get; set; } = "";
 
         /// <summary>
-        /// 专辑艺术家
+        /// 所属专辑艺术家
         /// </summary>
         public string AlbumArtist { get; set; } = "";
 
         /// <summary>
-        /// 时长
+        /// 音乐时长
         /// </summary>
         public string Duration { get; set; } = "";
 
         /// <summary>
-        /// 年份
+        /// 音乐年份
         /// </summary>
         public uint Year { get; set; } = 0;
 
         /// <summary>
-        /// 编号
+        /// 音乐编号
         /// </summary>
         public uint TrackNumber { get; set; }
-
-        /// <summary>
-        /// 名称首字母
-        /// </summary>
-        public string FirstLetter { get; set; } = "#";
     }
 }

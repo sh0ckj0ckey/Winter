@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Microsoft.International.Converters.PinYinConverter;
 
 namespace Winter.Helpers
@@ -10,9 +9,13 @@ namespace Winter.Helpers
        Npinyin很人性，很不错的第三方库，在传统多音字前优先使用率较高的，但在生僻字面前有点无法转换。（GetInitials(strChinese)  有Bug  如【洺】无法识别，但GetPinyin可以正常转换。）
        总结：优先Npinyin  翻译失败的使用微软PinYinConverter。目测完美。
     */
-    public class PinyinHelper
+    public partial class PinyinHelper
     {
-        private static Encoding gb2312 = Encoding.GetEncoding("GB2312");
+        [GeneratedRegex("^[0-9]")]
+        private static partial Regex NumberRegex();
+
+        [GeneratedRegex("^[a-zA-Z]")]
+        private static partial Regex LetterRegex();
 
         /// <summary>
         /// 取第一个字的首字母
@@ -31,13 +34,13 @@ namespace Winter.Helpers
                 strChinese = strChinese.Trim();
 
                 // 数字
-                if (Regex.IsMatch(strChinese, "^[0-9]"))
+                if (NumberRegex().IsMatch(strChinese))
                 {
                     return "#";
                 }
 
                 // 英文
-                if (Regex.IsMatch(strChinese.Trim(), "^[a-zA-Z]"))
+                if (LetterRegex().IsMatch(strChinese.Trim()))
                 {
                     return strChinese.ToUpper()[0].ToString();
                 }

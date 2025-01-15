@@ -9,7 +9,8 @@
     xmlns:controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:community="using:CommunityToolkit.WinUI.Controls" 
     xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:models="using:Winter.Models" 
+    xmlns:libraryModels="using:Winter.Models.MusicLibrary" 
+    xmlns:models="using:Winter.Models"
     mc:Ignorable="d" Background="Transparent" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -48,10 +49,10 @@
                 <Grid.Resources>
                     <CollectionViewSource x:Name="GroupedMusicCollectionViewSource" Source="{x:Bind _viewModel.GroupedMusic,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="GroupedMusic"/>
                 </Grid.Resources>
-                <controls:SemanticZoom>
-                    <controls:SemanticZoom.ZoomedInView>
+                <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <SemanticZoom.ZoomedInView>
                         <ListView x:Name="GroupedMusicList" Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                               ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}">
+                                  ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}">
                             <ListView.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.HeaderTemplate>
@@ -62,7 +63,7 @@
                                 </GroupStyle>
                             </ListView.GroupStyle>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:MusicItem">
+                                <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
                                     <Grid ColumnSpacing="16" Margin="24,16,12,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="4*"/>
@@ -78,18 +79,18 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </controls:SemanticZoom.ZoomedInView>
-                    <controls:SemanticZoom.ZoomedOutView>
+                    </SemanticZoom.ZoomedInView>
+                    <SemanticZoom.ZoomedOutView>
                         <ListView Padding="2,8,4,8" ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View.CollectionGroups,Mode=OneWay}"
-                               SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                  SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="ICollectionViewGroup">
                                     <TextBlock Text="{x:Bind Group.(models:MusicGroup.Key)}" FontWeight="Medium" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </controls:SemanticZoom.ZoomedOutView>
-                </controls:SemanticZoom>
+                    </SemanticZoom.ZoomedOutView>
+                </SemanticZoom>
             </Grid>
 
             <Grid Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -110,7 +111,7 @@
                         </GroupStyle>
                     </ListView.GroupStyle>
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:MusicItem">
+                        <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
                             <Grid ColumnSpacing="16" Margin="24,16,12,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*"/>

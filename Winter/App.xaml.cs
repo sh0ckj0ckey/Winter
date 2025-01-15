@@ -57,6 +57,8 @@ namespace Winter
             return new ServiceCollection()
                 .AddSingleton<IContentDialogService, ContentDialogService>()
                 .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton<IMusicLibraryService, MusicLibraryService>()
+                .AddSingleton<IMusicPlaylistsService, MusicPlaylistsService>()
                 .AddSingleton<MusicPlayerViewModel>()
                 .AddTransient<MusicPlaylistsViewModel>()
                 .AddTransient<MusicLibraryViewModel>()

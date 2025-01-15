@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Winter.Models.MusicLibrary;
 
 namespace Winter.Models
 {
@@ -34,6 +35,6 @@ namespace Winter.Models
         /// <summary>
         /// 音乐
         /// </summary>
-        public ObservableCollection<MusicItem> Music { get; set; } = new();
+        public ObservableCollection<LibraryMusicItem> Music { get; set; } = new();
     }
 }

@@ -19,6 +19,8 @@ namespace Winter.Views
             _viewModel = App.Current.Services.GetRequiredService<MusicPlaylistsViewModel>();
 
             this.InitializeComponent();
+
+            _viewModel.LoadMusicPlaylists();
         }
     }
 }

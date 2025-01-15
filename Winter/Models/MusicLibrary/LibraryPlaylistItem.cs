@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media.Imaging;
+
+namespace Winter.Models.MusicLibrary
+{
+    public class LibraryPlaylistItem
+    {
+        /// <summary>
+        /// 播放列表标题首字母
+        /// </summary>
+        public string TitleFirstLetter { get; set; } = "#";
+
+        /// <summary>
+        /// 播放列表标题
+        /// </summary>
+        public string Title { get; set; } = "";
+
+        /// <summary>
+        /// 播放列表文件路径
+        /// </summary>
+        public string PlaylistFilePath { get; set; } = "";
+
+        /// <summary>
+        /// 播放列表中的音乐路径
+        /// </summary>
+        public List<string> MusicFilePaths { get; set; } = [];
+
+        /// <summary>
+        /// 播放列表封面
+        /// </summary>
+        public BitmapImage? PlaylistMainCover { get; set; } = null;
+
+        /// <summary>
+        /// 播放列表第二封面
+        /// </summary>
+        public BitmapImage? PlaylistSecondaryCover { get; set; } = null;
+
+        /// <summary>
+        /// 播放列表第三封面
+        /// </summary>
+        public BitmapImage? PlaylistTertiaryCover { get; set; } = null;
+    }
+}
