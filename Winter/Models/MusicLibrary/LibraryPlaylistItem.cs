@@ -10,11 +10,6 @@ namespace Winter.Models.MusicLibrary
     public class LibraryPlaylistItem
     {
         /// <summary>
-        /// 播放列表标题首字母
-        /// </summary>
-        public string TitleFirstLetter { get; set; } = "#";
-
-        /// <summary>
         /// 播放列表标题
         /// </summary>
         public string Title { get; set; } = "";

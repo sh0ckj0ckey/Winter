@@ -50,6 +50,6 @@ namespace Winter.Services.Interfaces
         /// </summary>
         /// <param name="path">音乐文件路径</param>
         /// <returns></returns>
-        LibraryMusicItem? GetMusicItemByPath(string path);
+        Task<LibraryMusicItem?> GetMusicItemByPathAsync(string path);
     }
 }

@@ -17,10 +17,7 @@ namespace Winter.Views
         public MusicLibraryPage()
         {
             _viewModel = App.Current.Services.GetRequiredService<MusicLibraryViewModel>();
-
             this.InitializeComponent();
-
-            _viewModel.LoadMusicLibrary();
         }
     }
 }

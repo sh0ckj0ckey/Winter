@@ -60,8 +60,8 @@ namespace Winter
                 .AddSingleton<IMusicLibraryService, MusicLibraryService>()
                 .AddSingleton<IMusicPlaylistsService, MusicPlaylistsService>()
                 .AddSingleton<MusicPlayerViewModel>()
-                .AddTransient<MusicPlaylistsViewModel>()
-                .AddTransient<MusicLibraryViewModel>()
+                .AddSingleton<MusicPlaylistsViewModel>()
+                .AddSingleton<MusicLibraryViewModel>()
                 .BuildServiceProvider();
         }
 
@@ -74,6 +74,9 @@ namespace Winter
         {
             MainWindow = new MainWindow();
             MainWindow.Activate();
+
+            Services.GetRequiredService<MusicLibraryViewModel>().LoadMusicLibrary();
+            Services.GetRequiredService<MusicPlaylistsViewModel>().LoadMusicPlaylists();
         }
 
         public void ShowMainWindow()

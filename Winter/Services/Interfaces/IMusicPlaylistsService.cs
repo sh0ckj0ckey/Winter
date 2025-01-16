@@ -26,6 +26,6 @@ namespace Winter.Services.Interfaces
         /// </summary>
         /// <param name="path">播放列表文件路径</param>
         /// <returns></returns>
-        LibraryPlaylistItem? GetPlaylistItemByPath(string path);
+        Task<LibraryPlaylistItem?> GetPlaylistItemByPathAsync(string path);
     }
 }

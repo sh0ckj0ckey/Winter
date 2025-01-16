@@ -69,7 +69,7 @@ namespace Winter.ViewModels
                 var allPlaylists = _musicPlaylistsService.GetAllPlaylistItems();
 
                 // 按照首字母分组
-                var orderedByPinyinList = allPlaylists.OrderBy(x => x.TitleFirstLetter).ToList();
+                var orderedByPinyinList = allPlaylists.OrderBy(x => x.Title).ToList();
 
                 foreach (var item in orderedByPinyinList)
                 {

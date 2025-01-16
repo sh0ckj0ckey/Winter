@@ -86,7 +86,6 @@ namespace Winter.ViewModels
             finally
             {
                 this.Loading = false;
-
                 if (this.GroupType == 0)
                 {
                     GroupMusicByTitle();

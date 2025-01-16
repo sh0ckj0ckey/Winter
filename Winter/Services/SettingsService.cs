@@ -9,6 +9,7 @@ namespace Winter.Services
     public class SettingsService : ObservableObject, ISettingsService
     {
         private const string SETTING_NAME_APPEARANCE_INDEX = "AppearanceIndex";
+
         private const string SETTING_NAME_BACKDROP_INDEX = "BackdropIndex";
 
         private ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
