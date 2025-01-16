@@ -38,6 +38,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0" MinWidth="120">
                                     <Border Grid.Column="0" CornerRadius="4" Height="80" Width="80" Margin="32,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -80,12 +81,17 @@
                                         <TextBlock FontSize="15" Text="首歌"/>
                                     </StackPanel>
                                 </Grid>
-                                <!--<Button Grid.Column="2" Padding="12,8" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Button Grid.Column="2" Padding="12,0" Height="42" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <TextBlock Text="&#xE102;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
-                                        <TextBlock Text="播放歌单" VerticalAlignment="Center"/>
+                                        <TextBlock Text="播放歌单" Visibility="Visible" VerticalAlignment="Center"/>
                                     </StackPanel>
-                                </Button>-->
+                                </Button>
+                                <Button Grid.Column="3" Margin="4,0,4,0" Padding="12,0" Height="42" Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="&#xE10C;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </Button>
                     </DataTemplate>
