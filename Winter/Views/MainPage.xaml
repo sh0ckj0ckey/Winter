@@ -38,7 +38,7 @@
                         <BitmapImage UriSource="/Assets/Icon/winter.png" DecodePixelType="Logical" DecodePixelHeight="64"/>
                     </Image.Source>
                 </Image>
-                <TextBlock Text="晚听" FontSize="20" FontWeight="Bold" VerticalAlignment="Center">
+                <TextBlock Text="Winter" FontSize="20" FontWeight="Bold" VerticalAlignment="Center">
                     <TextBlock.Foreground>
                         <LinearGradientBrush>
                             <GradientStop Color="#EF63A5" Offset="0"/>
