@@ -60,6 +60,12 @@
                         <ComboBoxItem Content="亚克力"/>
                     </ComboBox>
                 </community:SettingsCard>
+                <!--<TextBlock Text="库" Margin="4,12,0,6" FontWeight="Bold" FontSize="16"/>
+                <community:SettingsExpander Header="音乐库位置" Description="指定加载音乐列表的位置">
+                    <community:SettingsExpander.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8F1;"/>
+                    </community:SettingsExpander.HeaderIcon>
+                </community:SettingsExpander>-->
                 <TextBlock Text="关于" Margin="4,12,0,6" FontWeight="Bold" FontSize="16"/>
                 <community:SettingsCard Header="与我联系" Description="如果您遇到问题或有任何建议">
                     <community:SettingsCard.HeaderIcon>
