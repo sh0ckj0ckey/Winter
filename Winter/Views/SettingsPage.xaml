@@ -26,7 +26,7 @@
                                 </Image.Source>
                             </Image>
                             <StackPanel Margin="14,0,0,0" Spacing="0" Orientation="Vertical" VerticalAlignment="Center">
-                                <TextBlock Text="晚听" FontSize="17" FontWeight="Bold"/>
+                                <TextBlock Text="冻听" FontSize="17" FontWeight="Bold"/>
                                 <TextBlock Text="{x:Bind _appVersion}" FontSize="13" Opacity="0.5" FontFamily="Consolas"/>
                             </StackPanel>
                         </StackPanel>
@@ -39,7 +39,7 @@
                     </Button>
                 </community:SettingsCard>
                 <TextBlock Text="个性化" Margin="4,12,0,6" FontWeight="Bold" FontSize="16"/>
-                <community:SettingsCard Header="主题" Description="选择 &quot;晚听&quot; 的外观">
+                <community:SettingsCard Header="主题" Description="选择 &quot;冻听&quot; 的外观">
                     <community:SettingsCard.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE771;"/>
                     </community:SettingsCard.HeaderIcon>
@@ -50,7 +50,7 @@
                         <ComboBoxItem Content="浅色"/>
                     </ComboBox>
                 </community:SettingsCard>
-                <community:SettingsCard Header="背景" Description="选择 &quot;晚听&quot; 的背景材质">
+                <community:SettingsCard Header="背景" Description="选择 &quot;冻听&quot; 的背景材质">
                     <community:SettingsCard.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE727;"/>
                     </community:SettingsCard.HeaderIcon>
@@ -102,7 +102,7 @@
                         </StackPanel>
                     </Button>
                 </community:SettingsCard>
-                <TextBlock Text="© NoMewing." Opacity="0.5" FontFamily="Consolas" FontSize="13" Margin="4,4,0,8"/>
+                <TextBlock Text="©2025 NoMewing." Opacity="0.5" FontFamily="Consolas" FontSize="13" Margin="4,4,0,8"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
