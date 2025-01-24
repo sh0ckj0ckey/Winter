@@ -23,16 +23,16 @@ namespace Winter.Models.MusicLibrary
         /// <summary>
         /// 播放列表封面
         /// </summary>
-        public BitmapImage? PlaylistMainCover { get; set; } = null;
+        public AsyncCoverImage PlaylistMainCover { get; set; } = new();
 
         /// <summary>
         /// 播放列表第二封面
         /// </summary>
-        public BitmapImage? PlaylistSecondaryCover { get; set; } = null;
+        public AsyncCoverImage PlaylistSecondaryCover { get; set; } = new();
 
         /// <summary>
         /// 播放列表第三封面
         /// </summary>
-        public BitmapImage? PlaylistTertiaryCover { get; set; } = null;
+        public AsyncCoverImage PlaylistTertiaryCover { get; set; } = new();
     }
 }

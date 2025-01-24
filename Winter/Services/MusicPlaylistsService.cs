@@ -157,43 +157,34 @@ namespace Winter.Services
             };
 
             // 获取封面图
-            var coverImages = new List<BitmapImage>();
-            foreach (var musicFilePath in musicFilePaths)
+            int coverIndex = 0;
+            for (; coverIndex < musicFilePaths.Count; coverIndex++)
             {
-                try
+                if (playlistItem.PlaylistMainCover.Image is not null)
                 {
-                    if (coverImages.Count >= 3)
-                    {
-                        break;
-                    }
-
-                    uint imageSize = coverImages.Count switch
-                    {
-                        0 => 96 * 2,
-                        1 => 88 * 2,
-                        2 => 80 * 2,
-                        _ => 96 * 2
-                    };
-
-                    var musicFile = await StorageFile.GetFileFromPathAsync(musicFilePath);
-                    var thumbnail = await musicFile.GetThumbnailAsync(ThumbnailMode.MusicView, imageSize, ThumbnailOptions.UseCurrentScale);
-
-                    if (thumbnail is not null && thumbnail.Type != ThumbnailType.Icon)
-                    {
-                        var bitmapImage = new BitmapImage();
-                        await bitmapImage.SetSourceAsync(thumbnail);
-                        coverImages.Add(bitmapImage);
-                    }
+                    break;
                 }
-                catch
-                {
-                    // ignored
-                }
+
+                await playlistItem.PlaylistMainCover.LoadCoverImageFromPath(musicFilePaths[coverIndex], 96 * 2);
             }
+            for (; coverIndex < musicFilePaths.Count; coverIndex++)
+            {
+                if (playlistItem.PlaylistSecondaryCover.Image is not null)
+                {
+                    break;
+                }
 
-            playlistItem.PlaylistMainCover = coverImages.ElementAtOrDefault(0);
-            playlistItem.PlaylistSecondaryCover = coverImages.ElementAtOrDefault(1);
-            playlistItem.PlaylistTertiaryCover = coverImages.ElementAtOrDefault(2);
+                await playlistItem.PlaylistSecondaryCover.LoadCoverImageFromPath(musicFilePaths[coverIndex], 88 * 2);
+            }
+            for (; coverIndex < musicFilePaths.Count; coverIndex++)
+            {
+                if (playlistItem.PlaylistTertiaryCover.Image is not null)
+                {
+                    break;
+                }
+
+                await playlistItem.PlaylistTertiaryCover.LoadCoverImageFromPath(musicFilePaths[coverIndex], 80 * 2);
+            }
 
             return playlistItem;
         }

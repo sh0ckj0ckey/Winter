@@ -44,6 +44,10 @@
             </community:SegmentedItem>
         </community:Segmented>
 
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ComboBox MinWidth="96" Margin="24,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </StackPanel>
+        
         <Grid Grid.Row="1" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
             <Grid Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan2ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Resources>

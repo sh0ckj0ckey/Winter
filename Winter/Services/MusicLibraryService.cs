@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
@@ -51,54 +52,52 @@ namespace Winter.Services
             //    }
             //}));
 
-            List<LibraryMusicItem?> musicItems = [];
-            foreach (var file in files)
-            {
-                try
-                {
-                    musicItems.Add(await LoadMusicFromFileAsync(file));
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-            }
-
             _allMusicItems.Clear();
             _allAlbumItems.Clear();
             _pathToMusicItem.Clear();
 
-            if (musicItems is null)
+            foreach (var file in files)
             {
-                return;
-            }
-
-            foreach (var musicItem in musicItems)
-            {
-                if (musicItem is null)
+                try
                 {
-                    continue;
-                }
+                    var musicItem = await LoadMusicFromFileAsync(file);
 
-                _allMusicItems.Add(musicItem);
-                _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
-
-                if (!string.IsNullOrWhiteSpace(musicItem.Album))
-                {
-                    var album = _allAlbumItems.FirstOrDefault(albumItem => albumItem.Title == musicItem.Album && albumItem.AlbumArtist == musicItem.AlbumArtist);
-                    if (album is null)
+                    if (musicItem is null)
                     {
-                        _allAlbumItems.Add(new LibraryAlbumItem
+                        continue;
+                    }
+
+                    _allMusicItems.Add(musicItem);
+                    _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
+
+                    if (!string.IsNullOrWhiteSpace(musicItem.Album))
+                    {
+                        var album = _allAlbumItems.FirstOrDefault(albumItem => albumItem.Title == musicItem.Album && albumItem.AlbumArtist == musicItem.AlbumArtist);
+                        if (album is null)
                         {
-                            Title = musicItem.Album,
-                            AlbumArtist = musicItem.AlbumArtist,
-                            Year = musicItem.Year
-                        });
+                            album = new LibraryAlbumItem
+                            {
+                                Title = musicItem.Album,
+                                AlbumArtist = musicItem.AlbumArtist,
+                                Year = musicItem.Year
+                            };
+
+                            _allAlbumItems.Add(album);
+                        }
+                        else
+                        {
+                            album.Year = Math.Max(album.Year, musicItem.Year);
+                        }
+
+                        if (album.AlbumCover.Image is null)
+                        {
+                            _ = album.AlbumCover.LoadCoverImageFromFile(file, 96 * 2);
+                        }
                     }
-                    else
-                    {
-                        album.Year = Math.Max(album.Year, musicItem.Year);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             }
 
@@ -162,5 +161,6 @@ namespace Winter.Services
 
             return musicItem;
         }
+
     }
 }

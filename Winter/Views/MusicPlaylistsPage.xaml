@@ -124,25 +124,25 @@
                                 </Grid>
                                 <Grid Grid.Column="1" MinWidth="120" HorizontalAlignment="Right" VerticalAlignment="Center">
                                     <Border Grid.Column="0" CornerRadius="4" Height="80" Width="80" Margin="32,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                            community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistTertiaryCover,Converter={StaticResource NullToVisibilityConverter}}">
+                                            community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistTertiaryCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter}}">
                                         <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistTertiaryCover}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistTertiaryCover.Image,Mode=OneWay}"/>
                                         </Border.Background>
                                     </Border>
                                     <Border Grid.Column="0" CornerRadius="4" Height="88" Width="88" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                            community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistSecondaryCover,Converter={StaticResource NullToVisibilityConverter}}">
+                                            community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistSecondaryCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter}}">
                                         <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistSecondaryCover}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistSecondaryCover.Image,Mode=OneWay}"/>
                                         </Border.Background>
                                     </Border>
                                     <Border Grid.Column="0" CornerRadius="4" Height="96" Width="96" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                            community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistMainCover,Converter={StaticResource NullToVisibilityConverter}}">
+                                            community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistMainCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter}}">
                                         <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistMainCover}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistMainCover.Image,Mode=OneWay}"/>
                                         </Border.Background>
                                     </Border>
                                     <Border Grid.Column="0" CornerRadius="4" Height="96" Width="96" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                            Visibility="{x:Bind PlaylistMainCover,Converter={StaticResource NullToVisibilityConverter},ConverterParameter=!}"
+                                            Visibility="{x:Bind PlaylistMainCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter},ConverterParameter=!}"
                                             Background="{ThemeResource ControlElevationBorderBrush}">
                                         <Image Height="64" Width="64" Opacity="0.7">
                                             <Image.Source>

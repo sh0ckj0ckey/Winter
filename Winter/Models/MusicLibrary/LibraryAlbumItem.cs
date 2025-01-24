@@ -1,4 +1,6 @@
-﻿namespace Winter.Models.MusicLibrary
+﻿using Microsoft.UI.Xaml.Media.Imaging;
+
+namespace Winter.Models.MusicLibrary
 {
     /// <summary>
     /// 音乐库专辑项
@@ -19,5 +21,10 @@
         /// 专辑年份
         /// </summary>
         public uint Year { get; set; } = 0;
+
+        /// <summary>
+        /// 专辑封面
+        /// </summary>
+        public AsyncCoverImage AlbumCover { get; set; } = new();
     }
 }
