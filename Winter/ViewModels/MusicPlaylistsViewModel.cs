@@ -3,9 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Winter.Models;
 using Winter.Models.MusicLibrary;
-using Winter.Services;
 using Winter.Services.Interfaces;
 
 namespace Winter.ViewModels
@@ -38,7 +36,7 @@ namespace Winter.ViewModels
         public async void LoadMusicPlaylists()
         {
             this.Loading = true;
-            
+
             try
             {
                 await _musicPlaylistsService.LoadMusicPlaylistsAsync();

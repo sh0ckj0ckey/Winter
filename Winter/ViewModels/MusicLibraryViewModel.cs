@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Windows.Storage;
-using Windows.Storage.FileProperties;
-using Windows.Storage.Search;
-using Winter.Helpers;
 using Winter.Models;
 using Winter.Services.Interfaces;
 

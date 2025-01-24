@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
-using Windows.Storage;
-using Winter.Helpers;
 using Winter.Models.MusicLibrary;
 using Winter.Services.Interfaces;
-using System.IO;
-using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Winter.Services
 {

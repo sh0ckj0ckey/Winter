@@ -35,12 +35,12 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="冻听"
+        DisplayName="晚歌"
         Description="轻便的本地音乐播放器。"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Manifest\Square150x150Logo.png"
         Square44x44Logo="Assets\Manifest\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Manifest\Wide310x150Logo.png"  ShortName="冻听" Square71x71Logo="Assets\Manifest\SmallTile.png" Square310x310Logo="Assets\Manifest\LargeTile.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Manifest\Wide310x150Logo.png"  ShortName="晚歌" Square71x71Logo="Assets\Manifest\SmallTile.png" Square310x310Logo="Assets\Manifest\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
