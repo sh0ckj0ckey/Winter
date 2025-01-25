@@ -24,7 +24,7 @@ namespace Winter.Models
         {
             try
             {
-                var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, size, ThumbnailOptions.UseCurrentScale);
+                var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, size, ThumbnailOptions.ResizeThumbnail);
                 if (thumbnail is not null && thumbnail.Type != ThumbnailType.Icon)
                 {
                     var bitmapImage = new BitmapImage();
