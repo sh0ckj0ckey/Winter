@@ -20,9 +20,9 @@
                 <community:SettingsCard>
                     <community:SettingsCard.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="68" Width="68" Margin="0,-4,0,-4">
+                            <Image Height="72" Width="72" Margin="0,-6,0,-6">
                                 <Image.Source>
-                                    <BitmapImage DecodePixelHeight="136" DecodePixelType="Logical" UriSource="ms-appx:///Assets/Icon/Winter_full.png"/>
+                                    <BitmapImage DecodePixelHeight="144" DecodePixelType="Logical" UriSource="ms-appx:///Assets/Icon/Winter_full.png"/>
                                 </Image.Source>
                             </Image>
                             <StackPanel Margin="12,0,0,0" Spacing="0" Orientation="Vertical" VerticalAlignment="Center">
