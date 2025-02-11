@@ -58,7 +58,8 @@
                         <ListView x:Name="GroupedMusicList" Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                   ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}">
                             <ListView.GroupStyle>
-                                <GroupStyle>
+                                <GroupStyle HeaderContainerStyle="{StaticResource MediaListViewHeaderItemStyle}"
+                                            HidesIfEmpty="True">
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="models:MusicGroup">
                                             <TextBlock Margin="6,0,0,0" Text="{x:Bind Key}" Foreground="{ThemeResource APP_ACCENT_BK}" FontWeight="Medium" FontSize="14"/>

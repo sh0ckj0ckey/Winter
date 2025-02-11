@@ -26,7 +26,7 @@
                                 </Image.Source>
                             </Image>
                             <StackPanel Margin="12,0,0,0" Spacing="0" Orientation="Vertical" VerticalAlignment="Center">
-                                <TextBlock Text="晚调" FontSize="17" FontWeight="Bold"/>
+                                <TextBlock Text="晚歌" FontSize="17" FontWeight="Bold"/>
                                 <TextBlock Text="本地音乐播放器" FontSize="14" Opacity="0.7"/>
                                 <TextBlock Text="{x:Bind _appVersion}" FontSize="13" Opacity="0.5" FontFamily="Consolas"/>
                             </StackPanel>
@@ -40,7 +40,7 @@
                     </Button>
                 </community:SettingsCard>
                 <TextBlock Text="个性化" Margin="4,12,0,6" FontWeight="Bold" FontSize="16"/>
-                <community:SettingsCard Header="主题" Description="选择 &quot;晚调&quot; 的外观">
+                <community:SettingsCard Header="主题" Description="选择 &quot;晚歌&quot; 的外观">
                     <community:SettingsCard.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE771;"/>
                     </community:SettingsCard.HeaderIcon>
@@ -51,7 +51,7 @@
                         <ComboBoxItem Content="浅色"/>
                     </ComboBox>
                 </community:SettingsCard>
-                <community:SettingsCard Header="背景" Description="选择 &quot;晚调&quot; 的背景材质">
+                <community:SettingsCard Header="背景" Description="选择 &quot;晚歌&quot; 的背景材质">
                     <community:SettingsCard.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE727;"/>
                     </community:SettingsCard.HeaderIcon>
