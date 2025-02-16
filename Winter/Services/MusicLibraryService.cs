@@ -108,6 +108,8 @@ namespace Winter.Services
 
         public List<LibraryAlbumItem> GetAllAlbumItems() => _allAlbumItems;
 
+        public List<string> GetAllArtistNames() => _allMusicItems.Select(music => music.Artist.Split(';')).SelectMany(artists => artists).Distinct().ToList();
+
         public List<LibraryMusicItem> GetMusicItemsByArtist(string artist) =>
             _allMusicItems.Where(music => music.Artist.Split(';').Any(a => a.Trim().Equals(artist, StringComparison.Ordinal))).ToList();
 

@@ -26,11 +26,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="24,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Grid Grid.Row="0" Margin="24,4,250,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE77B;" FontSize="14" Opacity="0.7" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <ComboBox Padding="28,0,0,0" MinWidth="96" PlaceholderText="全部歌手" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox Background="Transparent" BorderBrush="Transparent" MinWidth="96" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                          SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}">
+                    <TextBlock Text="{x:Bind }"
+                </ComboBox>
             </Grid>
-            <StackPanel Grid.Row="0" Margin="0,12,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Grid.Row="0" Margin="0,4,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <community:Segmented SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <community:SegmentedItem>
                         <community:SegmentedItem.Icon>

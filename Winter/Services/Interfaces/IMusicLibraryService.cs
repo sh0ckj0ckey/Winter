@@ -25,6 +25,12 @@ namespace Winter.Services.Interfaces
         List<LibraryAlbumItem> GetAllAlbumItems();
 
         /// <summary>
+        /// 获取音乐库中的所有艺术家名字
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetAllArtistNames();
+
+        /// <summary>
         /// 获取指定艺术家的所有音乐
         /// </summary>
         /// <param name="artist">艺术家名字</param>

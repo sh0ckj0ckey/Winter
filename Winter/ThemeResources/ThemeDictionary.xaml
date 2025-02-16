@@ -7,6 +7,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="APP_ACCENT_BK" Color="{ThemeResource SystemAccentColorLight2}"/>
+                    <SolidColorBrush x:Key="APP_ACCENT_LOW_BK" Color="{ThemeResource SystemAccentColorLight3}"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -14,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="APP_ACCENT_BK" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="APP_ACCENT_LOW_BK" Color="{ThemeResource SystemAccentColor}"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

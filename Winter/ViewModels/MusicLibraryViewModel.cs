@@ -56,6 +56,11 @@ namespace Winter.ViewModels
         /// </summary>
         public ObservableCollection<MusicAlbum> MusicAlbums { get; } = new();
 
+        /// <summary>
+        /// 艺术家名字列表
+        /// </summary>
+        public ObservableCollection<string> ArtistNames { get; } = new ObservableCollection<string>();
+
         public MusicLibraryViewModel(IMusicLibraryService musicLibraryService)
         {
             _musicLibraryService = musicLibraryService;
@@ -76,6 +81,11 @@ namespace Winter.ViewModels
             finally
             {
                 this.Loading = false;
+
+                this.ArtistNames.Clear();
+                this.ArtistNames.Add("全部");
+                _musicLibraryService.GetAllArtistNames().ForEach(x => this.ArtistNames.Add(x));
+
                 if (this.GroupType == 0)
                 {
                     GroupMusicByTitle();
@@ -96,11 +106,15 @@ namespace Winter.ViewModels
                     return;
                 }
 
+                if (this.GroupedMusic.Count > 0)
+                {
+                    return;
+                }
+
                 this.GroupedMusic.Clear();
 
                 var allMusic = _musicLibraryService.GetAllMusicItems();
 
-                // 按照首字母分组
                 var orderedByPinyinList =
                     (from item in allMusic
                      group item by item.TitleFirstLetter into newItems
@@ -127,6 +141,11 @@ namespace Winter.ViewModels
             try
             {
                 if (this.Loading)
+                {
+                    return;
+                }
+
+                if (this.MusicAlbums.Count > 0)
                 {
                     return;
                 }
