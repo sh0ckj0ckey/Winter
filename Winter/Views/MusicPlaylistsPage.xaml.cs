@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -36,6 +37,30 @@ namespace Winter.Views
             {
                 Storyboard? sb = btn.Resources["PointerLeaveStoryboard"] as Storyboard;
                 sb?.Begin();
+            }
+        }
+
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (sender is ScrollViewer scrollViewer)
+            {
+                var verticalOffset = scrollViewer.VerticalOffset;
+                var maxOffset = Math.Min(16, scrollViewer.ScrollableHeight);
+
+                if (maxOffset <= 1) return;
+
+                // 透明度按滚动比例变化，从全透明到不透明
+                double newOpacity = verticalOffset / maxOffset;
+                if (newOpacity > 1)
+                {
+                    newOpacity = 1;
+                }
+                if (newOpacity < 0)
+                {
+                    newOpacity = 0;
+                }
+
+                HeaderSeparatorBorder.Opacity = newOpacity;
             }
         }
     }

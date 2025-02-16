@@ -15,41 +15,44 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="ListViewHeaderItemDividerStroke" Color="Transparent"/>
-        <converters:DoubleToVisibilityConverter x:Key="LessThan2ToVisibilityConverter" LessThan="2"/>
-        <converters:DoubleToVisibilityConverter x:Key="GreaterThan1ToVisibilityConverter" GreaterThan="1"/>
+        <converters:DoubleToVisibilityConverter x:Key="LessThan1ToVisibilityConverter" LessThan="1"/>
+        <converters:DoubleToVisibilityConverter x:Key="GreaterThan0ToVisibilityConverter" GreaterThan="0"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <community:Segmented Grid.Row="0" SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" Margin="0,12,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <community:SegmentedItem>
-                <community:SegmentedItem.Icon>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
-                </community:SegmentedItem.Icon>
-            </community:SegmentedItem>
-            <community:SegmentedItem>
-                <community:SegmentedItem.Icon>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
-                </community:SegmentedItem.Icon>
-            </community:SegmentedItem>
-            <community:SegmentedItem>
-                <community:SegmentedItem.Icon>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE93C;"/>
-                </community:SegmentedItem.Icon>
-            </community:SegmentedItem>
-        </community:Segmented>
-
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <ComboBox MinWidth="96" Margin="24,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        </StackPanel>
-        
-        <Grid Grid.Row="1" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
-            <Grid Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan2ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Background="Transparent" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="24,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE77B;" FontSize="14" Opacity="0.7" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox Padding="28,0,0,0" MinWidth="96" PlaceholderText="全部歌手" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+            <StackPanel Grid.Row="0" Margin="0,12,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <community:Segmented SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <community:SegmentedItem>
+                        <community:SegmentedItem.Icon>
+                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
+                        </community:SegmentedItem.Icon>
+                    </community:SegmentedItem>
+                    <community:SegmentedItem>
+                        <community:SegmentedItem.Icon>
+                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE93C;"/>
+                        </community:SegmentedItem.Icon>
+                    </community:SegmentedItem>
+                </community:Segmented>
+                <Border Height="24" Width="1" Background="{ThemeResource ControlElevationBorderBrush}"/>
+                <Button>
+                    <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8F4;" FontSize="16" VerticalAlignment="Center"/>
+                        <TextBlock Text="添加文件夹" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            
+            <Grid Grid.Row="1" Margin="0,12,0,0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Resources>
                     <CollectionViewSource x:Name="GroupedMusicCollectionViewSource" Source="{x:Bind _viewModel.GroupedMusic,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="GroupedMusic"/>
                 </Grid.Resources>
@@ -85,19 +88,19 @@
                         </ListView>
                     </SemanticZoom.ZoomedInView>
                     <SemanticZoom.ZoomedOutView>
-                        <ListView Padding="2,8,4,8" ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View.CollectionGroups,Mode=OneWay}"
+                        <GridView Padding="2,8,4,8" MaxWidth="320" ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View.CollectionGroups,Mode=OneWay}"
                                   SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                            <ListView.ItemTemplate>
+                            <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="ICollectionViewGroup">
                                     <TextBlock Text="{x:Bind Group.(models:MusicGroup.Key)}" FontWeight="Medium" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </GridView.ItemTemplate>
+                        </GridView>
                     </SemanticZoom.ZoomedOutView>
                 </SemanticZoom>
             </Grid>
 
-            <Grid Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Grid.Row="1" Margin="0,12,0,0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan0ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Resources>
                     <CollectionViewSource x:Name="AlbumCollectionViewSource" Source="{x:Bind _viewModel.MusicAlbums,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="Music"/>
                 </Grid.Resources>
@@ -134,7 +137,7 @@
             </Grid>
         </Grid>
 
-        <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=False}">
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{x:Bind _viewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=False}">
             <controls:ProgressRing IsActive="{x:Bind _viewModel.Loading,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
     </Grid>

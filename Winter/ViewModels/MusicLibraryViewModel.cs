@@ -41,10 +41,6 @@ namespace Winter.ViewModels
                 }
                 else if (value == 1)
                 {
-                    GroupMusicByArtist();
-                }
-                else if (value == 2)
-                {
                     GroupMusicByAlbum();
                 }
             }
@@ -86,10 +82,6 @@ namespace Winter.ViewModels
                 }
                 else if (this.GroupType == 1)
                 {
-                    GroupMusicByArtist();
-                }
-                else if (this.GroupType == 2)
-                {
                     GroupMusicByAlbum();
                 }
             }
@@ -120,41 +112,6 @@ namespace Winter.ViewModels
                      }).OrderBy(x => x.Key).ToList();
 
                 foreach (var item in orderedByPinyinList)
-                {
-                    this.GroupedMusic.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine(ex);
-            }
-        }
-
-        private void GroupMusicByArtist()
-        {
-            try
-            {
-                if (this.Loading)
-                {
-                    return;
-                }
-
-                this.GroupedMusic.Clear();
-
-                var allMusic = _musicLibraryService.GetAllMusicItems();
-
-                // 按照艺术家分组
-                var orderedByArtistList =
-                    (from item in allMusic
-                     group item by item.Artist into newItems
-                     select
-                     new MusicGroup
-                     {
-                         Key = newItems.Key,
-                         GroupedMusic = new(newItems.ToList())
-                     }).OrderBy(x => x.Key).ToList();
-
-                foreach (var item in orderedByArtistList)
                 {
                     this.GroupedMusic.Add(item);
                 }
