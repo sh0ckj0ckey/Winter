@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
@@ -52,10 +51,6 @@ namespace Winter.Services
             //    }
             //}));
 
-            _allMusicItems.Clear();
-            _allAlbumItems.Clear();
-            _pathToMusicItem.Clear();
-
             foreach (var file in files)
             {
                 try
@@ -79,16 +74,29 @@ namespace Winter.Services
                             {
                                 Title = musicItem.Album,
                                 AlbumArtist = musicItem.AlbumArtist,
-                                Year = musicItem.Year
+                                Year = musicItem.Year,
                             };
 
                             _allAlbumItems.Add(album);
                         }
                         else
                         {
+                            // 更新专辑年份
                             album.Year = Math.Max(album.Year, musicItem.Year);
                         }
 
+                        // 按照音乐编号插入音乐到专辑中
+                        int index = album.Music.FindIndex(m => m.TrackNumber > musicItem.TrackNumber);
+                        if (index == -1)
+                        {
+                            album.Music.Add(musicItem);
+                        }
+                        else
+                        {
+                            album.Music.Insert(index, musicItem);
+                        }
+
+                        // 加载专辑封面
                         if (album.AlbumCover.Image is null)
                         {
                             _ = album.AlbumCover.LoadCoverImageFromFile(file, 96 * 2);
@@ -108,35 +116,42 @@ namespace Winter.Services
 
         public List<LibraryAlbumItem> GetAllAlbumItems() => _allAlbumItems;
 
-        public List<string> GetAllArtistNames() => _allMusicItems.Select(music => music.Artist.Split(';')).SelectMany(artists => artists).Distinct().ToList();
+        public List<string> GetAllArtistNames() => _allMusicItems
+            .Select(music => music.Artist.Split(';'))
+            .SelectMany(artists => artists)
+            .Select(artist => artist.Trim())
+            .Distinct()
+            .OrderBy(artists => artists)
+            .ToList();
 
         public List<LibraryMusicItem> GetMusicItemsByArtist(string artist) =>
-            _allMusicItems.Where(music => music.Artist.Split(';').Any(a => a.Trim().Equals(artist, StringComparison.Ordinal))).ToList();
+            _allMusicItems
+            .Where(music => music.Artist.Split(';')
+            .Any(a => a.Trim().Equals(artist, StringComparison.Ordinal)))
+            .ToList();
 
         public List<LibraryAlbumItem> GetAlbumItemsByArtist(string artist) =>
-            _allAlbumItems.Where(album => album.AlbumArtist.Split(';').Any(a => a.Trim().Equals(artist, StringComparison.Ordinal))).ToList();
-
-        public List<LibraryMusicItem> GetMusicItemsByAlbum(LibraryAlbumItem album) =>
-            _allMusicItems.Where(music => music.Album == album.Title && music.AlbumArtist == album.AlbumArtist).ToList();
+            _allAlbumItems
+            .Where(album => album.AlbumArtist.Split(';')
+            .Any(a => a.Trim().Equals(artist, StringComparison.Ordinal)))
+            .ToList();
 
         public async Task<LibraryMusicItem?> GetMusicItemByPathAsync(string path)
         {
             _pathToMusicItem.TryGetValue(path, out LibraryMusicItem? musicItem);
+
             if (musicItem is null)
             {
-                try
+                // 如果这个音乐文件存在，但是不存在于列表中，则加载它到字典里，但是不添加到列表
+                var file = await StorageFile.GetFileFromPathAsync(path);
+                if (file is not null)
                 {
-                    // 如果这个音乐文件存在，但是不存在于列表中，则加载它到字典里，但是不添加到列表
-                    var file = await StorageFile.GetFileFromPathAsync(path);
-                    if (file is not null)
+                    musicItem = await LoadMusicFromFileAsync(file);
+
+                    if (musicItem is not null)
                     {
-                        musicItem = await LoadMusicFromFileAsync(file);
                         _pathToMusicItem[path] = musicItem;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
                 }
             }
 
@@ -156,7 +171,7 @@ namespace Winter.Services
                 AlbumArtist = !string.IsNullOrWhiteSpace(musicProperties.AlbumArtist) ? musicProperties.AlbumArtist : "未知艺术家",
                 Duration = musicProperties.Duration.ToString(@"mm\:ss"),
                 Year = musicProperties.Year,
-                TrackNumber = musicProperties.TrackNumber
+                TrackNumber = musicProperties.TrackNumber,
             };
 
             musicItem.TitleFirstLetter = PinyinHelper.GetFirstSpell(musicItem.Title);

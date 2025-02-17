@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Winter.Models;
+using Winter.Models.MusicLibrary;
 using Winter.Services.Interfaces;
 
 namespace Winter.ViewModels
@@ -54,7 +55,7 @@ namespace Winter.ViewModels
         /// <summary>
         /// 专辑列表
         /// </summary>
-        public ObservableCollection<MusicAlbum> MusicAlbums { get; } = new();
+        public ObservableCollection<LibraryAlbumItem> MusicAlbums { get; } = new();
 
         /// <summary>
         /// 艺术家名字列表
@@ -152,20 +153,11 @@ namespace Winter.ViewModels
 
                 this.MusicAlbums.Clear();
 
-                var allMusic = _musicLibraryService.GetAllMusicItems();
+                var allAlbums = _musicLibraryService.GetAllAlbumItems();
 
-                var orderedByArtistList =
-                    (from item in allMusic
-                     group item by new { item.Album, item.Year } into newItems
-                     select
-                     new MusicAlbum
-                     {
-                         Title = newItems.Key.Album,
-                         Year = newItems.Key.Year,
-                         Music = new(newItems.OrderBy(x => x.TrackNumber).ToList())
-                     }).OrderByDescending(x => x.Year).ThenBy(x => x.Title).ToList();
+                var orderedByYearList = allAlbums.OrderByDescending(x => x.Year);
 
-                foreach (var item in orderedByArtistList)
+                foreach (var item in orderedByYearList)
                 {
                     this.MusicAlbums.Add(item);
                 }

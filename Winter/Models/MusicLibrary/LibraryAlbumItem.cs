@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Xaml.Media.Imaging;
+﻿using System.Collections.Generic;
 
 namespace Winter.Models.MusicLibrary
 {
@@ -26,5 +26,10 @@ namespace Winter.Models.MusicLibrary
         /// 专辑封面
         /// </summary>
         public AsyncCoverImage AlbumCover { get; set; } = new();
+
+        /// <summary>
+        /// 专辑中的音乐
+        /// </summary>
+        public List<LibraryMusicItem> Music { get; set; } = new List<LibraryMusicItem>();
     }
 }

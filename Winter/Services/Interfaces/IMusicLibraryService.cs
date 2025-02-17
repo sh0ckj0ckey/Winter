@@ -13,13 +13,13 @@ namespace Winter.Services.Interfaces
         Task LoadMusicLibraryAsync();
 
         /// <summary>
-        /// 获取音乐库中的所有音乐
+        /// 获取音乐库中的所有音乐项
         /// </summary>
         /// <returns></returns>
         List<LibraryMusicItem> GetAllMusicItems();
 
         /// <summary>
-        /// 获取音乐库中的所有专辑
+        /// 获取音乐库中的所有专辑项
         /// </summary>
         /// <returns></returns>
         List<LibraryAlbumItem> GetAllAlbumItems();
@@ -31,28 +31,21 @@ namespace Winter.Services.Interfaces
         List<string> GetAllArtistNames();
 
         /// <summary>
-        /// 获取指定艺术家的所有音乐
+        /// 获取指定艺术家的所有音乐项
         /// </summary>
         /// <param name="artist">艺术家名字</param>
         /// <returns></returns>
         List<LibraryMusicItem> GetMusicItemsByArtist(string artist);
 
         /// <summary>
-        /// 获取指定艺术家的所有专辑
+        /// 获取指定艺术家的所有专辑项
         /// </summary>
         /// <param name="artist">艺术家名字</param>
         /// <returns></returns>
         List<LibraryAlbumItem> GetAlbumItemsByArtist(string artist);
 
         /// <summary>
-        /// 获取指定专辑的所有音乐
-        /// </summary>
-        /// <param name="album">专辑</param>
-        /// <returns></returns>
-        List<LibraryMusicItem> GetMusicItemsByAlbum(LibraryAlbumItem album);
-
-        /// <summary>
-        /// 通过路径获取音乐
+        /// 通过路径获取音乐项
         /// </summary>
         /// <param name="path">音乐文件路径</param>
         /// <returns></returns>

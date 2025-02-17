@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
-using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
 using Winter.Models.MusicLibrary;
 using Winter.Services.Interfaces;
@@ -53,36 +50,24 @@ namespace Winter.Services
             //    }
             //}));
 
-            List<LibraryPlaylistItem?> playlistItems = [];
             foreach (var file in files)
             {
                 try
                 {
-                    playlistItems.Add(await LoadPlaylistFromFileAsync(file));
+                    var playlistItem = await LoadPlaylistFromFileAsync(file);
+
+                    if (playlistItem is null)
+                    {
+                        continue;
+                    }
+
+                    _allPlaylistItems.Add(playlistItem);
+                    _pathToPlaylistItem[playlistItem.PlaylistFilePath] = playlistItem;
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
                 }
-            }
-
-            _allPlaylistItems.Clear();
-            _pathToPlaylistItem.Clear();
-
-            if (playlistItems is null)
-            {
-                return;
-            }
-
-            foreach (var playlistItem in playlistItems)
-            {
-                if (playlistItem is null)
-                {
-                    continue;
-                }
-
-                _allPlaylistItems.Add(playlistItem);
-                _pathToPlaylistItem[playlistItem.PlaylistFilePath] = playlistItem;
             }
 
             Debug.WriteLine("Loaded music playlists.");
@@ -93,21 +78,19 @@ namespace Winter.Services
         public async Task<LibraryPlaylistItem?> GetPlaylistItemByPathAsync(string path)
         {
             _pathToPlaylistItem.TryGetValue(path, out LibraryPlaylistItem? playlistItem);
+
             if (playlistItem is null)
             {
-                try
+                // 如果这个播放列表文件存在，但是不存在于列表中，则加载它到字典里，但是不添加到列表
+                var file = await StorageFile.GetFileFromPathAsync(path);
+                if (file is not null)
                 {
-                    // 如果这个播放列表文件存在，但是不存在于列表中，则加载它到字典里，但是不添加到列表
-                    var file = await StorageFile.GetFileFromPathAsync(path);
-                    if (file is not null)
+                    playlistItem = await LoadPlaylistFromFileAsync(file);
+
+                    if (playlistItem is not null)
                     {
-                        playlistItem = await LoadPlaylistFromFileAsync(file);
                         _pathToPlaylistItem[path] = playlistItem;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
                 }
             }
 

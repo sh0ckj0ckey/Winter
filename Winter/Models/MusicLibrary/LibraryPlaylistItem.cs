@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Winter.Models.MusicLibrary
 {

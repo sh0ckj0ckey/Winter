@@ -48,6 +48,6 @@
         /// <summary>
         /// 音乐编号
         /// </summary>
-        public uint TrackNumber { get; set; }
+        public uint TrackNumber { get; set; } = 0;
     }
 }
