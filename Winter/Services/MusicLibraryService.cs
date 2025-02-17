@@ -99,7 +99,7 @@ namespace Winter.Services
                         // 加载专辑封面
                         if (album.AlbumCover.Image is null)
                         {
-                            _ = album.AlbumCover.LoadCoverImageFromFile(file, 96 * 2);
+                            _ = album.AlbumCover.LoadCoverImageFromFile(file, 72 * 2);
                         }
                     }
                 }

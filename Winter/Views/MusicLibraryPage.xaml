@@ -45,16 +45,16 @@
                         </community:SegmentedItem.Icon>
                     </community:SegmentedItem>
                 </community:Segmented>
-                
+
                 <Border Height="24" Width="1" Background="{ThemeResource ControlElevationBorderBrush}"/>
-                
+
                 <Button>
                     <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8F4;" FontSize="16" VerticalAlignment="Center"/>
                         <TextBlock Text="添加文件夹" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                
+
             </StackPanel>
 
             <Grid Grid.Row="1" Margin="0,12,0,0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -70,7 +70,7 @@
                 </Grid.Resources>
                 <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SemanticZoom.ZoomedInView>
-                        <ListView x:Name="GroupedMusicList" Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                   ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}">
                             <ListView.ItemContainerTransitions>
                                 <TransitionCollection/>
@@ -126,40 +126,71 @@
                 <Grid.Resources>
                     <CollectionViewSource x:Name="AlbumCollectionViewSource" Source="{x:Bind _viewModel.MusicAlbums,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="Music"/>
                 </Grid.Resources>
-                <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind AlbumCollectionViewSource.View,Mode=OneWay}">
-                    <ListView.ItemContainerTransitions>
-                        <TransitionCollection/>
-                    </ListView.ItemContainerTransitions>
-                    <ListView.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate x:DataType="libraryModels:LibraryAlbumItem">
-                                    <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="2" Margin="6,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <Image Source="{x:Bind AlbumCover.Image,Mode=OneWay}" Height="96" Width="96"/>
-                                        <TextBlock FontSize="14" FontWeight="Bold" Text="{x:Bind Title}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <TextBlock FontSize="14" Opacity="0.5" FontWeight="Medium" Text="{x:Bind Year}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    </StackPanel>
+                <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <SemanticZoom.ZoomedInView>
+                        <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                  ItemsSource="{x:Bind AlbumCollectionViewSource.View,Mode=OneWay}">
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection/>
+                            </ListView.ItemContainerTransitions>
+                            <ListView.GroupStyle>
+                                <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource ListViewHeaderItemStyle}">
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate x:DataType="libraryModels:LibraryAlbumItem">
+                                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8">
+                                                <Border CornerRadius="4" Height="72" Width="72" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                    <Border.Background>
+                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay}"/>
+                                                    </Border.Background>
+                                                </Border>
+                                                <StackPanel Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                    <TextBlock FontSize="17" FontWeight="Bold" Text="{x:Bind Title}"  Foreground="{ThemeResource APP_ACCENT_BK}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <TextBlock FontSize="14" Opacity="0.7" Text="{x:Bind AlbumArtist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <TextBlock FontSize="13" Opacity="0.5" Text="{x:Bind Year}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
+                                    <Grid ColumnSpacing="16" Margin="24,16,12,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="16"/>
+                                            <ColumnDefinition Width="4*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind TrackNumber}" FontSize="13" HorizontalAlignment="Left" Opacity="0.5" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Title}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Artist}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="3" Text="{x:Bind Duration}" FontSize="13" HorizontalAlignment="Right" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
                                 </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListView.GroupStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
-                            <Grid ColumnSpacing="16" Margin="24,16,12,16">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{x:Bind Title}" FontSize="13" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Grid.Column="1" Text="{x:Bind Artist}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Grid.Column="2" Text="{x:Bind Album}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Grid.Column="3" Text="{x:Bind Duration}" FontSize="13" HorizontalAlignment="Right" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </SemanticZoom.ZoomedInView>
+                    <SemanticZoom.ZoomedOutView>
+                        <GridView Padding="64" ItemsSource="{x:Bind AlbumCollectionViewSource.View.CollectionGroups,Mode=OneWay}"
+                                  SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <GridView.Resources>
+                                <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="GridViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
+                            </GridView.Resources>
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="ICollectionViewGroup">
+                                    <Border CornerRadius="4" Height="72" Width="72" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Border.Background>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(libraryModels:LibraryAlbumItem.AlbumCover).Image}"/>
+                                        </Border.Background>
+                                    </Border>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </SemanticZoom.ZoomedOutView>
+                </SemanticZoom>
             </Grid>
         </Grid>
 
