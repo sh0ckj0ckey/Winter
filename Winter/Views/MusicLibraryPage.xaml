@@ -27,10 +27,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="0,4,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
-                <ComboBox Background="Transparent" BorderBrush="Transparent" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                          SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}"/>
+            <ComboBox Grid.Row="0" Margin="12,4,0,0" Background="Transparent" BorderBrush="Transparent" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}"/>
+
+            <StackPanel Grid.Row="0" Margin="0,4,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
                 <community:Segmented SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <community:SegmentedItem>
@@ -134,6 +135,7 @@
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate x:DataType="libraryModels:LibraryAlbumItem">
                                     <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="2" Margin="6,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Image Source="{x:Bind AlbumCover.Image,Mode=OneWay}" Height="96" Width="96"/>
                                         <TextBlock FontSize="14" FontWeight="Bold" Text="{x:Bind Title}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         <TextBlock FontSize="14" Opacity="0.5" FontWeight="Medium" Text="{x:Bind Year}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     </StackPanel>
