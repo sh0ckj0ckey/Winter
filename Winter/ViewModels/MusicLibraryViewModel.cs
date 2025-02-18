@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Winter.Models;
 using Winter.Models.MusicLibrary;
 using Winter.Services.Interfaces;
@@ -12,6 +13,8 @@ namespace Winter.ViewModels
     public class MusicLibraryViewModel : ObservableObject
     {
         private readonly IMusicLibraryService _musicLibraryService;
+
+        private BitmapImage? _defaultAlbumCoverImage = null;
 
         private bool _loading = false;
 
@@ -160,6 +163,17 @@ namespace Winter.ViewModels
                 foreach (var item in orderedByYearList)
                 {
                     this.MusicAlbums.Add(item);
+
+                    if (item.AlbumCover.Image is null)
+                    {
+                        _defaultAlbumCoverImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icon/Winter_placeholder.png"))
+                        {
+                            DecodePixelType = DecodePixelType.Logical,
+                            DecodePixelWidth = 144,
+                        };
+
+                        item.AlbumCover.SetImage(_defaultAlbumCoverImage);
+                    }
                 }
             }
             catch (Exception ex)

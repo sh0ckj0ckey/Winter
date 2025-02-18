@@ -178,10 +178,74 @@
                                 <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent"/>
                                 <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent"/>
                                 <SolidColorBrush x:Key="GridViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
+
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="GridViewItem">
+                                                <Grid>
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="CommonStates">
+                                                            <VisualState x:Name="Normal">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="1.0" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="1.0" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="PointerOver">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="1.05" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="1.05" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Pressed">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="0.95" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="0.95" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Selected"/>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                    <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+                                                        <ContentPresenter.RenderTransform>
+                                                            <CompositeTransform/>
+                                                        </ContentPresenter.RenderTransform>
+                                                    </ContentPresenter>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
                             </GridView.Resources>
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="ICollectionViewGroup">
-                                    <Border CornerRadius="4" Height="72" Width="72" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border CornerRadius="4" Height="72" Width="72" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            ToolTipService.ToolTip="{x:Bind Group.(libraryModels:LibraryAlbumItem.Title)}">
                                         <Border.Background>
                                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(libraryModels:LibraryAlbumItem.AlbumCover).Image}"/>
                                         </Border.Background>

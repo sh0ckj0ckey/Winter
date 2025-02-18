@@ -120,12 +120,16 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
+
+                                    <!--歌单标题-->
                                     <TextBlock Grid.Row="0" FontSize="17" Text="{x:Bind Title}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" MaxLines="2"/>
                                     <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                                         <TextBlock FontSize="15" Text="共"/>
                                         <TextBlock FontSize="15" Margin="2,0,0,0" Text="{x:Bind MusicFilePaths.Count}" FontWeight="Medium"/>
                                         <TextBlock FontSize="15" Text="首歌"/>
                                     </StackPanel>
+                                    
+                                    <!--播放和菜单按钮-->
                                     <StackPanel x:Name="PlaylistButtonsStackPanel" Grid.Row="2" Margin="-8,0,0,0" Spacing="8" Height="Auto" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Button x:Name="PlaylistPlayButton" Padding="8,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
@@ -143,8 +147,11 @@
                                             <TextBlock x:Name="PlaylistMenuButtonContent" Text="&#xE10C;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
+                                    
                                 </Grid>
                                 <Grid Grid.Column="1" MinWidth="120" HorizontalAlignment="Right" VerticalAlignment="Center">
+
+                                    <!--歌单封面-->
                                     <Border Grid.Column="0" CornerRadius="4" Height="80" Width="80" Margin="32,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
                                             community:Effects.Shadow="{StaticResource CommonShadow}" Visibility="{x:Bind PlaylistTertiaryCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter}}">
                                         <Border.Background>
@@ -172,6 +179,7 @@
                                             </Image.Source>
                                         </Image>
                                     </Border>
+                                    
                                 </Grid>
                             </Grid>
                         </Button>
