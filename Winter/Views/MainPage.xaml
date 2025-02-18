@@ -35,7 +35,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="6" Margin="24,24,24,16" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Image Height="32" Width="32" VerticalAlignment="Center">
                     <Image.Source>
-                        <BitmapImage UriSource="/Assets/Icon/winter.png" DecodePixelType="Logical" DecodePixelHeight="64"/>
+                        <BitmapImage UriSource="/Assets/Icons/Winter.png" DecodePixelType="Logical" DecodePixelHeight="64"/>
                     </Image.Source>
                 </Image>
                 <TextBlock Text="Winter" FontFamily="Segoe Script" Margin="0,0,0,-6" FontSize="22" FontWeight="Black" VerticalAlignment="Center">

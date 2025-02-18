@@ -31,7 +31,7 @@ namespace Winter
             this.ExtendsContentIntoTitleBar = true;
             this.SetTitleBar(AppTitleBar);
 
-            string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets/Icon/Winter.ico");
+            string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets/Icons/Winter.ico");
             this.SetIcon(iconPath);
             this.SetTaskBarIcon(Icon.FromFile(iconPath));
 

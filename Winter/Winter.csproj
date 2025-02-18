@@ -14,7 +14,7 @@
 		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
 		<DefaultLanguage>en-US</DefaultLanguage>
 		<SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
-		<ApplicationIcon>Assets\Icon\Winter.ico</ApplicationIcon>
+		<ApplicationIcon>Assets\Icons\Winter.ico</ApplicationIcon>
 		<AppxBundle>Always</AppxBundle>
 		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
 		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
@@ -31,11 +31,10 @@
 		<StartupObject>Winter.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="Assets\Icon\icon_github.png" />
-	  <None Remove="Assets\Icon\winter.ico" />
-	  <None Remove="Assets\Icon\winter.png" />
-	  <None Remove="Assets\Icon\Winter_full.png" />
-	  <None Remove="Assets\Icon\Winter_placeholder.png" />
+	  <None Remove="Assets\Icons\icon_github.png" />
+	  <None Remove="Assets\Icons\winter.ico" />
+	  <None Remove="Assets\Icons\winter.png" />
+	  <None Remove="Assets\Icons\WinterPlayerDefault.png" />
 	  <None Remove="Assets\Manifest\LargeTile.scale-100.png" />
 	  <None Remove="Assets\Manifest\LargeTile.scale-125.png" />
 	  <None Remove="Assets\Manifest\LargeTile.scale-150.png" />
@@ -86,7 +85,6 @@
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-150.png" />
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-200.png" />
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-400.png" />
-	  <None Remove="Assets\Test\cover.jpg" />
 	  <None Remove="ThemeResources\ThemeDictionary.xaml" />
 	  <None Remove="Views\MainPage.xaml" />
 	  <None Remove="Views\MusicLibraryPage.xaml" />

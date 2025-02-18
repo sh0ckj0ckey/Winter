@@ -171,13 +171,14 @@
                                         </Border.Background>
                                     </Border>
                                     <Border Grid.Column="0" CornerRadius="4" Height="96" Width="96" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                            Visibility="{x:Bind PlaylistMainCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter},ConverterParameter=!}"
-                                            Background="{ThemeResource ControlElevationBorderBrush}">
-                                        <Image Height="64" Width="64" Opacity="0.7">
-                                            <Image.Source>
-                                                <BitmapImage UriSource="/Assets/Icon/Winter_placeholder_gray.png" DecodePixelWidth="128" DecodePixelType="Logical"/>
-                                            </Image.Source>
-                                        </Image>
+                                            Visibility="{x:Bind PlaylistMainCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter},ConverterParameter=!}">
+                                        <Border.Background>
+                                            <ImageBrush>
+                                                <ImageBrush.ImageSource>
+                                                    <BitmapImage UriSource="/Assets/Icons/WinterPlaceholder.png" DecodePixelWidth="128" DecodePixelType="Logical"/>
+                                                </ImageBrush.ImageSource>
+                                            </ImageBrush>
+                                        </Border.Background>
                                     </Border>
                                     
                                 </Grid>

@@ -51,17 +51,17 @@
                 <Border.Background>
                     <ImageBrush Stretch="UniformToFill">
                         <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="/Assets/Test/cover.jpg" DecodePixelType="Logical" DecodePixelHeight="512"/>
+                            <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefault.png" DecodePixelType="Logical" DecodePixelHeight="512"/>
                         </ImageBrush.ImageSource>
                     </ImageBrush>
                 </Border.Background>
             </Border>
-            <TextBlock Text="那年夏天宁静的海" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
-            <TextBlock Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+            <TextBlock Text="" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
+            <TextBlock Text="" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!--进度条-->
-        <controls:ProgressBar Grid.Row="3" Margin="0,0" Maximum="100" Value="70" Background="{ThemeResource ControlElevationBorderBrush}"/>
+        <controls:ProgressBar Grid.Row="3" Margin="0,0" Maximum="100" Value="0" Background="{ThemeResource ControlElevationBorderBrush}"/>
 
         <!--控制栏-->
         <Grid Grid.Row="4" MinHeight="96">

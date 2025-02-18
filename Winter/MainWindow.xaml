@@ -7,10 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:windowex="using:WinUIEx"
-    TaskBarIcon="Assets/Icon/Winter.ico"
+    TaskBarIcon="Assets/Icons/Winter.ico"
     Title="晚歌" MinWidth="780" MinHeight="560"
     mc:Ignorable="d" Closed="OnMainWindowClosed">
-    <!--TaskBarIcon="Assets/Icon/Winter.ico"-->
+    <!--TaskBarIcon="Assets/Icons/Winter.ico"-->
 
     <windowex:WindowEx.Content>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

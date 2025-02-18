@@ -166,7 +166,7 @@ namespace Winter.ViewModels
 
                     if (item.AlbumCover.Image is null)
                     {
-                        _defaultAlbumCoverImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icon/Winter_placeholder.png"))
+                        _defaultAlbumCoverImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholder.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
                             DecodePixelWidth = 144,
