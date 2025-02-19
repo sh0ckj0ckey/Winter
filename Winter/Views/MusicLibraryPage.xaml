@@ -188,17 +188,17 @@
                                                         <VisualStateGroup x:Name="CommonStates">
                                                             <VisualState x:Name="Normal">
                                                                 <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="1.0" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="1.0" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="1.0" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="1.0" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.9" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.9" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
@@ -207,17 +207,17 @@
                                                             </VisualState>
                                                             <VisualState x:Name="PointerOver">
                                                                 <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="1.05" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="1.05" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="1.05" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="1.05" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="1" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="1" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
@@ -226,17 +226,17 @@
                                                             </VisualState>
                                                             <VisualState x:Name="Pressed">
                                                                 <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="0.95" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" To="0.97" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="0.95" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="0.97" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
-                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.8" Duration="0:0:0.2">
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.8" Duration="0:0:0.4">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
