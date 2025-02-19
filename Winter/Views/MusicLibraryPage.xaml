@@ -137,7 +137,7 @@
                                 <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource ListViewHeaderItemStyle}">
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="libraryModels:LibraryAlbumItem">
-                                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8">
+                                            <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
                                                 <Border CornerRadius="4" Height="72" Width="72" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                     <Border.Background>
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay}"/>
@@ -145,8 +145,8 @@
                                                 </Border>
                                                 <StackPanel Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                     <TextBlock FontSize="17" FontWeight="Bold" Text="{x:Bind Title}"  Foreground="{ThemeResource APP_ACCENT_BK}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                    <TextBlock FontSize="14" Opacity="0.7" Text="{x:Bind AlbumArtist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                    <TextBlock FontSize="13" Opacity="0.5" Text="{x:Bind Year}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <TextBlock FontSize="14" Opacity="0.7" Text="{x:Bind AlbumArtist}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <TextBlock FontSize="13" Opacity="0.5" Text="{x:Bind Year}" Visibility="{x:Bind Year,Converter={StaticResource GreaterThan0ToVisibilityConverter}}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </StackPanel>
                                         </DataTemplate>
@@ -155,16 +155,16 @@
                             </ListView.GroupStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
-                                    <Grid ColumnSpacing="16" Margin="24,16,12,16">
+                                    <Grid Margin="24,16,12,16">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" MinWidth="16"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="4*"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{x:Bind TrackNumber}" FontSize="13" HorizontalAlignment="Left" Opacity="0.5" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind TrackNumber}" Visibility="{x:Bind TrackNumber,Converter={StaticResource GreaterThan0ToVisibilityConverter}}" MinWidth="16" FontSize="13" HorizontalAlignment="Left" Opacity="0.5" Margin="0,0,12,0" TextTrimming="CharacterEllipsis"/>
                                         <TextBlock Grid.Column="1" Text="{x:Bind Title}" FontSize="13" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Grid.Column="2" Text="{x:Bind Artist}" FontSize="13" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Artist}" FontSize="13" Opacity="0.7" Margin="8,0" TextTrimming="CharacterEllipsis"/>
                                         <TextBlock Grid.Column="3" Text="{x:Bind Duration}" FontSize="13" HorizontalAlignment="Right" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
                                     </Grid>
                                 </DataTemplate>
@@ -198,6 +198,11 @@
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.9" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
                                                                 </Storyboard>
                                                             </VisualState>
                                                             <VisualState x:Name="PointerOver">
@@ -212,6 +217,11 @@
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="1" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
                                                                 </Storyboard>
                                                             </VisualState>
                                                             <VisualState x:Name="Pressed">
@@ -222,6 +232,11 @@
                                                                         </DoubleAnimation.EasingFunction>
                                                                     </DoubleAnimation>
                                                                     <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" To="0.95" Duration="0:0:0.2">
+                                                                        <DoubleAnimation.EasingFunction>
+                                                                            <CircleEase EasingMode="EaseOut"/>
+                                                                        </DoubleAnimation.EasingFunction>
+                                                                    </DoubleAnimation>
+                                                                    <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.8" Duration="0:0:0.2">
                                                                         <DoubleAnimation.EasingFunction>
                                                                             <CircleEase EasingMode="EaseOut"/>
                                                                         </DoubleAnimation.EasingFunction>
