@@ -49,9 +49,9 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
-            
+
             <Border x:Name="HeaderSeparatorBorder" Grid.Row="1" Height="1" Opacity="0" Margin="0,0,0,0" Background="{ThemeResource ControlElevationBorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            
+
             <ScrollViewer x:Name="PlaylistsScrollViewer" Grid.Row="2" ViewChanged="ScrollViewer_ViewChanged" SizeChanged="ScrollViewer_SizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
                 <controls:ItemsRepeater Margin="8,0,8,8" ItemsSource="{x:Bind _viewModel.Playlists,Mode=OneWay}" HorizontalAlignment="Stretch">
                     <ItemsRepeater.Layout>
@@ -131,7 +131,7 @@
                                         <TextBlock FontSize="15" Margin="2,0,0,0" Text="{x:Bind MusicFilePaths.Count}" FontWeight="Medium"/>
                                         <TextBlock FontSize="15" Text="首歌"/>
                                     </StackPanel>
-                                    
+
                                     <!--播放和菜单按钮-->
                                     <StackPanel x:Name="PlaylistButtonsStackPanel" Grid.Row="2" Margin="-8,0,0,0" Spacing="8" Height="Auto" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Button x:Name="PlaylistPlayButton" Padding="8,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -150,7 +150,7 @@
                                             <TextBlock x:Name="PlaylistMenuButtonContent" Text="&#xE10C;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
-                                    
+
                                 </Grid>
                                 <Grid Grid.Column="1" MinWidth="120" HorizontalAlignment="Right" VerticalAlignment="Center">
 
@@ -183,7 +183,7 @@
                                             </ImageBrush>
                                         </Border.Background>
                                     </Border>
-                                    
+
                                 </Grid>
                             </Grid>
                         </Button>
