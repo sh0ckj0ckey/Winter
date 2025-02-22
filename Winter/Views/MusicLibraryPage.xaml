@@ -79,7 +79,7 @@
                                 <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource ListViewHeaderItemStyle}">
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="models:MusicGroup">
-                                            <TextBlock Text="{x:Bind Key}" Margin="24,0,0,10" Foreground="{ThemeResource APP_ACCENT_BK}" FontWeight="Medium" FontSize="14"/>
+                                            <TextBlock Text="{x:Bind Key}" Margin="24,4,0,14" Foreground="{ThemeResource APP_ACCENT_BK}" FontWeight="Medium" FontSize="14"/>
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
