@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -12,9 +14,23 @@ namespace Winter.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    [INotifyPropertyChanged]
+#pragma warning disable MVVMTK0049 // Using [INotifyPropertyChanged] is not AOT compatible for WinRT
     public sealed partial class MusicPlaylistsPage : Page
+#pragma warning restore MVVMTK0049 // Using [INotifyPropertyChanged] is not AOT compatible for WinRT
     {
         private readonly MusicPlaylistsViewModel _viewModel;
+
+        private double _playlistItemWidth = 304;
+
+        /// <summary>
+        /// 歌单列表卡片自适应宽度
+        /// </summary>
+        public double PlaylistItemWidth
+        {
+            get => _playlistItemWidth;
+            private set => SetProperty(ref _playlistItemWidth, value);
+        }
 
         public MusicPlaylistsPage()
         {
@@ -42,10 +58,37 @@ namespace Winter.Views
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            if (sender is ScrollViewer scrollViewer)
+            UpdateHeaderSeparatorBorder();
+        }
+
+        private void ScrollViewer_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        {
+            try
             {
-                var verticalOffset = scrollViewer.VerticalOffset;
-                var maxOffset = Math.Min(16, scrollViewer.ScrollableHeight);
+                double availableWidth = e.NewSize.Width - 20;
+                int desiredItemCount = ((int)availableWidth / 304);
+                this.PlaylistItemWidth = availableWidth / desiredItemCount;
+
+                UpdateHeaderSeparatorBorder();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex);
+            }
+        }
+
+        private void UpdateHeaderSeparatorBorder()
+        {
+            if (PlaylistsScrollViewer is not null)
+            {
+                if (PlaylistsScrollViewer.ScrollableHeight <= 0)
+                {
+                    HeaderSeparatorBorder.Opacity = 0;
+                    return;
+                }
+
+                var verticalOffset = PlaylistsScrollViewer.VerticalOffset;
+                var maxOffset = Math.Min(16, PlaylistsScrollViewer.ScrollableHeight);
 
                 if (maxOffset <= 1) return;
 
