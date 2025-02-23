@@ -2,8 +2,10 @@ using System;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using Winter.Models.MusicLibrary;
 using Winter.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -36,6 +38,32 @@ namespace Winter.Views
         {
             _viewModel = App.Current.Services.GetRequiredService<MusicPlaylistsViewModel>();
             this.InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LibraryPlaylistItem playlist)
+            {
+                var control = new Controls.PlaylistControl(playlist);
+
+                var dialog = new ContentDialog
+                {
+                    XamlRoot = this.XamlRoot,
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Content = control,
+                    PrimaryButtonText = "播放全部",
+                    CloseButtonText = "关闭",
+                    DefaultButton = ContentDialogButton.Close,
+                    RequestedTheme = this.ActualTheme,
+                };
+
+                ContentDialogResult result = await dialog.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+
+                }
+            }
         }
 
         private void Button_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -106,5 +134,6 @@ namespace Winter.Views
                 HeaderSeparatorBorder.Opacity = newOpacity;
             }
         }
+
     }
 }

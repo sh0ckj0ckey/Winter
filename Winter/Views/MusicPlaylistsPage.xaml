@@ -59,7 +59,7 @@
                     </ItemsRepeater.Layout>
                     <DataTemplate x:DataType="libraryModels:LibraryPlaylistItem">
                         <Button Margin="4" Padding="8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
+                                DataContext="{x:Bind }" Click="Button_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                             <Button.Resources>
                                 <Storyboard x:Name="PointerEnterStoryboard">
                                     <DoubleAnimation Storyboard.TargetName="PlaylistButtonsStackPanel" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2"/>

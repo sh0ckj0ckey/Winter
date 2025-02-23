@@ -29,7 +29,7 @@ namespace Winter
             this.InitializeComponent();
             this.PersistenceId = "WinterMainWindow";
             this.ExtendsContentIntoTitleBar = true;
-            this.SetTitleBar(AppTitleBar);
+            //this.SetTitleBar(AppTitleBar);
 
             string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets/Icons/Winter.ico");
             this.SetIcon(iconPath);
