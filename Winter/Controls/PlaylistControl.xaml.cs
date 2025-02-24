@@ -17,6 +17,10 @@ using Winter.Models.MusicLibrary;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.DependencyInjection;
 using Winter.Services.Interfaces;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Graphics.Imaging;
+using Windows.Storage.Streams;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -106,7 +110,7 @@ namespace Winter.Controls
             }
         }
 
-        private void GenerateHeaderBackgroundImage()
+        private async void GenerateHeaderBackgroundImage()
         {
             try
             {
@@ -115,20 +119,63 @@ namespace Winter.Controls
                     return;
                 }
 
+                var images = new List<BitmapImage>();
+
                 if (this.Playlist.PlaylistMainCover?.Image is not null)
                 {
-
+                    images.Add(this.Playlist.PlaylistMainCover.Image);
                 }
 
                 if (this.Playlist.PlaylistSecondaryCover?.Image is not null)
                 {
-
+                    images.Add(this.Playlist.PlaylistSecondaryCover.Image);
                 }
 
                 if (this.Playlist.PlaylistTertiaryCover?.Image is not null)
                 {
-
+                    images.Add(this.Playlist.PlaylistTertiaryCover.Image);
                 }
+
+                if (images.Count <= 0)
+                {
+                    return;
+                }
+
+                int targetWidth = 64;
+                int targetHeight = 64;
+                int imageCountPerRow = 10;
+
+                var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+
+                for (int i = 0; i < imageCountPerRow; i++)
+                {
+                    var img = new Microsoft.UI.Xaml.Controls.Image
+                    {
+                        Source = images[i % images.Count],
+                        Width = targetWidth,
+                        Height = targetHeight,
+                        Stretch = Stretch.UniformToFill,
+                    };
+                    stackPanel.Children.Add(img);
+                }
+
+                stackPanel.Measure(new Size(targetWidth * imageCountPerRow, targetHeight));
+                stackPanel.Arrange(new Rect(0, 0, targetWidth * imageCountPerRow, targetHeight));
+
+                var renderTargetBitmap = new RenderTargetBitmap();
+                await renderTargetBitmap.RenderAsync(stackPanel);
+
+                var pixelBuffer = await renderTargetBitmap.GetPixelsAsync();
+                var finalImage = new BitmapImage();
+                using var stream = new InMemoryRandomAccessStream();
+                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied, 
+                    (uint)renderTargetBitmap.PixelWidth, (uint)renderTargetBitmap.PixelHeight, 96, 96, pixelBuffer.ToArray());
+                await encoder.FlushAsync();
+                stream.Seek(0);
+                await finalImage.SetSourceAsync(stream);
+
+                this.HeaderBackgroundImageBrush.ImageSource = finalImage;
             }
             catch (Exception ex)
             {
