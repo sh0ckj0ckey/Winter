@@ -1,26 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Winter.Models.MusicLibrary;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
-using Winter.Services.Interfaces;
-using static System.Net.Mime.MediaTypeNames;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Shapes;
+using Windows.Foundation;
 using Windows.Graphics.Imaging;
+using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
+using Winter.Models.MusicLibrary;
+using Winter.Services.Interfaces;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -67,8 +64,7 @@ namespace Winter.Controls
             this.Playlist = libraryPlaylistItem;
 
             LoadPlaylistMusic();
-
-            GenerateHeaderBackgroundImage();
+            DrawHeaderBackgroundImage();
         }
 
         private async void LoadPlaylistMusic()
@@ -110,30 +106,46 @@ namespace Winter.Controls
             }
         }
 
-        private async void GenerateHeaderBackgroundImage()
+        private async void DrawHeaderBackgroundImage()
         {
             try
             {
+                HeaderBackgroundBorder.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+
                 if (this.Playlist is null)
                 {
                     return;
                 }
 
-                var images = new List<BitmapImage>();
+                List<SoftwareBitmap> images = [];
 
-                if (this.Playlist.PlaylistMainCover?.Image is not null)
+                if (this.Playlist.MusicFilePaths?.Count > 0)
                 {
-                    images.Add(this.Playlist.PlaylistMainCover.Image);
-                }
+                    foreach (var path in this.Playlist.MusicFilePaths)
+                    {
+                        try
+                        {
+                            if (images.Count >= 6)
+                            {
+                                break;
+                            }
 
-                if (this.Playlist.PlaylistSecondaryCover?.Image is not null)
-                {
-                    images.Add(this.Playlist.PlaylistSecondaryCover.Image);
-                }
-
-                if (this.Playlist.PlaylistTertiaryCover?.Image is not null)
-                {
-                    images.Add(this.Playlist.PlaylistTertiaryCover.Image);
+                            var file = await StorageFile.GetFileFromPathAsync(path);
+                            var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 64, ThumbnailOptions.ResizeThumbnail);
+                            if (thumbnail is not null && thumbnail.Type != ThumbnailType.Icon)
+                            {
+                                var softwareBitmap = await GenerateSoftwareBitmap(thumbnail);
+                                if (softwareBitmap is not null)
+                                {
+                                    images.Add(softwareBitmap);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Trace.WriteLine(ex);
+                        }
+                    }
                 }
 
                 if (images.Count <= 0)
@@ -143,44 +155,76 @@ namespace Winter.Controls
 
                 int targetWidth = 64;
                 int targetHeight = 64;
-                int imageCountPerRow = 10;
+                int imageCountPerRow = 12;
+                int imageRowCount = 6;
+                int imageGap = 2;
 
-                var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+                int canvasWidth = (targetWidth * imageCountPerRow) + (imageGap * (imageCountPerRow + 1));
+                int canvasHeight = (targetHeight * imageRowCount) + (imageGap * (imageRowCount + 1));
 
-                for (int i = 0; i < imageCountPerRow; i++)
+                int imageCount = images.Count;
+
+                CanvasRenderTarget renderTarget = new CanvasRenderTarget(CanvasDevice.GetSharedDevice(), canvasWidth, canvasHeight, 96);
+                using (CanvasDrawingSession drawingSession = renderTarget.CreateDrawingSession())
                 {
-                    var img = new Microsoft.UI.Xaml.Controls.Image
+                    drawingSession.Clear(Colors.Transparent);
+                    for (int i = 0; i < imageRowCount; i++)
                     {
-                        Source = images[i % images.Count],
-                        Width = targetWidth,
-                        Height = targetHeight,
-                        Stretch = Stretch.UniformToFill,
-                    };
-                    stackPanel.Children.Add(img);
+                        for (int j = 0; j < imageCountPerRow; j++)
+                        {
+                            SoftwareBitmap image = images[(j + (i % imageCount)) % imageCount];
+                            int x = j * (targetWidth + imageGap);
+                            int y = i * (targetHeight + imageGap);
+                            var drawRect = new Rect(x, y, targetWidth, targetHeight);
+
+                            using var canvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(CanvasDevice.GetSharedDevice(), image);
+                            drawingSession.DrawImage(canvasBitmap, drawRect);
+
+                            //drawingSession.FillRoundedRectangle(drawRect, 4, 4, Colors.Red);
+                        }
+                    }
                 }
 
-                stackPanel.Measure(new Size(targetWidth * imageCountPerRow, targetHeight));
-                stackPanel.Arrange(new Rect(0, 0, targetWidth * imageCountPerRow, targetHeight));
-
-                var renderTargetBitmap = new RenderTargetBitmap();
-                await renderTargetBitmap.RenderAsync(stackPanel);
-
-                var pixelBuffer = await renderTargetBitmap.GetPixelsAsync();
-                var finalImage = new BitmapImage();
+                var softwareBitmapImage = await SoftwareBitmap.CreateCopyFromSurfaceAsync(renderTarget);
                 using var stream = new InMemoryRandomAccessStream();
                 var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied, 
-                    (uint)renderTargetBitmap.PixelWidth, (uint)renderTargetBitmap.PixelHeight, 96, 96, pixelBuffer.ToArray());
+                encoder.SetSoftwareBitmap(softwareBitmapImage);
                 await encoder.FlushAsync();
                 stream.Seek(0);
-                await finalImage.SetSourceAsync(stream);
+                var bitmapImage = new BitmapImage();
+                await bitmapImage.SetSourceAsync(stream);
 
-                this.HeaderBackgroundImageBrush.ImageSource = finalImage;
+                HeaderBackgroundImageBrush.ImageSource = bitmapImage;
+                HeaderBackgroundBorder.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Trace.WriteLine(ex);
             }
+        }
+
+        private async Task<SoftwareBitmap?> GenerateSoftwareBitmap(IRandomAccessStream randomAccessStream)
+        {
+            try
+            {
+                randomAccessStream.Seek(0);
+                BitmapDecoder decoder = await BitmapDecoder.CreateAsync(randomAccessStream);
+                var targetSoftwareBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                targetSoftwareBitmap.DpiX = 96;
+                targetSoftwareBitmap.DpiY = 96;
+                return targetSoftwareBitmap;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine(ex);
+            }
+            finally
+            {
+                randomAccessStream?.Seek(0);
+                randomAccessStream?.Dispose();
+            }
+
+            return null;
         }
     }
 }
