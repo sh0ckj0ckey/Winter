@@ -45,7 +45,7 @@
                 <Button Style="{ThemeResource AccentButtonStyle}">
                     <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE710;" FontSize="16" VerticalAlignment="Center"/>
-                        <TextBlock Text="新建播放列表" VerticalAlignment="Center"/>
+                        <TextBlock Text="新建歌单" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
