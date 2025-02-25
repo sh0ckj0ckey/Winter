@@ -196,6 +196,8 @@ namespace Winter.Controls
 
                 HeaderBackgroundImageBrush.ImageSource = bitmapImage;
                 HeaderBackgroundBorder.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+                HeaderBackgroundBorder.Opacity = 0;
+                HeaderBackgroundEnterStoryboard?.Begin();
             }
             catch (Exception ex)
             {

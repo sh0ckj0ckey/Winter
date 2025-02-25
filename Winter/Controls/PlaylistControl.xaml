@@ -14,10 +14,19 @@
     mc:Ignorable="d" Background="Transparent">
 
     <UserControl.Resources>
-        <community:AttachedDropShadow x:Key="CommonShadow" BlurRadius="36" IsMasked="False" Color="{ThemeResource SolidBackgroundFillColorBase}" CastTo="{x:Bind HeaderBackgroundBorder}"/>
+        <community:AttachedDropShadow x:Key="CommonShadow" BlurRadius="36" IsMasked="True" Color="{ThemeResource SolidBackgroundFillColorBase}" CastTo="{x:Bind HeaderBackgroundBorder}"/>
 
         <converters:DoubleToVisibilityConverter x:Key="GreaterThan0ToVisibilityConverter" GreaterThan="0"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+        <Storyboard x:Name="HeaderBackgroundEnterStoryboard">
+            <DoubleAnimation Storyboard.TargetName="HeaderBackgroundBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2"/>
+            <DoubleAnimation Storyboard.TargetName="HeaderBackgroundTranslation" Storyboard.TargetProperty="X" From="-16" To="0" Duration="0:0:2">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </UserControl.Resources>
 
     <Grid Margin="-24,-24,-24,-24" MinHeight="400" MaxHeight="560" Width="480" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -33,14 +42,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border x:Name="HeaderBackgroundBorder" Grid.RowSpan="3" Visibility="Collapsed" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <communityAnimations:Implicit.ShowAnimations>
-                    <communityAnimations:TranslationAnimation From="-16,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:4"/>
-                    <communityAnimations:OpacityAnimation To="1" Duration="0:0:4"/>
-                </communityAnimations:Implicit.ShowAnimations>
-                <communityAnimations:Implicit.HideAnimations>
-                    <communityAnimations:OpacityAnimation To="0" Duration="0:0:0.4"/>
-                </communityAnimations:Implicit.HideAnimations>
+            <Border x:Name="HeaderBackgroundBorder" Grid.RowSpan="3" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="HeaderBackgroundTranslation"/>
+                </Border.RenderTransform>
                 <Border.Background>
                     <ImageBrush x:Name="HeaderBackgroundImageBrush" Opacity="0.3" Stretch="None">
                         <ImageBrush.Transform>
