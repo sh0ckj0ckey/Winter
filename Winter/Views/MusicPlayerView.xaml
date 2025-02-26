@@ -49,9 +49,9 @@
         <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Border.Background>
-                    <ImageBrush Stretch="UniformToFill">
+                    <ImageBrush Stretch="UniformToFill" Opacity="0.35">
                         <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefault.png" DecodePixelType="Logical" DecodePixelHeight="512"/>
+                            <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefaultGray.png" DecodePixelType="Logical" DecodePixelHeight="512"/>
                         </ImageBrush.ImageSource>
                     </ImageBrush>
                 </Border.Background>
