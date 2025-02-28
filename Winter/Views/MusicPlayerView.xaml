@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!--界面切换-->
-        <community:Segmented Grid.Row="1" SelectedIndex="0" Margin="0,0,24,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <community:Segmented Grid.Row="1" SelectedIndex="0" Margin="0,0,24,0" HorizontalAlignment="Right" VerticalAlignment="Center" SelectionChanged="Segmented_SelectionChanged">
             <community:SegmentedItem>
                 <community:SegmentedItem.Icon>
                     <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8D6;"/>
@@ -46,8 +46,8 @@
         </Button>
 
         <!--正在播放-->
-        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <StackPanel x:Name="PlayingStackPanel" Grid.Row="2" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border x:Name="ConnectedPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Border.Background>
                     <ImageBrush Stretch="UniformToFill" Opacity="0.35">
                         <ImageBrush.ImageSource>
@@ -56,9 +56,32 @@
                     </ImageBrush>
                 </Border.Background>
             </Border>
-            <TextBlock Text="" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
-            <TextBlock Text="" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="房客" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
         </StackPanel>
+
+        <!--播放队列-->
+        <Grid x:Name="PlayListGrid" Grid.Row="2" Visibility="Collapsed" Padding="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="16">
+                <Border x:Name="DestinationPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Border.Background>
+                        <ImageBrush Stretch="UniformToFill" Opacity="0.35">
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefaultGray.png" DecodePixelType="Logical" DecodePixelHeight="144"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Border.Background>
+                </Border>
+                <StackPanel Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock x:Name="DestinationPlayingMusicTitleTextBlock" Text="房客" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
 
         <!--进度条-->
         <controls:ProgressBar Grid.Row="3" Margin="0,0" Maximum="100" Value="0" Background="{ThemeResource ControlElevationBorderBrush}"/>
