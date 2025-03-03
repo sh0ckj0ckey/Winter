@@ -64,7 +64,7 @@
                                 <Storyboard x:Name="PointerEnterStoryboard">
                                     <DoubleAnimation Storyboard.TargetName="PlaylistButtonsStackPanel" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2"/>
                                     <DoubleAnimation Storyboard.TargetName="PlaylistPlayButtonContent" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
-                                    <DoubleAnimation Storyboard.TargetName="PlaylistMenuButtonContent" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                    <DoubleAnimation Storyboard.TargetName="PlaylistAddButtonContent" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
                                     <DoubleAnimation Storyboard.TargetName="PlaylistPlayButton" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" To="32" Duration="0:0:0.3">
                                         <DoubleAnimation.EasingFunction>
                                             <CircleEase EasingMode="EaseOut"/>
@@ -80,7 +80,7 @@
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="PlaylistMenuButtonTranslation" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
+                                    <DoubleAnimation Storyboard.TargetName="PlaylistAddButtonTranslation" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
                                         <DoubleAnimation.EasingFunction>
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
@@ -89,7 +89,7 @@
                                 <Storyboard x:Name="PointerLeaveStoryboard">
                                     <DoubleAnimation Storyboard.TargetName="PlaylistButtonsStackPanel" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2"/>
                                     <DoubleAnimation Storyboard.TargetName="PlaylistPlayButtonContent" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
-                                    <DoubleAnimation Storyboard.TargetName="PlaylistMenuButtonContent" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                    <DoubleAnimation Storyboard.TargetName="PlaylistAddButtonContent" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
                                     <DoubleAnimation Storyboard.TargetName="PlaylistPlayButton" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" To="0" Duration="0:0:0.3">
                                         <DoubleAnimation.EasingFunction>
                                             <CircleEase EasingMode="EaseOut"/>
@@ -105,7 +105,7 @@
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="PlaylistMenuButtonTranslation" Storyboard.TargetProperty="Y" To="32" Duration="0:0:0.4">
+                                    <DoubleAnimation Storyboard.TargetName="PlaylistAddButtonTranslation" Storyboard.TargetProperty="Y" To="32" Duration="0:0:0.4">
                                         <DoubleAnimation.EasingFunction>
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
@@ -132,7 +132,7 @@
                                         <TextBlock FontSize="15" Text="首歌"/>
                                     </StackPanel>
 
-                                    <!--播放和菜单按钮-->
+                                    <!--播放按钮-->
                                     <StackPanel x:Name="PlaylistButtonsStackPanel" Grid.Row="2" Margin="-8,0,0,0" Spacing="8" Height="Auto" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Button x:Name="PlaylistPlayButton" Padding="8,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
@@ -145,9 +145,9 @@
                                         </Button>
                                         <Button x:Name="PlaylistMenuButton" Padding="8,0" Height="0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
-                                                <TranslateTransform x:Name="PlaylistMenuButtonTranslation" Y="32"/>
+                                                <TranslateTransform x:Name="PlaylistAddButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
-                                            <TextBlock x:Name="PlaylistMenuButtonContent" Text="&#xE10C;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="PlaylistAddButtonContent" Text="&#xED0E;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
 
