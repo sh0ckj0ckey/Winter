@@ -31,12 +31,12 @@ namespace Winter.Views
                     PlayingStackPanel.Visibility = showPlayingList ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
                 }
 
-                if (PlayListGrid is not null)
+                if (PlayingListGrid is not null)
                 {
-                    PlayListGrid.Visibility = showPlayingList ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
+                    PlayingListGrid.Visibility = showPlayingList ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
                 }
 
-                if (PlayingStackPanel is null || PlayListGrid is null)
+                if (PlayingStackPanel is null || PlayingListGrid is null)
                 {
                     return;
                 }
@@ -59,6 +59,8 @@ namespace Winter.Views
                     coverAnimation?.TryStart(DestinationPlayingMusicCoverBorder);
                     titleAnimation?.TryStart(DestinationPlayingMusicTitleTextBlock);
                     artistAnimation?.TryStart(DestinationPlayingMusicArtistTextBlock);
+
+                    ShowPlayingListStoryboard?.Begin();
                 }
                 else
                 {
@@ -75,6 +77,8 @@ namespace Winter.Views
                     coverAnimation?.TryStart(ConnectedPlayingMusicCoverBorder);
                     titleAnimation?.TryStart(ConnectedPlayingMusicTitleTextBlock);
                     artistAnimation?.TryStart(ConnectedPlayingMusicArtistTextBlock);
+
+                    HidePlayingListStoryboard?.Begin();
                 }
             }
         }

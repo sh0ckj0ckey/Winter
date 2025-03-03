@@ -10,6 +10,24 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:community="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d" Background="Transparent">
+    <UserControl.Resources>
+        <Storyboard x:Name="ShowPlayingListStoryboard">
+            <DoubleAnimation Storyboard.TargetName="PlayingListBorder" Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.2" Duration="0:0:0.6"/>
+            <DoubleAnimation Storyboard.TargetName="PlayingListBorderTranslation" Storyboard.TargetProperty="Y" To="0" BeginTime="0:0:0.2" Duration="0:0:0.6">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="HidePlayingListStoryboard">
+            <DoubleAnimation Storyboard.TargetName="PlayingListBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlayingListBorderTranslation" Storyboard.TargetProperty="Y" To="24" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
 
     <Grid Grid.Column="0">
         <Grid.RowDefinitions>
@@ -61,7 +79,7 @@
         </StackPanel>
 
         <!--播放队列-->
-        <Grid x:Name="PlayListGrid" Grid.Row="2" Visibility="Collapsed" Padding="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid x:Name="PlayingListGrid" Grid.Row="2" RowSpacing="8" Visibility="Collapsed" Padding="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -81,6 +99,11 @@
                     <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
+            <Border x:Name="PlayingListBorder" Grid.Row="1" Opacity="0" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="PlayingListBorderTranslation" Y="32"/>
+                </Border.RenderTransform>
+            </Border>
         </Grid>
 
         <!--进度条-->
