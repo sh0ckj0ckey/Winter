@@ -1,9 +1,11 @@
 using System;
 using CommunityToolkit.WinUI.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media.Animation;
+using Winter.Services.Interfaces;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -12,11 +14,15 @@ namespace Winter.Views
 {
     public sealed partial class MusicPlayerView : UserControl
     {
+        private readonly ISettingsService _settingsService;
+
         private readonly Visual _visual;
 
         public MusicPlayerView()
         {
             this.InitializeComponent();
+
+            _settingsService = App.Current.Services.GetRequiredService<ISettingsService>();
             _visual = ElementCompositionPreview.GetElementVisual(this);
         }
 
@@ -81,6 +87,31 @@ namespace Winter.Views
                     HidePlayingListStoryboard?.Begin();
                 }
             }
+        }
+
+        private void PlayingNoRandomButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            _settingsService.PlayingRandomMode = PlayingRandomMode.Random;
+        }
+
+        private void PlayingRandomButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            _settingsService.PlayingRandomMode = PlayingRandomMode.NoRandom;
+        }
+
+        private void PlayingNoRepeatButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            _settingsService.PlayingRepeatMode = PlayingRepeatMode.RepeatAll;
+        }
+
+        private void PlayingRepeatAllButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            _settingsService.PlayingRepeatMode = PlayingRepeatMode.RepeatOne;
+        }
+
+        private void PlayingRepeatOneButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            _settingsService.PlayingRepeatMode = PlayingRepeatMode.NoRepeat;
         }
     }
 }

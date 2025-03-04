@@ -12,6 +12,10 @@ namespace Winter.Services
 
         private const string SETTING_NAME_BACKDROP_INDEX = "BackdropIndex";
 
+        private const string SETTING_NAME_RANDOM_INDEX = "RandomIndex";
+
+        private const string SETTING_NAME_REPEAT_INDEX = "RepeatIndex";
+
         private ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
         public event EventHandler<int>? AppearanceSettingChanged;
@@ -21,6 +25,10 @@ namespace Winter.Services
         private int _appearanceIndex = -1;
 
         private int _backdropIndex = -1;
+
+        private int _playingRandomMode = -1;
+
+        private int _playingRepeatMode = -1;
 
         /// <summary>
         /// 设置的应用程序的主题 0-System 1-Dark 2-Light
@@ -108,6 +116,89 @@ namespace Winter.Services
             }
         }
 
+        /// <summary>
+        /// 随机播放模式
+        /// </summary>
+        public PlayingRandomMode PlayingRandomMode
+        {
+            get
+            {
+                try
+                {
+                    if (_playingRandomMode < 0)
+                    {
+                        if (_localSettings.Values[SETTING_NAME_RANDOM_INDEX] == null)
+                        {
+                            _playingRandomMode = 0;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_RANDOM_INDEX]?.ToString() == "0")
+                        {
+                            _playingRandomMode = 0;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_RANDOM_INDEX]?.ToString() == "1")
+                        {
+                            _playingRandomMode = 1;
+                        }
+                        else
+                        {
+                            _playingRandomMode = 0;
+                        }
+                    }
+                }
+                catch (Exception ex) { Trace.WriteLine(ex); }
+                if (_playingRandomMode < 0) _playingRandomMode = 0;
+                return (PlayingRandomMode)_playingRandomMode;
+            }
+            set
+            {
+                SetProperty(ref _playingRandomMode, (int)value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_RANDOM_INDEX] = _playingRandomMode;
+            }
+        }
+
+        /// <summary>
+        /// 循环播放模式
+        /// </summary>
+        public PlayingRepeatMode PlayingRepeatMode
+        {
+            get
+            {
+                try
+                {
+                    if (_playingRepeatMode < 0)
+                    {
+                        if (_localSettings.Values[SETTING_NAME_REPEAT_INDEX] == null)
+                        {
+                            _playingRepeatMode = 0;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_REPEAT_INDEX]?.ToString() == "0")
+                        {
+                            _playingRepeatMode = 0;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_REPEAT_INDEX]?.ToString() == "1")
+                        {
+                            _playingRepeatMode = 1;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_REPEAT_INDEX]?.ToString() == "2")
+                        {
+                            _playingRepeatMode = 2;
+                        }
+                        else
+                        {
+                            _playingRepeatMode = 0;
+                        }
+                    }
+                }
+                catch (Exception ex) { Trace.WriteLine(ex); }
+                if (_playingRepeatMode < 0) _playingRepeatMode = 0;
+                return (PlayingRepeatMode)_playingRepeatMode;
+            }
+            set
+            {
+                SetProperty(ref _playingRepeatMode, (int)value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_REPEAT_INDEX] = _playingRepeatMode;
+            }
+        }
     }
 
 }
