@@ -70,7 +70,7 @@
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="PlaylistMenuButton" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" To="32" Duration="0:0:0.3">
+                                    <DoubleAnimation Storyboard.TargetName="PlaylistAddButton" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" To="32" Duration="0:0:0.3">
                                         <DoubleAnimation.EasingFunction>
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
@@ -95,7 +95,7 @@
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
                                     </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="PlaylistMenuButton" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" To="0" Duration="0:0:0.3">
+                                    <DoubleAnimation Storyboard.TargetName="PlaylistAddButton" EnableDependentAnimation="True" Storyboard.TargetProperty="Height" To="0" Duration="0:0:0.3">
                                         <DoubleAnimation.EasingFunction>
                                             <CircleEase EasingMode="EaseOut"/>
                                         </DoubleAnimation.EasingFunction>
@@ -136,18 +136,18 @@
                                     <StackPanel x:Name="PlaylistButtonsStackPanel" Grid.Row="2" Margin="-8,0,0,0" Spacing="8" Height="Auto" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Button x:Name="PlaylistPlayButton" Padding="8,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
-                                                <TranslateTransform x:Name="PlaylistPlayButtonTranslation" Y="16"/>
+                                                <TranslateTransform x:Name="PlaylistPlayButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
-                                            <StackPanel x:Name="PlaylistPlayButtonContent" Orientation="Horizontal" Spacing="6">
+                                            <StackPanel x:Name="PlaylistPlayButtonContent" Opacity="0" Orientation="Horizontal" Spacing="6">
                                                 <TextBlock Text="&#xE102;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
                                                 <TextBlock Text="播放歌单" Visibility="Visible" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>
-                                        <Button x:Name="PlaylistMenuButton" Padding="8,0" Height="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Button x:Name="PlaylistAddButton" Padding="8,0" Height="0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
                                                 <TranslateTransform x:Name="PlaylistAddButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
-                                            <FontIcon x:Name="PlaylistAddButtonContent" FontFamily="{ThemeResource FluentIconFromScreenbox}" Glyph="&#xF5EB;" FontSize="15" VerticalAlignment="Center"/>
+                                            <FontIcon x:Name="PlaylistAddButtonContent" Opacity="0" FontFamily="{ThemeResource FluentIconFromScreenbox}" Glyph="&#xF5EB;" FontSize="15" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
 
