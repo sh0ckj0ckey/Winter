@@ -147,7 +147,7 @@
                                             <Button.RenderTransform>
                                                 <TranslateTransform x:Name="PlaylistAddButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
-                                            <TextBlock x:Name="PlaylistAddButtonContent" Text="&#xED0E;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                                            <FontIcon x:Name="PlaylistAddButtonContent" FontFamily="{ThemeResource FluentIconFromScreenbox}" Glyph="&#xF5EB;" FontSize="15" VerticalAlignment="Center"/>
                                         </Button>
                                     </StackPanel>
 

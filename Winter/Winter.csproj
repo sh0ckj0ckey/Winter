@@ -31,9 +31,7 @@
 		<StartupObject>Winter.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Content Remove="Assets\Fonts\ScreenboxFluentIcons.ttf" />
-	</ItemGroup>
-	<ItemGroup>
+	  <None Remove="Assets\Fonts\ScreenboxFluentIcons.ttf" />
 	  <None Remove="Assets\Icons\icon_github.png" />
 	  <None Remove="Assets\Icons\winter.ico" />
 	  <None Remove="Assets\Icons\winter.png" />

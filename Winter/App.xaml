@@ -13,6 +13,8 @@
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
 
+            <FontFamily x:Key="FluentIconFromScreenbox">/Assets/Fonts/ScreenboxFluentIcons.ttf#Screenbox Fluent Icons</FontFamily>
+
             <Style x:Key="ListViewHeaderItemStyle" TargetType="ListViewHeaderItem">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="CornerRadius" Value="4"/>
