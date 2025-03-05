@@ -77,8 +77,8 @@
                     </ImageBrush>
                 </Border.Background>
             </Border>
-            <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="房客" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!--播放队列-->
@@ -98,8 +98,8 @@
                     </Border.Background>
                 </Border>
                 <StackPanel Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <TextBlock x:Name="DestinationPlayingMusicTitleTextBlock" Text="房客" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left"/>
-                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="王心凌" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="DestinationPlayingMusicTitleTextBlock" Text="" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
             <Border x:Name="PlayingListBorder" Grid.Row="1" Opacity="0" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -128,7 +128,7 @@
                 </Grid>
                 <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xE623;" FontSize="14" ToolTipService.ToolTip="下一首" Background="Transparent" BorderBrush="Transparent"/>
                 <Grid>
-                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource FluentIconFromScreenbox}" Content="&#xE8EE;" FontSize="16" ToolTipService.ToolTip="循环" Background="Transparent" BorderBrush="Transparent"
+                    <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource FluentIconFromScreenbox}" Content="&#xE8EE;" FontSize="16" ToolTipService.ToolTip="循环播放" Background="Transparent" BorderBrush="Transparent"
                             Visibility="{x:Bind _settingsService.PlayingRepeatMode,Mode=OneWay,Converter={StaticResource IsEqualToVisibilityConverter},ConverterParameter=NoRepeat}" Click="PlayingNoRepeatButton_Click"/>
                     <Button HorizontalAlignment="Center" Padding="0" Height="42" Width="42" FontFamily="{ThemeResource FluentIconFromScreenbox}" Content="&#xE8EE;" FontSize="16" ToolTipService.ToolTip="全部循环" Style="{ThemeResource AccentButtonStyle}"
                             Visibility="{x:Bind _settingsService.PlayingRepeatMode,Mode=OneWay,Converter={StaticResource IsEqualToVisibilityConverter},ConverterParameter=RepeatAll}" Click="PlayingRepeatAllButton_Click"/>
