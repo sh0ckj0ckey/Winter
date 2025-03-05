@@ -21,7 +21,7 @@
 
         <SolidColorBrush x:Key="ListViewHeaderItemDividerStroke" Color="Transparent"/>
         <communityConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <converters:NullOrEmpty2VisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <converters:NullOrEmptyToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
         <!--<SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent"/>
         <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent"/>
