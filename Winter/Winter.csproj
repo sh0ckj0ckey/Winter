@@ -108,7 +108,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.1.240916" />
 		<PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
-		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
 		<PackageReference Include="System.Text.Json" Version="9.0.0" />
 		<PackageReference Include="MinecraftLaunch.PinyinConverter" Version="1.0.0" />
 		<PackageReference Include="NPinyin.Core" Version="3.0.0" />
