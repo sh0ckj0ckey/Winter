@@ -126,9 +126,9 @@
 
                                     <!--歌单标题-->
                                     <TextBlock Grid.Row="0" FontSize="17" Text="{x:Bind Title}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" MaxLines="2"/>
-                                    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="4" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                                         <TextBlock FontSize="15" Text="共"/>
-                                        <TextBlock FontSize="15" Margin="2,0,0,0" Text="{x:Bind MusicFilePaths.Count}" FontWeight="Medium"/>
+                                        <TextBlock FontSize="15" Text="{x:Bind MusicFilePaths.Count}" FontWeight="Medium"/>
                                         <TextBlock FontSize="15" Text="首歌"/>
                                     </StackPanel>
 
@@ -138,8 +138,8 @@
                                             <Button.RenderTransform>
                                                 <TranslateTransform x:Name="PlaylistPlayButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
-                                            <StackPanel x:Name="PlaylistPlayButtonContent" Opacity="0" Orientation="Horizontal" Spacing="6">
-                                                <TextBlock Text="&#xE102;" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                                            <StackPanel x:Name="PlaylistPlayButtonContent" Opacity="0" Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="&#xE768;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
                                                 <TextBlock Text="播放歌单" Visibility="Visible" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>

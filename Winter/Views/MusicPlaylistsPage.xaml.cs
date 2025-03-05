@@ -51,9 +51,7 @@ namespace Winter.Views
                     XamlRoot = this.XamlRoot,
                     Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
                     Content = control,
-                    PrimaryButtonText = "播放全部",
                     CloseButtonText = "关闭",
-                    DefaultButton = ContentDialogButton.Close,
                     RequestedTheme = this.ActualTheme,
                 };
 

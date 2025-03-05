@@ -40,9 +40,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border x:Name="HeaderBackgroundBorder" Grid.RowSpan="3" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border x:Name="HeaderBackgroundBorder" Grid.RowSpan="4" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Border.RenderTransform>
                     <TranslateTransform x:Name="HeaderBackgroundTranslation"/>
                 </Border.RenderTransform>
@@ -58,14 +59,35 @@
             <TextBlock Grid.Row="0" FontSize="20" Margin="38,18,38,0" Text="{x:Bind Playlist.Title,Mode=OneWay}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" MaxLines="2"
                        community:Effects.Shadow="{StaticResource CommonShadow}"/>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="38,8,38,18" Spacing="2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="38,4,38,8" Spacing="4" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                         community:Effects.Shadow="{StaticResource CommonShadow}">
-                <TextBlock FontSize="15" Text="共"/>
-                <TextBlock FontSize="15" Margin="2,0,0,0" Text="{x:Bind Playlist.MusicFilePaths.Count,Mode=OneWay}" FontWeight="Medium"/>
-                <TextBlock FontSize="15" Text="首歌"/>
+                <TextBlock FontSize="14" Text="共"/>
+                <TextBlock FontSize="14" Text="{x:Bind Playlist.MusicFilePaths.Count,Mode=OneWay}" FontWeight="Medium"/>
+                <TextBlock FontSize="14" Text="首歌"/>
             </StackPanel>
 
-            <Border Grid.Row="2" Height="1" Background="{ThemeResource ControlElevationBorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <StackPanel Grid.Row="2" Margin="38,0,38,12" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="8">
+                <Button x:Name="PlaylistPlayButton" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="&#xE768;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
+                        <TextBlock Text="播放歌单" Visibility="Visible" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="PlaylistAddButton" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="&#xF5EB;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
+                        <TextBlock Text="加入播放队列" Visibility="Visible" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="PlaylistRenameButton" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="&#xE8AC;" FontSize="15" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                        <TextBlock Text="重命名" Visibility="Visible" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <Border Grid.Row="3" Height="1" Background="{ThemeResource ControlElevationBorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
 
         </Grid>
 
