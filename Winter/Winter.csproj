@@ -86,7 +86,6 @@
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-150.png" />
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-200.png" />
 	  <None Remove="Assets\Manifest\Wide310x150Logo.scale-400.png" />
-	  <None Remove="Controls\PlaylistControl.xaml" />
 	  <None Remove="ThemeResources\ThemeDictionary.xaml" />
 	  <None Remove="Views\MainPage.xaml" />
 	  <None Remove="Views\MusicLibraryPage.xaml" />
@@ -154,7 +153,7 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PlaylistControl.xaml">
+	  <Page Update="Controls\PlaylistContentDialogContentControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

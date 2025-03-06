@@ -44,23 +44,16 @@ namespace Winter.Views
         {
             if (sender is Button btn && btn.DataContext is LibraryPlaylistItem playlist)
             {
-                var control = new Controls.PlaylistControl(playlist);
-
                 var dialog = new ContentDialog
                 {
                     XamlRoot = this.XamlRoot,
                     Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                    Content = control,
-                    CloseButtonText = "¹Ø±Õ",
                     RequestedTheme = this.ActualTheme,
                 };
 
-                ContentDialogResult result = await dialog.ShowAsync();
+                dialog.Content = new Controls.PlaylistContentDialogContentControl(playlist, () => { dialog?.Hide(); });
 
-                if (result == ContentDialogResult.Primary)
-                {
-
-                }
+                _ = await dialog.ShowAsync();
             }
         }
 

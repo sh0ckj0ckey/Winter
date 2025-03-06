@@ -23,10 +23,12 @@ namespace Winter.Controls
 {
     [INotifyPropertyChanged]
 #pragma warning disable MVVMTK0049 // Using [INotifyPropertyChanged] is not AOT compatible for WinRT
-    public sealed partial class PlaylistControl : UserControl
+    public sealed partial class PlaylistContentDialogContentControl : UserControl
 #pragma warning restore MVVMTK0049 // Using [INotifyPropertyChanged] is not AOT compatible for WinRT
     {
         private readonly IMusicLibraryService _musicLibraryService;
+
+        private readonly Action _hideDialogContent;
 
         private LibraryPlaylistItem? _playlist = null;
 
@@ -52,13 +54,14 @@ namespace Winter.Controls
 
         public ObservableCollection<LibraryMusicItem> MusicItems = new();
 
-        public PlaylistControl(LibraryPlaylistItem libraryPlaylistItem)
+        public PlaylistContentDialogContentControl(LibraryPlaylistItem libraryPlaylistItem, Action hideContentDialog)
         {
             _musicLibraryService = App.Current.Services.GetRequiredService<IMusicLibraryService>();
-
-            this.InitializeComponent();
+            _hideDialogContent = hideContentDialog;
 
             this.Playlist = libraryPlaylistItem;
+
+            this.InitializeComponent();
 
             LoadPlaylistMusic();
             DrawHeaderBackgroundImage();
@@ -101,6 +104,11 @@ namespace Winter.Controls
             {
                 this.IsLoadingPlaylistMusic = false;
             }
+        }
+
+        private void PlaylistCloseButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            _hideDialogContent?.Invoke();
         }
 
         private async void DrawHeaderBackgroundImage()
@@ -225,5 +233,6 @@ namespace Winter.Controls
 
             return null;
         }
+
     }
 }
