@@ -134,7 +134,7 @@
 
                                     <!--播放按钮-->
                                     <StackPanel x:Name="PlaylistButtonsStackPanel" Grid.Row="2" Margin="-8,0,0,0" Spacing="8" Height="Auto" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Button x:Name="PlaylistPlayButton" Padding="8,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Button x:Name="PlaylistPlayButton" Padding="6,0,10,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
                                                 <TranslateTransform x:Name="PlaylistPlayButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
