@@ -77,7 +77,7 @@
                   ItemsSource="{x:Bind MusicItems,Mode=OneWay}" Visibility="{x:Bind IsLoadingPlaylistMusic,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
-                    <Grid ColumnSpacing="16" Margin="24,16,10,16">
+                    <Grid ColumnSpacing="16" Margin="24,16,8,16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*"/>
                             <ColumnDefinition Width="*"/>
@@ -95,23 +95,29 @@
 
         <Grid Grid.Row="2" Padding="16" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="8">
-                <Button x:Name="PlaylistPlayButton" Style="{ThemeResource AccentButtonStyle}" Padding="32,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="5">
+                <Button x:Name="PlaylistPlayButton" Style="{ThemeResource AccentButtonStyle}" Padding="22,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
                         <TextBlock Text="&#xE768;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
                         <TextBlock Text="播放歌单" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="PlaylistAddButton" Padding="12,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
+                    <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="&#xF5EB;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
-                        <TextBlock Text="加入播放队列" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="PlaylistAddTextBlock" Text="加入播放队列" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="PlaylistRenameButton" Padding="12,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <!--<StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center" VerticalAlignment="Center">-->
                     <TextBlock Text="&#xE8AC;" FontSize="15" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                    <!--<TextBlock x:Name="PlaylistRenameTextBlock" Text="重命名" VerticalAlignment="Center"/>
+                    </StackPanel>-->
                 </Button>
                 <Button x:Name="PlaylistDeleteButton" Padding="12,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Text="&#xE107;" FontSize="15" Foreground="#E46962" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                    <!--<StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center" VerticalAlignment="Center">-->
+                    <TextBlock Text="&#xE107;" FontSize="15" FontFamily="{ThemeResource SymbolThemeFontFamily}" VerticalAlignment="Center"/>
+                    <!--<TextBlock x:Name="PlaylistDeleteTextBlock" Text="删除歌单" VerticalAlignment="Center"/>
+                    </StackPanel>-->
                 </Button>
             </StackPanel>
 
