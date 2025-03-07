@@ -77,7 +77,7 @@
                   ItemsSource="{x:Bind MusicItems,Mode=OneWay}" Visibility="{x:Bind IsLoadingPlaylistMusic,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
-                    <Grid ColumnSpacing="16" Margin="24,16,8,16">
+                    <Grid ColumnSpacing="16" Margin="24,16,10,16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*"/>
                             <ColumnDefinition Width="*"/>
