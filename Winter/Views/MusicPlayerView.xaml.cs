@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media.Animation;
 using Winter.Services.Interfaces;
+using Winter.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -16,6 +17,8 @@ namespace Winter.Views
     {
         private readonly ISettingsService _settingsService;
 
+        private readonly MusicPlayerViewModel _viewModel;
+
         private readonly Visual _visual;
 
         public MusicPlayerView()
@@ -23,6 +26,7 @@ namespace Winter.Views
             this.InitializeComponent();
 
             _settingsService = App.Current.Services.GetRequiredService<ISettingsService>();
+            _viewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
             _visual = ElementCompositionPreview.GetElementVisual(this);
         }
 

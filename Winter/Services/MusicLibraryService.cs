@@ -16,14 +16,11 @@ namespace Winter.Services
     {
         private readonly List<LibraryMusicItem> _allMusicItems = [];
 
-        private readonly List<LibraryAlbumItem> _allAlbumItems = [];
-
         private readonly Dictionary<string, LibraryMusicItem> _pathToMusicItem = [];
 
         public async Task LoadMusicLibraryAsync()
         {
             _allMusicItems.Clear();
-            _allAlbumItems.Clear();
             _pathToMusicItem.Clear();
 
             Debug.WriteLine("Loading music library...");
@@ -65,43 +62,7 @@ namespace Winter.Services
                     _allMusicItems.Add(musicItem);
                     _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
 
-                    if (!string.IsNullOrWhiteSpace(musicItem.Album))
-                    {
-                        var album = _allAlbumItems.FirstOrDefault(albumItem => albumItem.Title == musicItem.Album && albumItem.AlbumArtist == musicItem.AlbumArtist);
-                        if (album is null)
-                        {
-                            album = new LibraryAlbumItem
-                            {
-                                Title = musicItem.Album,
-                                AlbumArtist = musicItem.AlbumArtist,
-                                Year = musicItem.Year,
-                            };
-
-                            _allAlbumItems.Add(album);
-                        }
-                        else
-                        {
-                            // 更新专辑年份
-                            album.Year = Math.Max(album.Year, musicItem.Year);
-                        }
-
-                        // 按照音乐编号插入音乐到专辑中
-                        int index = album.Music.FindIndex(m => m.TrackNumber > musicItem.TrackNumber);
-                        if (index == -1)
-                        {
-                            album.Music.Add(musicItem);
-                        }
-                        else
-                        {
-                            album.Music.Insert(index, musicItem);
-                        }
-
-                        // 加载专辑封面
-                        if (album.AlbumCover.Image is null)
-                        {
-                            _ = album.AlbumCover.LoadCoverImageFromFile(file, 72 * 2);
-                        }
-                    }
+                    _ = musicItem.MusicCover.LoadCoverImageFromFile(file, 72 * 2);
                 }
                 catch (Exception ex)
                 {
@@ -113,28 +74,6 @@ namespace Winter.Services
         }
 
         public List<LibraryMusicItem> GetAllMusicItems() => _allMusicItems;
-
-        public List<LibraryAlbumItem> GetAllAlbumItems() => _allAlbumItems;
-
-        public List<string> GetAllArtistNames() => _allMusicItems
-            .Select(music => music.Artist.Split(';'))
-            .SelectMany(artists => artists)
-            .Select(artist => artist.Trim())
-            .Distinct()
-            .OrderBy(artists => artists)
-            .ToList();
-
-        public List<LibraryMusicItem> GetMusicItemsByArtist(string artist) =>
-            _allMusicItems
-            .Where(music => music.Artist.Split(';')
-            .Any(a => a.Trim().Equals(artist, StringComparison.Ordinal)))
-            .ToList();
-
-        public List<LibraryAlbumItem> GetAlbumItemsByArtist(string artist) =>
-            _allAlbumItems
-            .Where(album => album.AlbumArtist.Split(';')
-            .Any(a => a.Trim().Equals(artist, StringComparison.Ordinal)))
-            .ToList();
 
         public async Task<LibraryMusicItem?> GetMusicItemByPathAsync(string path)
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -14,11 +16,11 @@ namespace Winter.ViewModels
     {
         private readonly IMusicLibraryService _musicLibraryService;
 
-        private BitmapImage? _defaultAlbumCoverImage = null;
-
         private bool _loading = false;
 
         private int _groupType = 0;
+
+        private string _filteringArtistName = "";
 
         /// <summary>
         /// 是否正在加载音乐库
@@ -41,11 +43,32 @@ namespace Winter.ViewModels
 
                 if (value == 0)
                 {
-                    GroupMusicByTitle();
+                    GroupMusicByTitle(this.FilteringArtistName);
                 }
                 else if (value == 1)
                 {
-                    GroupMusicByAlbum();
+                    GroupMusicByAlbum(this.FilteringArtistName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 过滤艺术家名字
+        /// </summary>
+        public string FilteringArtistName
+        {
+            get => _filteringArtistName;
+            set
+            {
+                SetProperty(ref _filteringArtistName, value);
+
+                if (this.GroupType == 0)
+                {
+                    GroupMusicByTitle(value);
+                }
+                else if (this.GroupType == 1)
+                {
+                    GroupMusicByAlbum(value);
                 }
             }
         }
@@ -53,12 +76,12 @@ namespace Winter.ViewModels
         /// <summary>
         /// 排序的歌曲列表
         /// </summary>
-        public ObservableCollection<MusicGroup> GroupedMusic { get; } = new();
+        public ObservableCollection<MusicGroup> MusicGroups { get; } = new();
 
         /// <summary>
         /// 专辑列表
         /// </summary>
-        public ObservableCollection<LibraryAlbumItem> MusicAlbums { get; } = new();
+        public ObservableCollection<MusicAlbum> MusicAlbums { get; } = new();
 
         /// <summary>
         /// 艺术家名字列表
@@ -86,22 +109,29 @@ namespace Winter.ViewModels
             {
                 this.Loading = false;
 
+                this.FilteringArtistName = string.Empty;
                 this.ArtistNames.Clear();
-                this.ArtistNames.Add("全部");
-                _musicLibraryService.GetAllArtistNames().ForEach(x => this.ArtistNames.Add(x));
+                _musicLibraryService.GetAllMusicItems()
+                   .Select(music => music.Artist.Split(';'))
+                   .SelectMany(artists => artists)
+                   .Select(artist => artist.Trim())
+                   .Distinct()
+                   .OrderBy(artists => artists)
+                   .ToList()
+                   .ForEach(x => this.ArtistNames.Add(x));
 
                 if (this.GroupType == 0)
                 {
-                    GroupMusicByTitle();
+                    GroupMusicByTitle(this.FilteringArtistName);
                 }
                 else if (this.GroupType == 1)
                 {
-                    GroupMusicByAlbum();
+                    GroupMusicByAlbum(this.FilteringArtistName);
                 }
             }
         }
 
-        private void GroupMusicByTitle()
+        private void GroupMusicByTitle(string filterArtistName)
         {
             try
             {
@@ -110,28 +140,33 @@ namespace Winter.ViewModels
                     return;
                 }
 
-                if (this.GroupedMusic.Count > 0)
+                this.MusicGroups.Clear();
+
+                IEnumerable<LibraryMusicItem>? musicToGroup = null;
+                if (string.IsNullOrWhiteSpace(filterArtistName))
                 {
-                    return;
+                    musicToGroup = _musicLibraryService.GetAllMusicItems();
+                }
+                else
+                {
+                    musicToGroup = _musicLibraryService.GetAllMusicItems()
+                                   .Where(music => music.Artist.Split(';')
+                                       .Any(a => a.Trim().Equals(filterArtistName, StringComparison.Ordinal)));
                 }
 
-                this.GroupedMusic.Clear();
-
-                var allMusic = _musicLibraryService.GetAllMusicItems();
-
-                var orderedByPinyinList =
-                    (from item in allMusic
+                var groupedByPinyinList =
+                    (from item in musicToGroup
                      group item by item.TitleFirstLetter into newItems
                      select
                      new MusicGroup
                      {
                          Key = newItems.Key,
-                         GroupedMusic = new(newItems.ToList())
+                         GroupedMusic = new(newItems)
                      }).OrderBy(x => x.Key).ToList();
 
-                foreach (var item in orderedByPinyinList)
+                foreach (var item in groupedByPinyinList)
                 {
-                    this.GroupedMusic.Add(item);
+                    this.MusicGroups.Add(item);
                 }
             }
             catch (Exception ex)
@@ -140,46 +175,49 @@ namespace Winter.ViewModels
             }
         }
 
-        private void GroupMusicByAlbum()
+        private void GroupMusicByAlbum(string filterArtistName)
         {
             try
             {
                 if (this.Loading)
-                {
-                    return;
-                }
-
-                if (this.MusicAlbums.Count > 0)
                 {
                     return;
                 }
 
                 this.MusicAlbums.Clear();
 
-                var allAlbums = _musicLibraryService.GetAllAlbumItems();
-
-                var orderedByYearList = allAlbums.OrderByDescending(x => x.Year);
-
-                foreach (var item in orderedByYearList)
+                IEnumerable<LibraryMusicItem>? musicToGroup = null;
+                if (string.IsNullOrWhiteSpace(filterArtistName))
                 {
-                    this.MusicAlbums.Add(item);
-
-                    if (item.AlbumCover.Image is null)
-                    {
-                        _defaultAlbumCoverImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholder.png"))
-                        {
-                            DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = 144,
-                        };
-
-                        item.AlbumCover.SetImage(_defaultAlbumCoverImage);
-                    }
+                    musicToGroup = _musicLibraryService.GetAllMusicItems();
                 }
+                else
+                {
+                    musicToGroup = musicToGroup = _musicLibraryService.GetAllMusicItems()
+                                                    .Where(music => !string.IsNullOrWhiteSpace(music.Album)
+                                                                                         && music.Artist.Split(';').Any(a => a.Trim().Equals(filterArtistName, StringComparison.Ordinal)));
+                }
+
+                var groupedByAlbumList = musicToGroup
+                                                       .GroupBy(musicItem => new { musicItem.Album, musicItem.AlbumArtist })
+                                                       .Select(g => new MusicAlbum
+                                                       {
+                                                           Title = g.Key.Album,
+                                                           AlbumArtist = g.Key.AlbumArtist,
+                                                           Year = g.Max(musicItem => musicItem.Year),
+                                                           AlbumMusic = g.OrderBy(musicItem => musicItem.TrackNumber).ToList(),
+                                                           AlbumCover = g.Select(musicItem => musicItem.MusicCover).FirstOrDefault(cover => cover.Image != null) ?? g.First().MusicCover
+                                                       })
+                                                       .OrderByDescending(album => album.Year)
+                                                       .ToList();
+
+                groupedByAlbumList.ForEach(album => this.MusicAlbums.Add(album));
             }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex);
             }
         }
+
     }
 }

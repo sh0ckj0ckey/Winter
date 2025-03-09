@@ -49,5 +49,10 @@
         /// 音乐编号
         /// </summary>
         public uint TrackNumber { get; set; } = 0;
+
+        /// <summary>
+        /// 音乐封面
+        /// </summary>
+        public AsyncCoverImage MusicCover { get; set; } = new();
     }
 }

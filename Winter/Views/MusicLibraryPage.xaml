@@ -66,7 +66,7 @@
                     <communityAnimations:OpacityAnimation To="0" Duration="0:0:0.2"/>
                 </communityAnimations:Implicit.HideAnimations>
                 <Grid.Resources>
-                    <CollectionViewSource x:Name="GroupedMusicCollectionViewSource" Source="{x:Bind _viewModel.GroupedMusic,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="GroupedMusic"/>
+                    <CollectionViewSource x:Name="GroupedMusicCollectionViewSource" Source="{x:Bind _viewModel.MusicGroups,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="GroupedMusic"/>
                 </Grid.Resources>
                 <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SemanticZoom.ZoomedInView>
@@ -136,7 +136,7 @@
                             <ListView.GroupStyle>
                                 <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource ListViewHeaderItemStyle}">
                                     <GroupStyle.HeaderTemplate>
-                                        <DataTemplate x:DataType="libraryModels:LibraryAlbumItem">
+                                        <DataTemplate x:DataType="models:MusicAlbum">
                                             <StackPanel Orientation="Horizontal" Spacing="16" Margin="20,4,0,12">
                                                 <Border CornerRadius="4" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                     <Border.Background>
@@ -260,9 +260,9 @@
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="ICollectionViewGroup">
                                     <Border CornerRadius="4" Height="72" Width="72" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                            ToolTipService.ToolTip="{x:Bind Group.(libraryModels:LibraryAlbumItem.Title)}">
+                                            ToolTipService.ToolTip="{x:Bind Group.(models:MusicAlbum.Title)}">
                                         <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(libraryModels:LibraryAlbumItem.AlbumCover).Image}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(models:MusicAlbum.AlbumCover).Image}"/>
                                         </Border.Background>
                                     </Border>
                                 </DataTemplate>

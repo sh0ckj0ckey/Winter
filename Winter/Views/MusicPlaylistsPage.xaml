@@ -134,7 +134,7 @@
 
                                     <!--播放按钮-->
                                     <StackPanel x:Name="PlaylistButtonsStackPanel" Grid.Row="2" Margin="-8,0,0,0" Spacing="8" Height="Auto" Opacity="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Button x:Name="PlaylistPlayButton" Padding="6,0,10,0" Height="0" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Button x:Name="PlaylistPlayButton" Padding="6,0,10,0" Height="0" Click="PlaylistPlayButton_Click" DataContext="{x:Bind }" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
                                                 <TranslateTransform x:Name="PlaylistPlayButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>
@@ -143,7 +143,7 @@
                                                 <TextBlock Text="播放歌单" Visibility="Visible" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>
-                                        <Button x:Name="PlaylistAddButton" Padding="8,0" Height="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Button x:Name="PlaylistAddButton" Padding="8,0" Height="0" Click="PlaylistAddButton_Click" DataContext="{x:Bind }" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button.RenderTransform>
                                                 <TranslateTransform x:Name="PlaylistAddButtonTranslation" Y="32"/>
                                             </Button.RenderTransform>

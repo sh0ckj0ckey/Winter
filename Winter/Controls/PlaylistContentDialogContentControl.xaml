@@ -95,13 +95,13 @@
 
         <Grid Grid.Row="2" Padding="16" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="8">
-                <Button x:Name="PlaylistPlayButton" Style="{ThemeResource AccentButtonStyle}" Padding="22,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button x:Name="PlaylistPlayButton" Click="PlaylistPlayButton_Click" Style="{ThemeResource AccentButtonStyle}" Padding="22,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <TextBlock Text="&#xE768;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
                         <TextBlock Text="播放歌单" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="PlaylistAddButton" Padding="12,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button x:Name="PlaylistAddButton" Click="PlaylistAddButton_Click" Padding="12,0" Height="38" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="&#xF5EB;" FontSize="15" FontFamily="{ThemeResource FluentIconFromScreenbox}" VerticalAlignment="Center"/>
                         <TextBlock x:Name="PlaylistAddTextBlock" Text="加入播放队列" VerticalAlignment="Center"/>

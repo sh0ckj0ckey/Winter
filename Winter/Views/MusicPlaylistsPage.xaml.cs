@@ -126,5 +126,19 @@ namespace Winter.Views
             }
         }
 
+        private void PlaylistPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LibraryPlaylistItem playlist)
+            {
+                //var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
+                //playerViewModel.ClearPlayingList();
+                //playerViewModel.AddMusicToPlayingList(playlist.MusicFilePaths);
+            }
+        }
+
+        private void PlaylistAddButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
 using Winter.Models.MusicLibrary;
 using Winter.Services.Interfaces;
+using Winter.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -234,5 +236,21 @@ namespace Winter.Controls
             return null;
         }
 
+        private void PlaylistPlayButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
+            playerViewModel?.ClearPlayingList();
+            playerViewModel?.AddMusicToPlayingList(MusicItems.ToList());
+
+            _hideDialogContent?.Invoke();
+        }
+
+        private void PlaylistAddButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
+            playerViewModel?.AddMusicToPlayingList(MusicItems.ToList());
+
+            _hideDialogContent?.Invoke();
+        }
     }
 }

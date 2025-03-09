@@ -47,10 +47,5 @@ namespace Winter.Models
                 System.Diagnostics.Trace.WriteLine(ex);
             }
         }
-
-        public void SetImage(BitmapImage image)
-        {
-            this.Image = image;
-        }
     }
 }
