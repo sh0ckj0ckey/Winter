@@ -10,7 +10,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:community="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:Winter.Converters" 
-    xmlns:libraryModels="using:Winter.Models.MusicLibrary"
+    xmlns:musicModels="using:Winter.Models.MusicModels"
     mc:Ignorable="d" Background="Transparent">
     <UserControl.Resources>
         <Storyboard x:Name="ShowPlayingListStoryboard">
@@ -110,7 +110,7 @@
                 <ListView Padding="0,8,0,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                           ItemsSource="{x:Bind _viewModel.PlayingMusicList,Mode=OneWay}">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
+                        <DataTemplate x:DataType="musicModels:MusicLibraryItem">
                             <Grid ColumnSpacing="16" Margin="24,16,10,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*"/>

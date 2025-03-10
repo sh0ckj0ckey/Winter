@@ -1,9 +1,9 @@
-﻿namespace Winter.Models.MusicLibrary
+﻿namespace Winter.Models.MusicModels
 {
     /// <summary>
     /// 音乐库音乐项
     /// </summary>
-    public class LibraryMusicItem
+    public class MusicLibraryItem
     {
         /// <summary>
         /// 音乐标题首字母

@@ -14,7 +14,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 using Winter.Services.Interfaces;
 using Winter.ViewModels;
 
@@ -32,14 +32,14 @@ namespace Winter.Controls
 
         private readonly Action _hideDialogContent;
 
-        private LibraryPlaylistItem? _playlist = null;
+        private MusicPlaylistItem? _playlist = null;
 
         private bool _isLoadingPlaylistMusic = false;
 
         /// <summary>
         /// 正在查看的播放列表
         /// </summary>
-        public LibraryPlaylistItem? Playlist
+        public MusicPlaylistItem? Playlist
         {
             get => _playlist;
             private set => SetProperty(ref _playlist, value);
@@ -54,9 +54,9 @@ namespace Winter.Controls
             private set => SetProperty(ref _isLoadingPlaylistMusic, value);
         }
 
-        public ObservableCollection<LibraryMusicItem> MusicItems = new();
+        public ObservableCollection<MusicLibraryItem> MusicItems = new();
 
-        public PlaylistContentDialogContentControl(LibraryPlaylistItem libraryPlaylistItem, Action hideContentDialog)
+        public PlaylistContentDialogContentControl(MusicPlaylistItem libraryPlaylistItem, Action hideContentDialog)
         {
             _musicLibraryService = App.Current.Services.GetRequiredService<IMusicLibraryService>();
             _hideDialogContent = hideContentDialog;

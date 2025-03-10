@@ -1,34 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 
 namespace Winter.ViewModels
 {
     public class MusicPlayerViewModel : ObservableObject
     {
-        private LibraryMusicItem? _playingMusic = null;
+        private MusicLibraryItem? _playingMusic = null;
 
         /// <summary>
         /// 播放队列
         /// </summary>
-        public ObservableCollection<LibraryMusicItem> PlayingMusicList { get; } = new();
+        public ObservableCollection<MusicLibraryItem> PlayingMusicList { get; } = new();
 
         /// <summary>
         /// 当前正在播放的音乐
         /// </summary>
-        public LibraryMusicItem? PlayingMusic
+        public MusicLibraryItem? PlayingMusic
         {
             get => _playingMusic;
             private set => SetProperty(ref _playingMusic, value);
         }
 
-        public void AddMusicToPlayingList(LibraryMusicItem musicItem)
+        public void AddMusicToPlayingList(MusicLibraryItem musicItem)
         {
             PlayingMusicList.Add(musicItem);
         }
 
-        public void AddMusicToPlayingList(IEnumerable<LibraryMusicItem> musicItems)
+        public void AddMusicToPlayingList(IEnumerable<MusicLibraryItem> musicItems)
         {
             foreach (var musicItem in musicItems)
             {
@@ -36,7 +36,7 @@ namespace Winter.ViewModels
             }
         }
 
-        public void RemoveMusicFromPlayingList(LibraryMusicItem musicItem)
+        public void RemoveMusicFromPlayingList(MusicLibraryItem musicItem)
         {
             PlayingMusicList.Remove(musicItem);
         }

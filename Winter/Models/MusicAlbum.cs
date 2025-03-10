@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 
 namespace Winter.Models
 {
@@ -28,6 +28,6 @@ namespace Winter.Models
         /// <summary>
         /// 专辑中的音乐
         /// </summary>
-        public List<LibraryMusicItem> AlbumMusic { get; set; } = new();
+        public List<MusicLibraryItem> AlbumMusic { get; set; } = new();
     }
 }

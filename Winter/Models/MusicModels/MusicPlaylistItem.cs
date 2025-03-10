@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Winter.Models.MusicLibrary
+namespace Winter.Models.MusicModels
 {
-    public class LibraryPlaylistItem
+    public class MusicPlaylistItem
     {
         /// <summary>
         /// 播放列表标题

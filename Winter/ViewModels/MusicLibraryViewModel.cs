@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Winter.Models;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 using Winter.Services.Interfaces;
 
 namespace Winter.ViewModels
@@ -97,7 +97,7 @@ namespace Winter.ViewModels
 
             try
             {
-                await _musicLibraryService.LoadMusicLibraryAsync();
+                await _musicLibraryService.InitializeMusicLibraryAsync();
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace Winter.ViewModels
 
                 this.MusicGroups.Clear();
 
-                IEnumerable<LibraryMusicItem>? musicToGroup = null;
+                IEnumerable<MusicLibraryItem>? musicToGroup = null;
                 if (string.IsNullOrWhiteSpace(filterArtistName))
                 {
                     musicToGroup = _musicLibraryService.GetAllMusicItems();
@@ -184,7 +184,7 @@ namespace Winter.ViewModels
 
                 this.MusicAlbums.Clear();
 
-                IEnumerable<LibraryMusicItem>? musicToGroup = null;
+                IEnumerable<MusicLibraryItem>? musicToGroup = null;
                 if (string.IsNullOrWhiteSpace(filterArtistName))
                 {
                     musicToGroup = _musicLibraryService.GetAllMusicItems();

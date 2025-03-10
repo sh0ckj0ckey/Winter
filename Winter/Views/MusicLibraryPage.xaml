@@ -9,7 +9,7 @@
     xmlns:controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:community="using:CommunityToolkit.WinUI.Controls" 
     xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:libraryModels="using:Winter.Models.MusicLibrary" 
+    xmlns:musicModels="using:Winter.Models.MusicModels" 
     xmlns:models="using:Winter.Models" 
     xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations"
     mc:Ignorable="d" Background="Transparent" NavigationCacheMode="Required">
@@ -85,7 +85,7 @@
                                 </GroupStyle>
                             </ListView.GroupStyle>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
+                                <DataTemplate x:DataType="musicModels:MusicLibraryItem">
                                     <Grid ColumnSpacing="16" Margin="24,16,12,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="4*"/>
@@ -154,7 +154,7 @@
                                 </GroupStyle>
                             </ListView.GroupStyle>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="libraryModels:LibraryMusicItem">
+                                <DataTemplate x:DataType="musicModels:MusicLibraryItem">
                                     <Grid Margin="24,16,12,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>

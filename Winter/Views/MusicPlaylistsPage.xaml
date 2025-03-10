@@ -12,7 +12,7 @@
     xmlns:community="using:CommunityToolkit.WinUI"
     xmlns:communityConverters="using:CommunityToolkit.WinUI.UI.Converters"
     xmlns:converters="using:Winter.Converters"
-    xmlns:libraryModels="using:Winter.Models.MusicLibrary" 
+    xmlns:musicModels="using:Winter.Models.MusicModels" 
     xmlns:models="using:Winter.Models" 
     mc:Ignorable="d" Background="Transparent" NavigationCacheMode="Required">
 
@@ -57,7 +57,7 @@
                     <ItemsRepeater.Layout>
                         <UniformGridLayout MinItemWidth="{x:Bind PlaylistItemWidth,Mode=OneWay}" MinItemHeight="144" MinColumnSpacing="0" MinRowSpacing="0"/>
                     </ItemsRepeater.Layout>
-                    <DataTemplate x:DataType="libraryModels:LibraryPlaylistItem">
+                    <DataTemplate x:DataType="musicModels:MusicPlaylistItem">
                         <Button Margin="4" Padding="8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 DataContext="{x:Bind }" Click="Button_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                             <Button.Resources>

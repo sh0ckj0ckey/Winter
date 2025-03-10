@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 using Winter.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -42,7 +42,7 @@ namespace Winter.Views
 
         private async void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.DataContext is LibraryPlaylistItem playlist)
+            if (sender is Button btn && btn.DataContext is MusicPlaylistItem playlist)
             {
                 var dialog = new ContentDialog
                 {
@@ -128,7 +128,7 @@ namespace Winter.Views
 
         private void PlaylistPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.DataContext is LibraryPlaylistItem playlist)
+            if (sender is Button btn && btn.DataContext is MusicPlaylistItem playlist)
             {
                 //var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
                 //playerViewModel.ClearPlayingList();

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 using Winter.Services.Interfaces;
 
 namespace Winter.ViewModels
@@ -26,7 +26,7 @@ namespace Winter.ViewModels
         /// <summary>
         /// 歌单列表
         /// </summary>
-        public ObservableCollection<LibraryPlaylistItem> Playlists { get; } = new();
+        public ObservableCollection<MusicPlaylistItem> Playlists { get; } = new();
 
         public MusicPlaylistsViewModel(IMusicPlaylistsService musicPlaylistsService)
         {
@@ -39,7 +39,7 @@ namespace Winter.ViewModels
 
             try
             {
-                await _musicPlaylistsService.LoadMusicPlaylistsAsync();
+                await _musicPlaylistsService.InitializeMusicPlaylistsAsync();
             }
             catch (Exception ex)
             {
@@ -49,11 +49,11 @@ namespace Winter.ViewModels
             {
                 this.Loading = false;
 
-                GroupPlaylistsByTitle();
+                OrderPlaylistsByTitle();
             }
         }
 
-        private void GroupPlaylistsByTitle()
+        private void OrderPlaylistsByTitle()
         {
             try
             {
@@ -66,10 +66,10 @@ namespace Winter.ViewModels
 
                 var allPlaylists = _musicPlaylistsService.GetAllPlaylistItems();
 
-                // 按照首字母分组
-                var orderedByPinyinList = allPlaylists.OrderBy(x => x.Title).ToList();
+                // 按照歌单标题分组
+                var orderedByTitleList = allPlaylists.OrderBy(x => x.Title).ToList();
 
-                foreach (var item in orderedByPinyinList)
+                foreach (var item in orderedByTitleList)
                 {
                     this.Playlists.Add(item);
                 }

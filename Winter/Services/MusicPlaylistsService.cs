@@ -6,21 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 using Winter.Services.Interfaces;
 
 namespace Winter.Services
 {
     public class MusicPlaylistsService : IMusicPlaylistsService
     {
-        private readonly List<LibraryPlaylistItem> _allPlaylistItems = [];
+        private readonly List<MusicPlaylistItem> _allPlaylistItems = [];
 
-        private readonly Dictionary<string, LibraryPlaylistItem> _pathToPlaylistItem = [];
+        private readonly Dictionary<string, MusicPlaylistItem> _pathToPlaylistItem = [];
 
         // 音乐类型文件的扩展名
         private readonly HashSet<string> _musicExtensions = new(StringComparer.OrdinalIgnoreCase) { ".mp3", ".wav", ".flac", ".aac", ".m4a", ".wma" };
 
-        public async Task LoadMusicPlaylistsAsync()
+        public async Task InitializeMusicPlaylistsAsync()
         {
             _allPlaylistItems.Clear();
             _pathToPlaylistItem.Clear();
@@ -54,13 +54,7 @@ namespace Winter.Services
             {
                 try
                 {
-                    var playlistItem = await LoadPlaylistFromFileAsync(file);
-
-                    if (playlistItem is null)
-                    {
-                        continue;
-                    }
-
+                    MusicPlaylistItem playlistItem = await LoadPlaylistFromFileAsync(file);
                     _allPlaylistItems.Add(playlistItem);
                     _pathToPlaylistItem[playlistItem.PlaylistFilePath] = playlistItem;
                 }
@@ -73,11 +67,11 @@ namespace Winter.Services
             Debug.WriteLine("Loaded music playlists.");
         }
 
-        public List<LibraryPlaylistItem> GetAllPlaylistItems() => _allPlaylistItems;
+        public List<MusicPlaylistItem> GetAllPlaylistItems() => _allPlaylistItems;
 
-        public async Task<LibraryPlaylistItem?> GetPlaylistItemByPathAsync(string path)
+        public async Task<MusicPlaylistItem?> GetPlaylistItemByPathAsync(string path)
         {
-            _pathToPlaylistItem.TryGetValue(path, out LibraryPlaylistItem? playlistItem);
+            _pathToPlaylistItem.TryGetValue(path, out MusicPlaylistItem? playlistItem);
 
             if (playlistItem is null)
             {
@@ -86,18 +80,14 @@ namespace Winter.Services
                 if (file is not null)
                 {
                     playlistItem = await LoadPlaylistFromFileAsync(file);
-
-                    if (playlistItem is not null)
-                    {
-                        _pathToPlaylistItem[path] = playlistItem;
-                    }
+                    _pathToPlaylistItem[path] = playlistItem;
                 }
             }
 
             return playlistItem;
         }
 
-        private async Task<LibraryPlaylistItem> LoadPlaylistFromFileAsync(StorageFile file)
+        private async Task<MusicPlaylistItem> LoadPlaylistFromFileAsync(StorageFile file)
         {
             IList<string> lines;
             try
@@ -132,24 +122,24 @@ namespace Winter.Services
                 }
             }
 
-            var playlistItem = new LibraryPlaylistItem
+            MusicPlaylistItem playlistItem = new()
             {
                 PlaylistFilePath = file.Path,
                 Title = Path.GetFileNameWithoutExtension(file.DisplayName),
-                MusicFilePaths = musicFilePaths
+                MusicFilePaths = musicFilePaths,
             };
 
             // 获取封面图
             int coverIndex = 0;
             for (; coverIndex < musicFilePaths.Count; coverIndex++)
             {
-                if (playlistItem.PlaylistMainCover.Image is not null)
-                {
-                    break;
-                }
-
                 try
                 {
+                    if (playlistItem.PlaylistMainCover.Image is not null)
+                    {
+                        break;
+                    }
+
                     var fileToMainCover = await StorageFile.GetFileFromPathAsync(musicFilePaths[coverIndex]);
                     await playlistItem.PlaylistMainCover.LoadCoverImageFromFile(fileToMainCover, 96 * 2);
                 }
@@ -157,13 +147,13 @@ namespace Winter.Services
             }
             for (; coverIndex < musicFilePaths.Count; coverIndex++)
             {
-                if (playlistItem.PlaylistSecondaryCover.Image is not null)
-                {
-                    break;
-                }
-
                 try
                 {
+                    if (playlistItem.PlaylistSecondaryCover.Image is not null)
+                    {
+                        break;
+                    }
+
                     var fileToSecondaryCover = await StorageFile.GetFileFromPathAsync(musicFilePaths[coverIndex]);
                     await playlistItem.PlaylistSecondaryCover.LoadCoverImageFromFile(fileToSecondaryCover, 88 * 2);
                 }
@@ -171,13 +161,13 @@ namespace Winter.Services
             }
             for (; coverIndex < musicFilePaths.Count; coverIndex++)
             {
-                if (playlistItem.PlaylistTertiaryCover.Image is not null)
-                {
-                    break;
-                }
-
                 try
                 {
+                    if (playlistItem.PlaylistTertiaryCover.Image is not null)
+                    {
+                        break;
+                    }
+
                     var fileToTertiaryCover = await StorageFile.GetFileFromPathAsync(musicFilePaths[coverIndex]);
                     await playlistItem.PlaylistTertiaryCover.LoadCoverImageFromFile(fileToTertiaryCover, 80 * 2);
                 }

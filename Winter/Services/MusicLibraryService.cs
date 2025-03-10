@@ -6,18 +6,18 @@ using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
 using Winter.Helpers;
-using Winter.Models.MusicLibrary;
+using Winter.Models.MusicModels;
 using Winter.Services.Interfaces;
 
 namespace Winter.Services
 {
     public class MusicLibraryService : IMusicLibraryService
     {
-        private readonly List<LibraryMusicItem> _allMusicItems = [];
+        private readonly List<MusicLibraryItem> _allMusicItems = [];
 
-        private readonly Dictionary<string, LibraryMusicItem> _pathToMusicItem = [];
+        private readonly Dictionary<string, MusicLibraryItem> _pathToMusicItem = [];
 
-        public async Task LoadMusicLibraryAsync()
+        public async Task InitializeMusicLibraryAsync()
         {
             _allMusicItems.Clear();
             _pathToMusicItem.Clear();
@@ -29,7 +29,7 @@ namespace Winter.Services
             StorageFolder musicFolder = KnownFolders.MusicLibrary;
 
             // 创建一个查询选项以查找所有音乐文件
-            var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, [".mp3", ".wav", ".aac", ".flac"]);
+            var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, [".mp3", ".wav", ".flac", ".aac", ".m4a", ".wma"]);
             var query = musicFolder.CreateFileQueryWithOptions(queryOptions);
             var files = await query.GetFilesAsync();
 
@@ -51,13 +51,9 @@ namespace Winter.Services
             {
                 try
                 {
-                    var musicItem = await LoadMusicFromFileAsync(file);
-
-                    if (musicItem is not null)
-                    {
-                        _allMusicItems.Add(musicItem);
-                        _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
-                    }
+                    MusicLibraryItem musicItem = await LoadMusicFromFileAsync(file);
+                    _allMusicItems.Add(musicItem);
+                    _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
                 }
                 catch (Exception ex)
                 {
@@ -68,11 +64,11 @@ namespace Winter.Services
             Debug.WriteLine("Loaded music library.");
         }
 
-        public List<LibraryMusicItem> GetAllMusicItems() => _allMusicItems;
+        public List<MusicLibraryItem> GetAllMusicItems() => _allMusicItems;
 
-        public async Task<LibraryMusicItem?> GetMusicItemByPathAsync(string path)
+        public async Task<MusicLibraryItem?> GetMusicItemByPathAsync(string path)
         {
-            _pathToMusicItem.TryGetValue(path, out LibraryMusicItem? musicItem);
+            _pathToMusicItem.TryGetValue(path, out MusicLibraryItem? musicItem);
 
             if (musicItem is null)
             {
@@ -81,22 +77,18 @@ namespace Winter.Services
                 if (file is not null)
                 {
                     musicItem = await LoadMusicFromFileAsync(file);
-
-                    if (musicItem is not null)
-                    {
-                        _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
-                    }
+                    _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
                 }
             }
 
             return musicItem;
         }
 
-        private async Task<LibraryMusicItem> LoadMusicFromFileAsync(StorageFile file)
+        private async Task<MusicLibraryItem> LoadMusicFromFileAsync(StorageFile file)
         {
             MusicProperties musicProperties = await file.Properties.GetMusicPropertiesAsync();
 
-            LibraryMusicItem musicItem = new()
+            MusicLibraryItem musicItem = new()
             {
                 MusicFilePath = file.Path,
                 Title = !string.IsNullOrWhiteSpace(musicProperties.Title) ? musicProperties.Title : file.DisplayName,
