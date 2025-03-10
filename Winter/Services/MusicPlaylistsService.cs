@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,7 +16,7 @@ namespace Winter.Services
     {
         private readonly List<MusicPlaylistItem> _allPlaylistItems = [];
 
-        private readonly Dictionary<string, MusicPlaylistItem> _pathToPlaylistItem = [];
+        private readonly ConcurrentDictionary<string, MusicPlaylistItem> _pathToPlaylistItem = [];
 
         // 音乐类型文件的扩展名
         private readonly HashSet<string> _musicExtensions = new(StringComparer.OrdinalIgnoreCase) { ".mp3", ".wav", ".flac", ".aac", ".m4a", ".wma" };
@@ -36,27 +37,33 @@ namespace Winter.Services
             var query = musicFolder.CreateFileQueryWithOptions(queryOptions);
             var files = await query.GetFilesAsync();
 
-            // 遍历每个文件，加载播放列表
-            //var playlistItems = await Task.WhenAll(files.Select(async file =>
-            //{
-            //    try
-            //    {
-            //        return await LoadPlaylistFromFileAsync(file);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Debug.WriteLine(ex);
-            //        return null;
-            //    }
-            //}));
+            {
+                // 遍历每个文件，加载播放列表
+                //var playlistItems = await Task.WhenAll(files.Select(async file =>
+                //{
+                //    try
+                //    {
+                //        return await LoadPlaylistFromFileAsync(file);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Debug.WriteLine(ex);
+                //        return null;
+                //    }
+                //}));
+            }
 
             foreach (var file in files)
             {
                 try
                 {
-                    MusicPlaylistItem playlistItem = await LoadPlaylistFromFileAsync(file);
+                    if (!_pathToPlaylistItem.TryGetValue(file.Path, out MusicPlaylistItem? playlistItem))
+                    {
+                        playlistItem = await LoadPlaylistFromFileAsync(file);
+                        _pathToPlaylistItem[playlistItem.PlaylistFilePath] = playlistItem;
+                    }
+
                     _allPlaylistItems.Add(playlistItem);
-                    _pathToPlaylistItem[playlistItem.PlaylistFilePath] = playlistItem;
                 }
                 catch (Exception ex)
                 {
@@ -71,16 +78,14 @@ namespace Winter.Services
 
         public async Task<MusicPlaylistItem?> GetPlaylistItemByPathAsync(string path)
         {
-            _pathToPlaylistItem.TryGetValue(path, out MusicPlaylistItem? playlistItem);
-
-            if (playlistItem is null)
+            if (!_pathToPlaylistItem.TryGetValue(path, out MusicPlaylistItem? playlistItem))
             {
-                // 如果这个播放列表文件存在，但是不存在于列表中，则加载它到字典里，但是不添加到列表
+                // 如果这个播放列表文件存在，但是不存在于列表中，则加载它到字典里，但是不需要添加到列表
                 var file = await StorageFile.GetFileFromPathAsync(path);
                 if (file is not null)
                 {
                     playlistItem = await LoadPlaylistFromFileAsync(file);
-                    _pathToPlaylistItem[path] = playlistItem;
+                    _pathToPlaylistItem[playlistItem.PlaylistFilePath] = playlistItem;
                 }
             }
 
