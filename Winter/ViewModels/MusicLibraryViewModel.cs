@@ -107,16 +107,19 @@ namespace Winter.ViewModels
             {
                 this.Loading = false;
 
-                this.FilteringArtistName = string.Empty;
-                this.ArtistNames.Clear();
-                _musicLibraryService.GetAllMusicItems()
-                   .Select(music => music.Artist.Split(';'))
-                   .SelectMany(artists => artists)
-                   .Select(artist => artist.Trim())
-                   .Distinct()
-                   .OrderBy(artists => artists)
-                   .ToList()
-                   .ForEach(x => this.ArtistNames.Add(x));
+                // 加载艺术家名字列表
+                {
+                    this.FilteringArtistName = string.Empty;
+                    this.ArtistNames.Clear();
+                    _musicLibraryService.GetAllMusicItems()
+                       .Select(music => music.Artist.Split(';'))
+                       .SelectMany(artists => artists)
+                       .Select(artist => artist.Trim())
+                       .Distinct()
+                       .OrderBy(artists => artists)
+                       .ToList()
+                       .ForEach(x => this.ArtistNames.Add(x));
+                }
 
                 if (this.GroupType == 0)
                 {
@@ -148,24 +151,19 @@ namespace Winter.ViewModels
                 else
                 {
                     musicToGroup = _musicLibraryService.GetAllMusicItems()
-                                   .Where(music => music.Artist.Split(';')
-                                       .Any(a => a.Trim().Equals(filterArtistName, StringComparison.Ordinal)));
+                                    .Where(music => music.Artist.Split(';').Any(a => a.Trim().Equals(filterArtistName, StringComparison.Ordinal)));
                 }
 
-                var groupedByPinyinList =
-                    (from item in musicToGroup
-                     group item by item.TitleFirstLetter into newItems
-                     select
-                     new MusicGroup
-                     {
-                         Key = newItems.Key,
-                         GroupedMusic = new(newItems)
-                     }).OrderBy(x => x.Key).ToList();
+                var groupedByPinyinList = (from item in musicToGroup
+                                           group item by item.TitleFirstLetter into newItems
+                                           select
+                                           new MusicGroup
+                                           {
+                                               Key = newItems.Key,
+                                               GroupedMusic = new(newItems)
+                                           }).OrderBy(x => x.Key).ToList();
 
-                foreach (var item in groupedByPinyinList)
-                {
-                    this.MusicGroups.Add(item);
-                }
+                groupedByPinyinList.ForEach(group => this.MusicGroups.Add(group));
             }
             catch (Exception ex)
             {
@@ -191,9 +189,9 @@ namespace Winter.ViewModels
                 }
                 else
                 {
-                    musicToGroup = musicToGroup = _musicLibraryService.GetAllMusicItems()
-                                                    .Where(music => !string.IsNullOrWhiteSpace(music.Album)
-                                                                                         && music.Artist.Split(';').Any(a => a.Trim().Equals(filterArtistName, StringComparison.Ordinal)));
+                    musicToGroup = _musicLibraryService.GetAllMusicItems()
+                                    .Where(music => !string.IsNullOrWhiteSpace(music.Album)
+                                                                      && music.Artist.Split(';').Any(a => a.Trim().Equals(filterArtistName, StringComparison.Ordinal)));
                 }
 
                 var groupedByAlbumList = musicToGroup
