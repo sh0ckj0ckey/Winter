@@ -25,22 +25,11 @@ namespace Winter.Models
                 if (thumbnail is not null && thumbnail.Type != ThumbnailType.Icon)
                 {
                     var bitmapImage = new BitmapImage();
+                    bitmapImage.DecodePixelType = DecodePixelType.Logical;
+                    bitmapImage.DecodePixelWidth = (int)size;
                     await bitmapImage.SetSourceAsync(thumbnail);
                     this.Image = bitmapImage;
                 }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine(ex);
-            }
-        }
-
-        public async Task LoadCoverImageFromPath(string path, uint size)
-        {
-            try
-            {
-                var file = await StorageFile.GetFileFromPathAsync(path);
-                await LoadCoverImageFromFile(file, size);
             }
             catch (Exception ex)
             {

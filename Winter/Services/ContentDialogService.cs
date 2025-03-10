@@ -12,7 +12,7 @@ namespace Winter.Services
 
         public Func<ElementTheme>? ElementThemeGetter { get; set; }
 
-        public async Task ShowDialogAsync(string title, string content, string closeButtonText)
+        public async Task<ContentDialogResult> ShowDialogAsync(string title, string content, string closeButtonText)
         {
             if (this.XamlRootGetter is null)
             {
@@ -27,19 +27,45 @@ namespace Winter.Services
             var xamlRoot = this.XamlRootGetter.Invoke();
             var elementTheme = this.ElementThemeGetter.Invoke();
 
-            if (xamlRoot is not null)
+            var contentDialog = new ContentDialog
             {
-                var contentDialog = new ContentDialog
-                {
-                    XamlRoot = xamlRoot,
-                    Title = title,
-                    Content = content,
-                    CloseButtonText = closeButtonText,
-                    RequestedTheme = elementTheme,
-                };
+                XamlRoot = xamlRoot,
+                Title = title,
+                Content = content,
+                CloseButtonText = closeButtonText,
+                RequestedTheme = elementTheme,
+            };
 
-                await contentDialog.ShowAsync();
+            return await contentDialog.ShowAsync();
+        }
+
+
+        public async Task<ContentDialogResult> ShowDialogAsync(string title, string content, string confirmButtonText, string closeButtonText)
+        {
+            if (this.XamlRootGetter is null)
+            {
+                throw new Exception("Must set XamlRootGetter before calling ShowDialog");
             }
+
+            if (this.ElementThemeGetter is null)
+            {
+                throw new Exception("Must set ElementThemeGetter before calling ShowDialog");
+            }
+
+            var xamlRoot = this.XamlRootGetter.Invoke();
+            var elementTheme = this.ElementThemeGetter.Invoke();
+
+            var contentDialog = new ContentDialog
+            {
+                XamlRoot = xamlRoot,
+                Title = title,
+                Content = content,
+                PrimaryButtonText = confirmButtonText,
+                CloseButtonText = closeButtonText,
+                RequestedTheme = elementTheme,
+            };
+
+            return await contentDialog.ShowAsync();
         }
     }
 }

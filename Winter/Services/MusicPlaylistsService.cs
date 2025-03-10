@@ -148,7 +148,12 @@ namespace Winter.Services
                     break;
                 }
 
-                await playlistItem.PlaylistMainCover.LoadCoverImageFromPath(musicFilePaths[coverIndex], 96 * 2);
+                try
+                {
+                    var fileToMainCover = await StorageFile.GetFileFromPathAsync(musicFilePaths[coverIndex]);
+                    await playlistItem.PlaylistMainCover.LoadCoverImageFromFile(fileToMainCover, 96 * 2);
+                }
+                catch (Exception ex) { Trace.WriteLine(ex); }
             }
             for (; coverIndex < musicFilePaths.Count; coverIndex++)
             {
@@ -157,7 +162,12 @@ namespace Winter.Services
                     break;
                 }
 
-                await playlistItem.PlaylistSecondaryCover.LoadCoverImageFromPath(musicFilePaths[coverIndex], 88 * 2);
+                try
+                {
+                    var fileToSecondaryCover = await StorageFile.GetFileFromPathAsync(musicFilePaths[coverIndex]);
+                    await playlistItem.PlaylistSecondaryCover.LoadCoverImageFromFile(fileToSecondaryCover, 88 * 2);
+                }
+                catch (Exception ex) { Trace.WriteLine(ex); }
             }
             for (; coverIndex < musicFilePaths.Count; coverIndex++)
             {
@@ -166,7 +176,12 @@ namespace Winter.Services
                     break;
                 }
 
-                await playlistItem.PlaylistTertiaryCover.LoadCoverImageFromPath(musicFilePaths[coverIndex], 80 * 2);
+                try
+                {
+                    var fileToTertiaryCover = await StorageFile.GetFileFromPathAsync(musicFilePaths[coverIndex]);
+                    await playlistItem.PlaylistTertiaryCover.LoadCoverImageFromFile(fileToTertiaryCover, 80 * 2);
+                }
+                catch (Exception ex) { Trace.WriteLine(ex); }
             }
 
             return playlistItem;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
@@ -54,15 +53,11 @@ namespace Winter.Services
                 {
                     var musicItem = await LoadMusicFromFileAsync(file);
 
-                    if (musicItem is null)
+                    if (musicItem is not null)
                     {
-                        continue;
+                        _allMusicItems.Add(musicItem);
+                        _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
                     }
-
-                    _allMusicItems.Add(musicItem);
-                    _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
-
-                    _ = musicItem.MusicCover.LoadCoverImageFromFile(file, 72 * 2);
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +84,7 @@ namespace Winter.Services
 
                     if (musicItem is not null)
                     {
-                        _pathToMusicItem[path] = musicItem;
+                        _pathToMusicItem[musicItem.MusicFilePath] = musicItem;
                     }
                 }
             }
@@ -114,6 +109,7 @@ namespace Winter.Services
             };
 
             musicItem.TitleFirstLetter = PinyinHelper.GetFirstSpell(musicItem.Title);
+            _ = musicItem.MusicCover.LoadCoverImageFromFile(file, 72 * 2);
 
             return musicItem;
         }
