@@ -178,7 +178,7 @@
                                         <Border.Background>
                                             <ImageBrush>
                                                 <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="/Assets/Icons/WinterPlaceholder.png" DecodePixelWidth="128" DecodePixelType="Logical"/>
+                                                    <BitmapImage UriSource="/Assets/Icons/WinterPlaceholderGray.png" DecodePixelWidth="128" DecodePixelType="Logical"/>
                                                 </ImageBrush.ImageSource>
                                             </ImageBrush>
                                         </Border.Background>

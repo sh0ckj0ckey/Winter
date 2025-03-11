@@ -142,7 +142,7 @@
                                             <StackPanel Orientation="Horizontal" Spacing="16" Margin="20,4,0,12">
                                                 <Border CornerRadius="4" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                     <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay}"/>
+                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackImageConverter}}"/>
                                                     </Border.Background>
                                                 </Border>
                                                 <StackPanel Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -175,7 +175,7 @@
                     </SemanticZoom.ZoomedInView>
                     <SemanticZoom.ZoomedOutView>
                         <GridView Padding="64" ItemsSource="{x:Bind AlbumCollectionViewSource.View.CollectionGroups,Mode=OneWay}"
-                                  SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                  SelectionMode="None" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <GridView.Resources>
                                 <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent"/>
                                 <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent"/>
@@ -264,7 +264,7 @@
                                     <Border CornerRadius="4" Height="72" Width="72" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                                             ToolTipService.ToolTip="{x:Bind Group.(models:MusicAlbum.Title)}">
                                         <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(models:MusicAlbum.AlbumCover).Image,Converter={StaticResource NullToFallbackImageConverter},Mode=OneWay}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(models:MusicAlbum.AlbumCover).Image,Mode=OneWay,Converter={StaticResource NullToFallbackImageConverter}}"/>
                                         </Border.Background>
                                     </Border>
                                 </DataTemplate>
