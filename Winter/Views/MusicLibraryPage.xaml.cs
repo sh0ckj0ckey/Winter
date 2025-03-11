@@ -19,5 +19,13 @@ namespace Winter.Views
             _viewModel = App.Current.Services.GetRequiredService<MusicLibraryViewModel>();
             this.InitializeComponent();
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                _viewModel.FilteringArtistName = comboBox.SelectedIndex == 0 ? string.Empty : comboBox.SelectedItem?.ToString() ?? string.Empty;
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@
             </Grid.RowDefinitions>
 
             <ComboBox Grid.Row="0" Margin="12,4,0,0" Background="Transparent" BorderBrush="Transparent" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                      SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}"/>
+                      SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged"/>
 
             <StackPanel Grid.Row="0" Margin="0,4,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 

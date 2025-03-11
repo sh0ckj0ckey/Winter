@@ -18,7 +18,7 @@ namespace Winter.ViewModels
 
         private int _groupType = 0;
 
-        private string _filteringArtistName = "";
+        private string _filteringArtistName = string.Empty;
 
         /// <summary>
         /// 是否正在加载音乐库
@@ -35,19 +35,7 @@ namespace Winter.ViewModels
         public int GroupType
         {
             get => _groupType;
-            set
-            {
-                SetProperty(ref _groupType, value);
-
-                if (value == 0)
-                {
-                    GroupMusicByTitle(this.FilteringArtistName);
-                }
-                else if (value == 1)
-                {
-                    GroupMusicByAlbum(this.FilteringArtistName);
-                }
-            }
+            set => SetProperty(ref _groupType, value);
         }
 
         /// <summary>
@@ -60,14 +48,8 @@ namespace Winter.ViewModels
             {
                 SetProperty(ref _filteringArtistName, value);
 
-                if (this.GroupType == 0)
-                {
-                    GroupMusicByTitle(value);
-                }
-                else if (this.GroupType == 1)
-                {
-                    GroupMusicByAlbum(value);
-                }
+                GroupMusicByTitle(value);
+                GroupMusicByAlbum(value);
             }
         }
 
@@ -111,6 +93,7 @@ namespace Winter.ViewModels
                 {
                     this.FilteringArtistName = string.Empty;
                     this.ArtistNames.Clear();
+                    this.ArtistNames.Add("全部艺术家");
                     _musicLibraryService.GetAllMusicItems()
                        .Select(music => music.Artist.Split(';'))
                        .SelectMany(artists => artists)
@@ -121,14 +104,8 @@ namespace Winter.ViewModels
                        .ForEach(x => this.ArtistNames.Add(x));
                 }
 
-                if (this.GroupType == 0)
-                {
-                    GroupMusicByTitle(this.FilteringArtistName);
-                }
-                else if (this.GroupType == 1)
-                {
-                    GroupMusicByAlbum(this.FilteringArtistName);
-                }
+                GroupMusicByTitle(this.FilteringArtistName);
+                GroupMusicByAlbum(this.FilteringArtistName);
             }
         }
 
