@@ -30,12 +30,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ComboBox Grid.Row="0" Margin="12,4,0,0" Background="Transparent" BorderBrush="Transparent" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                      SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged"/>
+            <Grid Grid.Row="0" Margin="0,8,18,12" ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Margin="0,4,24,0" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <ComboBox Grid.Column="0" Margin="20,0,0,0" Background="Transparent" BorderBrush="Transparent" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                          SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged"/>
 
-                <community:Segmented SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <community:Segmented Grid.Column="2" SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <community:SegmentedItem>
                         <community:SegmentedItem.Icon>
                             <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
@@ -48,18 +55,18 @@
                     </community:SegmentedItem>
                 </community:Segmented>
 
-                <Border Height="24" Width="1" Background="{ThemeResource ControlElevationBorderBrush}"/>
+                <Border Grid.Column="3" Height="24" Width="1" Background="{ThemeResource ControlElevationBorderBrush}"/>
 
-                <Button>
+                <Button Grid.Column="4">
                     <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8F4;" FontSize="16" VerticalAlignment="Center"/>
                         <TextBlock Text="添加文件夹" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
-            </StackPanel>
+            </Grid>
 
-            <Grid Grid.Row="1" Margin="0,12,0,0" Opacity="0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Grid.Row="1" Opacity="0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <communityAnimations:Implicit.ShowAnimations>
                     <communityAnimations:TranslationAnimation From="-64,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1.2"/>
                     <communityAnimations:OpacityAnimation To="1" Duration="0:0:0.6"/>
@@ -81,14 +88,14 @@
                                 <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource ListViewHeaderItemStyle}">
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="models:MusicGroup">
-                                            <TextBlock Text="{x:Bind Key}" Margin="24,4,0,14" Foreground="{ThemeResource APP_ACCENT_BK}" FontWeight="Medium" FontSize="14"/>
+                                            <TextBlock Text="{x:Bind Key}" Margin="12,4,0,14" Foreground="{ThemeResource APP_ACCENT_BK}" FontWeight="Medium" FontSize="14"/>
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
                             </ListView.GroupStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="musicModels:MusicLibraryItem">
-                                    <Grid ColumnSpacing="16" Margin="24,16,12,16">
+                                    <Grid ColumnSpacing="16" Margin="12,16,12,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="4*"/>
                                             <ColumnDefinition Width="*"/>
@@ -117,7 +124,7 @@
                 </SemanticZoom>
             </Grid>
 
-            <Grid Grid.Row="1" Margin="0,12,0,0" Opacity="0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan0ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Grid.Row="1" Opacity="0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan0ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <communityAnimations:Implicit.ShowAnimations>
                     <communityAnimations:TranslationAnimation From="64,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1.2"/>
                     <communityAnimations:OpacityAnimation To="1" Duration="0:0:0.6"/>
@@ -139,7 +146,7 @@
                                 <GroupStyle HidesIfEmpty="True" HeaderContainerStyle="{StaticResource ListViewHeaderItemStyle}">
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="models:MusicAlbum">
-                                            <StackPanel Orientation="Horizontal" Spacing="16" Margin="20,4,0,12">
+                                            <StackPanel Orientation="Horizontal" Spacing="16" Margin="8,4,0,12">
                                                 <Border CornerRadius="4" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                     <Border.Background>
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackImageConverter}}"/>
@@ -157,7 +164,7 @@
                             </ListView.GroupStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="musicModels:MusicLibraryItem">
-                                    <Grid Margin="24,16,12,16">
+                                    <Grid Margin="12,16,12,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="4*"/>

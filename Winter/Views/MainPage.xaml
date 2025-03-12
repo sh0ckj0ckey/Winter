@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
 
             <!--Logo-->
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="6" Margin="24,24,24,16" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="6" Margin="24,24,24,18" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Image Height="32" Width="32" VerticalAlignment="Center">
                     <Image.Source>
                         <BitmapImage UriSource="/Assets/Icons/Winter.png" DecodePixelType="Logical" DecodePixelHeight="64"/>
@@ -59,7 +59,7 @@
             </Grid.RowDefinitions>
 
             <!--页面导航-->
-            <communityControls:Segmented x:Name="MainNavSegmented" Grid.Row="0" Margin="12,18,4,0" SelectionMode="Single"
+            <communityControls:Segmented x:Name="MainNavSegmented" Grid.Row="0" Margin="20,16,4,0" SelectionMode="Single"
                                          SelectionChanged="Segmented_SelectionChanged" Style="{StaticResource PivotSegmentedStyle}">
                 <communityControls:SegmentedItem Content="歌单" FontSize="24" FontWeight="Normal"/>
                 <communityControls:SegmentedItem Content="音乐库" FontSize="24" FontWeight="Normal"/>

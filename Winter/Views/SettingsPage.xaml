@@ -16,8 +16,8 @@
         </Grid.RowDefinitions>
         <!--<Border Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,8,0,0" Height="1" Background="{ThemeResource ControlElevationBorderBrush}"/>-->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
-            <StackPanel Orientation="Vertical" Margin="16,20,20,0" Spacing="4">
-                <community:SettingsCard>
+            <StackPanel Orientation="Vertical" Margin="18,8,18,0" Spacing="4">
+                <community:SettingsCard Background="Transparent" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
                     <community:SettingsCard.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Height="72" Width="72" Margin="0,-6,0,-6">

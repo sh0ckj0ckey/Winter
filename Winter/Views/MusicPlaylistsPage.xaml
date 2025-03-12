@@ -35,7 +35,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="16,4,16,8" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Grid.Row="0" Margin="0,8,18,8" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button>
                     <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8F4;" FontSize="16" VerticalAlignment="Center"/>
@@ -43,7 +43,7 @@
                     </StackPanel>
                 </Button>
                 <Button Style="{ThemeResource AccentButtonStyle}">
-                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Padding="12,0" Spacing="4" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE710;" FontSize="16" VerticalAlignment="Center"/>
                         <TextBlock Text="新建歌单" VerticalAlignment="Center"/>
                     </StackPanel>
@@ -53,7 +53,7 @@
             <Border x:Name="HeaderSeparatorBorder" Grid.Row="1" Height="1" Opacity="0" Margin="0,0,0,0" Background="{ThemeResource ControlElevationBorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
 
             <ScrollViewer x:Name="PlaylistsScrollViewer" Grid.Row="2" ViewChanged="ScrollViewer_ViewChanged" SizeChanged="ScrollViewer_SizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
-                <controls:ItemsRepeater Margin="8,0,8,8" ItemsSource="{x:Bind _viewModel.Playlists,Mode=OneWay}" HorizontalAlignment="Stretch">
+                <controls:ItemsRepeater Margin="14,0,10,12" ItemsSource="{x:Bind _viewModel.Playlists,Mode=OneWay}" HorizontalAlignment="Stretch">
                     <ItemsRepeater.Layout>
                         <UniformGridLayout MinItemWidth="{x:Bind PlaylistItemWidth,Mode=OneWay}" MinItemHeight="144" MinColumnSpacing="0" MinRowSpacing="0"/>
                     </ItemsRepeater.Layout>

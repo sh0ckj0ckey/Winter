@@ -84,7 +84,7 @@ namespace Winter.Views
         {
             try
             {
-                double availableWidth = e.NewSize.Width - 20;
+                double availableWidth = e.NewSize.Width - 28;
                 int desiredItemCount = ((int)availableWidth / 304);
                 this.PlaylistItemWidth = availableWidth / desiredItemCount;
 
