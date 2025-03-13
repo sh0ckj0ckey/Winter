@@ -16,8 +16,6 @@ namespace Winter.ViewModels
 
         private bool _loading = false;
 
-        private int _groupType = 0;
-
         private string _filteringArtistName = string.Empty;
 
         /// <summary>
@@ -27,15 +25,6 @@ namespace Winter.ViewModels
         {
             get => _loading;
             private set => SetProperty(ref _loading, value);
-        }
-
-        /// <summary>
-        /// 列表分组依据
-        /// </summary>
-        public int GroupType
-        {
-            get => _groupType;
-            set => SetProperty(ref _groupType, value);
         }
 
         /// <summary>

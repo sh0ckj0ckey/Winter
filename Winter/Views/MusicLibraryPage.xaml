@@ -17,10 +17,50 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="ListViewHeaderItemDividerStroke" Color="Transparent"/>
-        <converters:DoubleToVisibilityConverter x:Key="LessThan1ToVisibilityConverter" LessThan="1"/>
         <converters:DoubleToVisibilityConverter x:Key="GreaterThan0ToVisibilityConverter" GreaterThan="0"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <localConverters:NullToFallbackImageConverter x:Key="NullToFallbackImageConverter"/>
+
+        <Storyboard x:Name="ShowMusicGroupsGridStoryboard">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MusicGroupsGrid" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MusicAlbumsGrid" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="Collapsed"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="MusicGroupsGrid" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.4"/>
+            <DoubleAnimation Storyboard.TargetName="MusicAlbumsGrid" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="MusicGroupsGridTranslation" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="MusicAlbumsGridTranslation" Storyboard.TargetProperty="X" To="64" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="ShowMusicAlbumsGridStoryboard">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MusicGroupsGrid" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="Collapsed"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MusicAlbumsGrid" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="MusicGroupsGrid" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="MusicAlbumsGrid" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.4"/>
+            <DoubleAnimation Storyboard.TargetName="MusicGroupsGridTranslation" Storyboard.TargetProperty="X" To="-64" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="MusicAlbumsGridTranslation" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -42,7 +82,7 @@
                 <ComboBox Grid.Column="0" Margin="20,0,0,0" Background="Transparent" BorderBrush="Transparent" Foreground="{ThemeResource APP_ACCENT_LOW_BK}" HorizontalAlignment="Left" VerticalAlignment="Center"
                           SelectedIndex="0" ItemsSource="{x:Bind _viewModel.ArtistNames,Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged"/>
 
-                <community:Segmented Grid.Column="2" SelectedIndex="{x:Bind _viewModel.GroupType,Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <community:Segmented Grid.Column="2" SelectedIndex="0" SelectionChanged="Segmented_SelectionChanged" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <community:SegmentedItem>
                         <community:SegmentedItem.Icon>
                             <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC4F;"/>
@@ -66,17 +106,13 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" Opacity="0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource LessThan1ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <communityAnimations:Implicit.ShowAnimations>
-                    <communityAnimations:TranslationAnimation From="-64,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1.2"/>
-                    <communityAnimations:OpacityAnimation To="1" Duration="0:0:0.6"/>
-                </communityAnimations:Implicit.ShowAnimations>
-                <communityAnimations:Implicit.HideAnimations>
-                    <communityAnimations:OpacityAnimation To="0" Duration="0:0:0.2"/>
-                </communityAnimations:Implicit.HideAnimations>
+            <Grid x:Name="MusicGroupsGrid" Grid.Row="1" Opacity="1" Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Resources>
                     <CollectionViewSource x:Name="GroupedMusicCollectionViewSource" Source="{x:Bind _viewModel.MusicGroups,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="GroupedMusic"/>
                 </Grid.Resources>
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="MusicGroupsGridTranslation" X="0"/>
+                </Grid.RenderTransform>
                 <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SemanticZoom.ZoomedInView>
                         <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
@@ -124,17 +160,13 @@
                 </SemanticZoom>
             </Grid>
 
-            <Grid Grid.Row="1" Opacity="0" Visibility="{x:Bind _viewModel.GroupType,Mode=OneWay,Converter={StaticResource GreaterThan0ToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <communityAnimations:Implicit.ShowAnimations>
-                    <communityAnimations:TranslationAnimation From="64,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1.2"/>
-                    <communityAnimations:OpacityAnimation To="1" Duration="0:0:0.6"/>
-                </communityAnimations:Implicit.ShowAnimations>
-                <communityAnimations:Implicit.HideAnimations>
-                    <communityAnimations:OpacityAnimation To="0" Duration="0:0:0.2"/>
-                </communityAnimations:Implicit.HideAnimations>
+            <Grid x:Name="MusicAlbumsGrid" Grid.Row="1" Opacity="0" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Resources>
                     <CollectionViewSource x:Name="AlbumCollectionViewSource" Source="{x:Bind _viewModel.MusicAlbums,Mode=OneWay}" IsSourceGrouped="True" ItemsPath="AlbumMusic"/>
                 </Grid.Resources>
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="MusicAlbumsGridTranslation" X="64"/>
+                </Grid.RenderTransform>
                 <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SemanticZoom.ZoomedInView>
                         <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 

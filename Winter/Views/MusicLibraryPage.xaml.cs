@@ -1,3 +1,4 @@
+using CommunityToolkit.WinUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Winter.ViewModels;
@@ -25,6 +26,21 @@ namespace Winter.Views
             if (sender is ComboBox comboBox)
             {
                 _viewModel.FilteringArtistName = comboBox.SelectedIndex == 0 ? string.Empty : comboBox.SelectedItem?.ToString() ?? string.Empty;
+            }
+        }
+
+        private void Segmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.IsLoaded && sender is Segmented segmented)
+            {
+                if (segmented.SelectedIndex == 0)
+                {
+                    ShowMusicGroupsGridStoryboard?.Begin();
+                }
+                else
+                {
+                    ShowMusicAlbumsGridStoryboard?.Begin();
+                }
             }
         }
     }
