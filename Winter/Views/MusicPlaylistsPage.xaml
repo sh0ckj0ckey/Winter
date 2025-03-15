@@ -173,7 +173,7 @@
                                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind PlaylistMainCover.Image,Mode=OneWay}"/>
                                         </Border.Background>
                                     </Border>
-                                    <Border Grid.Column="0" CornerRadius="4" Height="96" Width="96" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    <Border Grid.Column="0" CornerRadius="4" Height="96" Width="96" Margin="0,0,0,0" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"
                                             Visibility="{x:Bind PlaylistMainCover.Image,Mode=OneWay,Converter={StaticResource NullToVisibilityConverter},ConverterParameter=!}">
                                         <Border.Background>
                                             <ImageBrush>
