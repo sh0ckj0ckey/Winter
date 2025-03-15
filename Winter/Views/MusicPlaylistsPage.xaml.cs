@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Winter.Models.MusicModels;
+using Winter.Services.Interfaces;
 using Winter.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -21,6 +22,8 @@ namespace Winter.Views
     public sealed partial class MusicPlaylistsPage : Page
 #pragma warning restore MVVMTK0049 // Using [INotifyPropertyChanged] is not AOT compatible for WinRT
     {
+        private readonly IMusicLibraryService _musicLibraryService;
+
         private readonly MusicPlaylistsViewModel _viewModel;
 
         private double _playlistItemWidth = 304;
@@ -36,6 +39,7 @@ namespace Winter.Views
 
         public MusicPlaylistsPage()
         {
+            _musicLibraryService = App.Current.Services.GetRequiredService<IMusicLibraryService>();
             _viewModel = App.Current.Services.GetRequiredService<MusicPlaylistsViewModel>();
             this.InitializeComponent();
         }
@@ -126,19 +130,53 @@ namespace Winter.Views
             }
         }
 
-        private void PlaylistPlayButton_Click(object sender, RoutedEventArgs e)
+        private async void PlaylistPlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.DataContext is MusicPlaylistItem playlist)
             {
-                //var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
-                //playerViewModel.ClearPlayingList();
-                //playerViewModel.AddMusicToPlayingList(playlist.MusicFilePaths);
+                var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
+                playerViewModel?.ClearPlayingList();
+
+                foreach (var musicFilePath in playlist.MusicFilePaths)
+                {
+                    try
+                    {
+                        var musicItem = await _musicLibraryService.GetMusicItemByPathAsync(musicFilePath);
+                        if (musicItem is not null)
+                        {
+                            playerViewModel?.AddMusicToPlayingList(musicItem);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.WriteLine(ex);
+                    }
+                }
             }
         }
 
-        private void PlaylistAddButton_Click(object sender, RoutedEventArgs e)
+        private async void PlaylistAddButton_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button btn && btn.DataContext is MusicPlaylistItem playlist)
+            {
+                var playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
 
+                foreach (var musicFilePath in playlist.MusicFilePaths)
+                {
+                    try
+                    {
+                        var musicItem = await _musicLibraryService.GetMusicItemByPathAsync(musicFilePath);
+                        if (musicItem is not null)
+                        {
+                            playerViewModel?.AddMusicToPlayingList(musicItem);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.WriteLine(ex);
+                    }
+                }
+            }
         }
     }
 }

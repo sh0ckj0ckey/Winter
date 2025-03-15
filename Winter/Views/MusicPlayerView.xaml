@@ -14,7 +14,7 @@
     mc:Ignorable="d" Background="Transparent">
     <UserControl.Resources>
         <Storyboard x:Name="ShowPlayingListStoryboard">
-            <DoubleAnimation Storyboard.TargetName="PlayingListBorder" Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.3" Duration="0:0:0.6"/>
+            <DoubleAnimation Storyboard.TargetName="PlayingListBorder" Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.3" Duration="0:0:0.8"/>
             <DoubleAnimation Storyboard.TargetName="PlayingListBorderTranslation" Storyboard.TargetProperty="Y" To="0" BeginTime="0:0:0.3" Duration="0:0:0.6">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut"/>
