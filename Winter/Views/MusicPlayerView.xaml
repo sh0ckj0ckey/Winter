@@ -31,7 +31,7 @@
         </Storyboard>
 
         <converters:IsEqualToVisibilityConverter x:Key="IsEqualToVisibilityConverter"/>
-        <converters:NullToFallbackImageConverter x:Key="NullToFallbackImageConverter"/>
+        <converters:NullToFallbackCoverImageConverter x:Key="NullToFallbackCoverImageConverter"/>
     </UserControl.Resources>
 
     <Grid Grid.Column="0">
@@ -72,15 +72,15 @@
         <StackPanel x:Name="PlayingStackPanel" Grid.Row="2" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Border x:Name="ConnectedPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Border.Background>
-                    <ImageBrush Stretch="UniformToFill" Opacity="0.35">
+                    <ImageBrush Stretch="UniformToFill">
                         <ImageBrush.ImageSource>
                             <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefaultGray.png" DecodePixelType="Logical" DecodePixelHeight="512"/>
                         </ImageBrush.ImageSource>
                     </ImageBrush>
                 </Border.Background>
             </Border>
-            <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="未在播放" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Title,Mode=OneWay}" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Artist,Mode=OneWay}" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!--播放队列-->
@@ -92,7 +92,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="16" Margin="26,0,26,0">
                 <Border x:Name="DestinationPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Border.Background>
-                        <ImageBrush Stretch="UniformToFill" Opacity="0.35">
+                        <ImageBrush Stretch="UniformToFill">
                             <ImageBrush.ImageSource>
                                 <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefaultGray.png" DecodePixelType="Logical" DecodePixelHeight="144"/>
                             </ImageBrush.ImageSource>
@@ -100,8 +100,8 @@
                     </Border.Background>
                 </Border>
                 <StackPanel Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <TextBlock x:Name="DestinationPlayingMusicTitleTextBlock" Text="未在播放" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left"/>
-                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="DestinationPlayingMusicTitleTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Title,Mode=OneWay}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Artist,Mode=OneWay}" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
             <Border x:Name="PlayingListBorder" Grid.Row="1" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -120,7 +120,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.Column="0" CornerRadius="4" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind MusicCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackImageConverter}}"/>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind MusicCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackCoverImageConverter}}"/>
                                     </Border.Background>
                                 </Border>
                                 <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">

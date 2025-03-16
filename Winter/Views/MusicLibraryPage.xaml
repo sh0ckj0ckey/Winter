@@ -19,7 +19,7 @@
         <SolidColorBrush x:Key="ListViewHeaderItemDividerStroke" Color="Transparent"/>
         <converters:DoubleToVisibilityConverter x:Key="GreaterThan0ToVisibilityConverter" GreaterThan="0"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <localConverters:NullToFallbackImageConverter x:Key="NullToFallbackImageConverter"/>
+        <localConverters:NullToFallbackCoverImageConverter x:Key="NullToFallbackCoverImageConverter"/>
         <localConverters:CoverIsNullToBorderThicknessConverter x:Key="CoverIsNullToBorderThicknessConverter"/>
 
         <Storyboard x:Name="ShowMusicGroupsGridStoryboard">
@@ -183,7 +183,7 @@
                                                 <Border CornerRadius="4" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                         BorderThickness="{x:Bind AlbumCover.Image,Mode=OneWay,Converter={StaticResource CoverIsNullToBorderThicknessConverter}}" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
                                                     <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackImageConverter}}"/>
+                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AlbumCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackCoverImageConverter}}"/>
                                                     </Border.Background>
                                                 </Border>
                                                 <StackPanel Orientation="Vertical" Spacing="2" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -305,7 +305,7 @@
                                     <Border CornerRadius="4" Height="72" Width="72" Margin="2" ToolTipService.ToolTip="{x:Bind Group.(models:MusicAlbum.Title)}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                             BorderThickness="{x:Bind Group.(models:MusicAlbum.AlbumCover).Image,Mode=OneWay,Converter={StaticResource CoverIsNullToBorderThicknessConverter}}" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
                                         <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(models:MusicAlbum.AlbumCover).Image,Mode=OneWay,Converter={StaticResource NullToFallbackImageConverter}}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Group.(models:MusicAlbum.AlbumCover).Image,Mode=OneWay,Converter={StaticResource NullToFallbackCoverImageConverter}}"/>
                                         </Border.Background>
                                     </Border>
                                 </DataTemplate>
