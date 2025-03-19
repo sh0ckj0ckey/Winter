@@ -71,6 +71,8 @@ namespace Winter.Views
                     artistAnimation?.TryStart(DestinationPlayingMusicArtistTextBlock);
 
                     ShowPlayingListStoryboard?.Begin();
+
+                    _viewModel.PlayingMusicCover.DecodePixelWidth = 144;
                 }
                 else
                 {
@@ -89,6 +91,8 @@ namespace Winter.Views
                     artistAnimation?.TryStart(ConnectedPlayingMusicArtistTextBlock);
 
                     HidePlayingListStoryboard?.Begin();
+
+                    _viewModel.PlayingMusicCover.DecodePixelWidth = 512;
                 }
             }
         }

@@ -72,11 +72,7 @@
         <StackPanel x:Name="PlayingStackPanel" Grid.Row="2" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Border x:Name="ConnectedPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Border.Background>
-                    <ImageBrush Stretch="UniformToFill">
-                        <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefaultGray.png" DecodePixelType="Logical" DecodePixelHeight="512"/>
-                        </ImageBrush.ImageSource>
-                    </ImageBrush>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.PlayingMusicCover,Mode=OneWay}"/>
                 </Border.Background>
             </Border>
             <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Title,Mode=OneWay}" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
@@ -92,11 +88,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="16" Margin="26,0,26,0">
                 <Border x:Name="DestinationPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="72" Width="72" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Border.Background>
-                        <ImageBrush Stretch="UniformToFill">
-                            <ImageBrush.ImageSource>
-                                <BitmapImage UriSource="/Assets/Icons/WinterPlayerDefaultGray.png" DecodePixelType="Logical" DecodePixelHeight="144"/>
-                            </ImageBrush.ImageSource>
-                        </ImageBrush>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.PlayingMusicCover,Mode=OneWay}"/>
                     </Border.Background>
                 </Border>
                 <StackPanel Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -109,7 +101,7 @@
                     <TranslateTransform x:Name="PlayingListBorderTranslation" Y="32"/>
                 </Border.RenderTransform>
                 <ListView Padding="10,2,10,2" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                          ItemsSource="{x:Bind _viewModel.PlayingMusicList,Mode=OneWay}">
+                          ItemsSource="{x:Bind _viewModel.PlayingMusicList,Mode=OneWay}" SelectedItem="{x:Bind _viewModel.PlayingMusic,Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="musicModels:MusicLibraryItem">
                             <Grid ColumnSpacing="12" Margin="0,6,6,6">
