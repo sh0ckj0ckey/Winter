@@ -12,6 +12,11 @@ namespace Winter.ViewModels
 {
     public class MusicPlayerViewModel : ObservableObject
     {
+        /// <summary>
+        /// 播放封面尺寸，因为会有1px边框，因此需要减去2
+        /// </summary>
+        private readonly int _playingCoverSize = (256 - 2) * 2;
+
         private BitmapImage? _emptyBitmapImage = null;
 
         private BitmapImage? _defaultBitmapImage = null;
@@ -52,7 +57,7 @@ namespace Winter.ViewModels
                         _emptyBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlayerDefaultGray.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = 512,
+                            DecodePixelWidth = _playingCoverSize,
                         };
 
                         return _emptyBitmapImage;
@@ -62,7 +67,7 @@ namespace Winter.ViewModels
                         _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = 512,
+                            DecodePixelWidth = _playingCoverSize,
                         };
 
                         return _defaultBitmapImage;
@@ -85,7 +90,7 @@ namespace Winter.ViewModels
                     _emptyBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlayerDefaultGray.png"))
                     {
                         DecodePixelType = DecodePixelType.Logical,
-                        DecodePixelWidth = 512,
+                        DecodePixelWidth = _playingCoverSize,
                     };
 
                     this.PlayingMusicCover = _emptyBitmapImage;
@@ -94,12 +99,12 @@ namespace Winter.ViewModels
                 try
                 {
                     var file = await StorageFile.GetFileFromPathAsync(musicFilePath);
-                    var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 512, ThumbnailOptions.ResizeThumbnail);
+                    var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, (uint)_playingCoverSize, ThumbnailOptions.ResizeThumbnail);
                     if (thumbnail is not null && thumbnail.Type != ThumbnailType.Icon)
                     {
                         var bitmapImage = new BitmapImage();
                         bitmapImage.DecodePixelType = DecodePixelType.Logical;
-                        bitmapImage.DecodePixelWidth = 512;
+                        bitmapImage.DecodePixelWidth = _playingCoverSize;
                         await bitmapImage.SetSourceAsync(thumbnail);
 
                         this.PlayingMusicCover = bitmapImage;
@@ -109,7 +114,7 @@ namespace Winter.ViewModels
                         _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = 512,
+                            DecodePixelWidth = _playingCoverSize,
                         };
 
                         this.PlayingMusicCover = _defaultBitmapImage;
@@ -120,7 +125,7 @@ namespace Winter.ViewModels
                     _emptyBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlayerDefaultGray.png"))
                     {
                         DecodePixelType = DecodePixelType.Logical,
-                        DecodePixelWidth = 512,
+                        DecodePixelWidth = _playingCoverSize,
                     };
 
                     this.PlayingMusicCover = _emptyBitmapImage;

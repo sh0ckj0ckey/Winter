@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Winter.Converters
 {
-    internal class NullToFallbackCoverImageConverter : IValueConverter
+    internal class NullToFallbackPlayingListCoverConverter : IValueConverter
     {
         private static BitmapImage? _defaultBitmapImage = null;
 
@@ -18,7 +18,7 @@ namespace Winter.Converters
             _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
             {
                 DecodePixelType = DecodePixelType.Logical,
-                DecodePixelWidth = 144,
+                DecodePixelWidth = 42 * 2,
             };
 
             return _defaultBitmapImage;

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Windows.Storage;
 using Winter.Models;
 using Winter.Models.MusicModels;
 using Winter.Services.Interfaces;
@@ -168,12 +170,15 @@ namespace Winter.ViewModels
                                                            AlbumArtist = g.Key.AlbumArtist,
                                                            Year = g.Max(musicItem => musicItem.Year),
                                                            AlbumMusic = g.OrderBy(musicItem => musicItem.TrackNumber).ToList(),
-                                                           AlbumCover = g.Select(musicItem => musicItem.MusicCover).FirstOrDefault(cover => cover.Image != null) ?? g.First().MusicCover
                                                        })
                                                        .OrderByDescending(album => album.Year)
                                                        .ToList();
 
-                groupedByAlbumList.ForEach(album => this.MusicAlbums.Add(album));
+                groupedByAlbumList.ForEach(album =>
+                {
+                    this.MusicAlbums.Add(album);
+                    _ = LoadAlbumCoverAsync(album);
+                });
             }
             catch (Exception ex)
             {
@@ -181,5 +186,27 @@ namespace Winter.ViewModels
             }
         }
 
+        /// <summary>
+        /// 取出专辑中第一首具有封面的音乐，将其封面作为专辑封面
+        /// </summary>
+        /// <param name="album"></param>
+        /// <returns></returns>
+        private async Task LoadAlbumCoverAsync(MusicAlbum album)
+        {
+            foreach (var music in album.AlbumMusic)
+            {
+                try
+                {
+                    if (album.AlbumCover.Image is not null)
+                    {
+                        break;
+                    }
+
+                    var fileToTertiaryCover = await StorageFile.GetFileFromPathAsync(music.MusicFilePath);
+                    await album.AlbumCover.LoadCoverImageFromFile(fileToTertiaryCover, 72 * 2);
+                }
+                catch (Exception ex) { Trace.WriteLine(ex); }
+            }
+        }
     }
 }

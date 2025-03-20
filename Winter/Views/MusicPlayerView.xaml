@@ -31,7 +31,7 @@
         </Storyboard>
 
         <converters:IsEqualToVisibilityConverter x:Key="IsEqualToVisibilityConverter"/>
-        <converters:NullToFallbackCoverImageConverter x:Key="NullToFallbackCoverImageConverter"/>
+        <converters:NullToFallbackPlayingListCoverConverter x:Key="NullToFallbackPlayingListCoverConverter"/>
     </UserControl.Resources>
 
     <Grid Grid.Column="0">
@@ -112,7 +112,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.Column="0" CornerRadius="4" Height="42" Width="42" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind MusicCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackCoverImageConverter}}"/>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind MusicCover.Image,Mode=OneWay,Converter={StaticResource NullToFallbackPlayingListCoverConverter}}"/>
                                     </Border.Background>
                                 </Border>
                                 <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">

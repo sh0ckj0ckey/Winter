@@ -1,23 +1,27 @@
 ﻿using System;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Winter.Converters
 {
-    internal class CoverIsNullToBorderThicknessConverter : IValueConverter
+    internal class NullToFallbackAlbumCoverConverter : IValueConverter
     {
-        private static Thickness _thickness0px = new Thickness(0);
-        private static Thickness _thickness1px = new Thickness(1);
+        private static BitmapImage? _defaultBitmapImage = null;
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is BitmapImage bitmapImage && bitmapImage != null)
             {
-                return _thickness0px;
+                return bitmapImage;
             }
 
-            return _thickness1px;
+            _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelWidth = 72 * 2,
+            };
+
+            return _defaultBitmapImage;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

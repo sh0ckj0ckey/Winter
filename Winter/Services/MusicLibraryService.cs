@@ -106,7 +106,7 @@ namespace Winter.Services
             };
 
             musicItem.TitleFirstLetter = PinyinHelper.GetFirstSpell(musicItem.Title);
-            _ = musicItem.MusicCover.LoadCoverImageFromFile(file, 72 * 2);
+            _ = musicItem.MusicCover.LoadCoverImageFromFile(file, 42 * 2);
 
             return musicItem;
         }
