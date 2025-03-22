@@ -30,6 +30,8 @@ namespace Winter.Controls
     {
         private readonly IMusicLibraryService _musicLibraryService;
 
+        private readonly MusicPlayerViewModel _playerViewModel;
+
         private readonly Action _hideDialogContent;
 
         private MusicPlaylistItem? _playlist = null;
@@ -59,6 +61,7 @@ namespace Winter.Controls
         public PlaylistContentDialogContentControl(MusicPlaylistItem libraryPlaylistItem, Action hideContentDialog)
         {
             _musicLibraryService = App.Current.Services.GetRequiredService<IMusicLibraryService>();
+            _playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
             _hideDialogContent = hideContentDialog;
 
             this.Playlist = libraryPlaylistItem;

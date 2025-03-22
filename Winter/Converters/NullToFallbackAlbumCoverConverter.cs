@@ -15,10 +15,10 @@ namespace Winter.Converters
                 return bitmapImage;
             }
 
-            _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
+            _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGrayFilled.png"))
             {
                 DecodePixelType = DecodePixelType.Logical,
-                DecodePixelWidth = 72 * 2,
+                DecodePixelWidth = 72/* * 2*/,
             };
 
             return _defaultBitmapImage;

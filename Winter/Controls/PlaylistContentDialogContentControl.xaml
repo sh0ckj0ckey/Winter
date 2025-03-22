@@ -74,7 +74,7 @@
             <controls:ProgressRing IsActive="{x:Bind IsLoadingPlaylistMusic,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <ListView Grid.Row="1" Padding="0,8,0,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                  ItemsSource="{x:Bind MusicItems,Mode=OneWay}" Visibility="{x:Bind IsLoadingPlaylistMusic,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
+                  ItemsSource="{x:Bind MusicItems,Mode=OneWay}" SelectedItem="{x:Bind _playerViewModel.PlayingMusic,Mode=TwoWay}" Visibility="{x:Bind IsLoadingPlaylistMusic,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="musicModels:MusicLibraryItem">
                     <Grid ColumnSpacing="16" Margin="24,16,10,16">
