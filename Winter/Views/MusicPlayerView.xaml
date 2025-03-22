@@ -33,6 +33,7 @@
 
         <converters:IsEqualToVisibilityConverter x:Key="IsEqualToVisibilityConverter"/>
         <converters:NullToFallbackPlayingListCoverConverter x:Key="NullToFallbackPlayingListCoverConverter"/>
+        <converters:NullOrEmptyToVisibilityConverter x:Key="NullOrEmptyToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid Grid.Column="0">
@@ -45,7 +46,7 @@
         </Grid.RowDefinitions>
 
         <!--界面切换-->
-        <community:Segmented Grid.Row="1" SelectedIndex="0" Margin="0,0,24,0" HorizontalAlignment="Right" VerticalAlignment="Center" SelectionChanged="Segmented_SelectionChanged">
+        <community:Segmented Grid.Row="1" SelectedIndex="{x:Bind _viewModel.PlayerUIMode,Mode=TwoWay}" Margin="0,0,24,0" HorizontalAlignment="Right" VerticalAlignment="Center" SelectionChanged="Segmented_SelectionChanged">
             <community:SegmentedItem>
                 <community:SegmentedItem.Icon>
                     <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8D6;"/>
@@ -70,7 +71,7 @@
         </Button>
 
         <!--正在播放-->
-        <StackPanel x:Name="PlayingStackPanel" Grid.Row="2" Visibility="Visible" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel x:Name="PlayingStackPanel" Grid.Row="2" Visibility="Visible" Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Border x:Name="ConnectedPlayingMusicCoverBorder" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource ControlElevationBorderBrush}" Height="256" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Border.Background>
                     <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.PlayingMusicCover,Mode=OneWay}"/>
@@ -82,8 +83,10 @@
                     <communityAnimations:OpacityAnimation To="0.0" Duration="0:0:0.4"/>
                 </communityAnimations:Implicit.HideAnimations>
             </Border>
-            <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Title,Mode=OneWay}" FontWeight="Bold" FontSize="18" Margin="0,16,0,4" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Artist,Mode=OneWay}" FontWeight="Normal" FontSize="14" Opacity="0.7" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Vertical" Spacing="4" Visibility="{x:Bind _viewModel.PlayingMusic,Mode=OneWay,Converter={StaticResource NullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="ConnectedPlayingMusicTitleTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Title,Mode=OneWay}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="ConnectedPlayingMusicArtistTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Artist,Mode=OneWay}" FontWeight="Normal" FontSize="14" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" HorizontalAlignment="Center"/>
+            </StackPanel>
         </StackPanel>
 
         <!--播放队列-->
@@ -104,9 +107,9 @@
                         <communityAnimations:OpacityAnimation To="0.0" Duration="0:0:0.4"/>
                     </communityAnimations:Implicit.HideAnimations>
                 </Border>
-                <StackPanel Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" Spacing="4" Visibility="{x:Bind _viewModel.PlayingMusic,Mode=OneWay,Converter={StaticResource NullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <TextBlock x:Name="DestinationPlayingMusicTitleTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Title,Mode=OneWay}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left"/>
-                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Artist,Mode=OneWay}" FontWeight="Normal" FontSize="14" Opacity="0.7" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="DestinationPlayingMusicArtistTextBlock" Text="{x:Bind _viewModel.PlayingMusic.Artist,Mode=OneWay}" FontWeight="Normal" FontSize="14" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" HorizontalAlignment="Left"/>
                 </StackPanel>
             </StackPanel>
             <Border x:Name="PlayingListBorder" Grid.Row="1" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -136,12 +139,12 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{x:Bind Artist}" FontSize="12" Opacity="0.7" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1" Text="•" FontSize="12" Opacity="0.5" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="2" Text="{x:Bind Album}" FontSize="12" Opacity="0.7" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind Artist}" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="•" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Album}" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
                                     </Grid>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="{x:Bind Duration}" Opacity="0.5" FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="{x:Bind Duration}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Opacity="0.7" FontSize="13" VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

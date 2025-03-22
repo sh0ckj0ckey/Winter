@@ -13,13 +13,20 @@ namespace Winter.ViewModels
     public class MusicPlayerViewModel : ObservableObject
     {
         /// <summary>
-        /// 播放封面尺寸，因为会有1px边框，因此需要减去2
+        /// 播放封面大图尺寸，因为会有1px边框，因此需要减去2
         /// </summary>
-        private readonly int _playingCoverSize = (256 - 2) * 2;
+        private readonly int _playingLargeCoverSize = (256 - 2) * 2;
+
+        /// <summary>
+        /// 播放封面小图尺寸，因为会有1px边框，因此需要减去2
+        /// </summary>
+        private readonly int _playingSmallCoverSize = (72 - 2) * 2;
 
         private BitmapImage? _emptyBitmapImage = null;
 
         private BitmapImage? _defaultBitmapImage = null;
+
+        private int _playerUIMode = 0;
 
         private MusicLibraryItem? _playingMusic = null;
 
@@ -31,6 +38,22 @@ namespace Winter.ViewModels
         public ObservableCollection<MusicLibraryItem> PlayingMusicList { get; } = new();
 
         /// <summary>
+        /// 播放器界面
+        /// </summary>
+        public int PlayerUIMode
+        {
+            get => _playerUIMode;
+            set
+            {
+                SetProperty(ref _playerUIMode, value);
+                if (this.PlayingMusicCover is not null)
+                {
+                    this.PlayingMusicCover.DecodePixelWidth = value == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
+                }
+            }
+        }
+
+        /// <summary>
         /// 当前正在播放的音乐
         /// </summary>
         public MusicLibraryItem? PlayingMusic
@@ -38,6 +61,11 @@ namespace Winter.ViewModels
             get => _playingMusic;
             set
             {
+                if (_playingMusic == value)
+                {
+                    return;
+                }
+
                 SetProperty(ref _playingMusic, value);
                 UpdatePlayerCover(value?.MusicFilePath);
             }
@@ -57,8 +85,9 @@ namespace Winter.ViewModels
                         _emptyBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlayerDefaultGray.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = _playingCoverSize,
                         };
+
+                        _emptyBitmapImage.DecodePixelWidth = this.PlayerUIMode == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
 
                         return _emptyBitmapImage;
                     }
@@ -67,8 +96,9 @@ namespace Winter.ViewModels
                         _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = _playingCoverSize,
                         };
+
+                        _defaultBitmapImage.DecodePixelWidth = this.PlayerUIMode == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
 
                         return _defaultBitmapImage;
                     }
@@ -90,8 +120,9 @@ namespace Winter.ViewModels
                     _emptyBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlayerDefaultGray.png"))
                     {
                         DecodePixelType = DecodePixelType.Logical,
-                        DecodePixelWidth = _playingCoverSize,
                     };
+
+                    _emptyBitmapImage.DecodePixelWidth = this.PlayerUIMode == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
 
                     this.PlayingMusicCover = _emptyBitmapImage;
                 }
@@ -99,12 +130,12 @@ namespace Winter.ViewModels
                 try
                 {
                     var file = await StorageFile.GetFileFromPathAsync(musicFilePath);
-                    var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, (uint)_playingCoverSize, ThumbnailOptions.ResizeThumbnail);
+                    var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, (uint)_playingLargeCoverSize, ThumbnailOptions.ResizeThumbnail);
                     if (thumbnail is not null && thumbnail.Type != ThumbnailType.Icon)
                     {
                         var bitmapImage = new BitmapImage();
                         bitmapImage.DecodePixelType = DecodePixelType.Logical;
-                        bitmapImage.DecodePixelWidth = _playingCoverSize;
+                        bitmapImage.DecodePixelWidth = this.PlayerUIMode == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
                         await bitmapImage.SetSourceAsync(thumbnail);
 
                         this.PlayingMusicCover = bitmapImage;
@@ -114,8 +145,9 @@ namespace Winter.ViewModels
                         _defaultBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlaceholderGray.png"))
                         {
                             DecodePixelType = DecodePixelType.Logical,
-                            DecodePixelWidth = _playingCoverSize,
                         };
+
+                        _defaultBitmapImage.DecodePixelWidth = this.PlayerUIMode == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
 
                         this.PlayingMusicCover = _defaultBitmapImage;
                     }
@@ -125,8 +157,9 @@ namespace Winter.ViewModels
                     _emptyBitmapImage ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/WinterPlayerDefaultGray.png"))
                     {
                         DecodePixelType = DecodePixelType.Logical,
-                        DecodePixelWidth = _playingCoverSize,
                     };
+
+                    _emptyBitmapImage.DecodePixelWidth = this.PlayerUIMode == 1 ? _playingSmallCoverSize : _playingLargeCoverSize;
 
                     this.PlayingMusicCover = _emptyBitmapImage;
                     throw;
@@ -140,25 +173,25 @@ namespace Winter.ViewModels
 
         public void AddMusicToPlayingList(MusicLibraryItem musicItem)
         {
-            PlayingMusicList.Add(musicItem);
+            this.PlayingMusicList.Add(musicItem);
         }
 
         public void AddMusicToPlayingList(IEnumerable<MusicLibraryItem> musicItems)
         {
             foreach (var musicItem in musicItems)
             {
-                PlayingMusicList.Add(musicItem);
+                this.PlayingMusicList.Add(musicItem);
             }
         }
 
         public void RemoveMusicFromPlayingList(MusicLibraryItem musicItem)
         {
-            PlayingMusicList.Remove(musicItem);
+            this.PlayingMusicList.Remove(musicItem);
         }
 
         public void ClearPlayingList()
         {
-            PlayingMusicList.Clear();
+            this.PlayingMusicList.Clear();
         }
     }
 }
