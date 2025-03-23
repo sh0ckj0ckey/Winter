@@ -117,7 +117,7 @@
                     <TranslateTransform x:Name="PlayingListBorderTranslation" Y="32"/>
                 </Border.RenderTransform>
                 <ListView Padding="10,2,10,2" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                          ItemsSource="{x:Bind _viewModel.PlayingMusicList,Mode=OneWay}" SelectedItem="{x:Bind _viewModel.PlayingMusic,Mode=TwoWay}">
+                          ItemsSource="{x:Bind _viewModel.PlayingMusicList,Mode=OneWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="musicModels:MusicLibraryItem">
                             <Grid ColumnSpacing="12" Margin="0,6,6,6">

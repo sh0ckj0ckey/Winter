@@ -116,7 +116,7 @@
                 <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SemanticZoom.ZoomedInView>
                         <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                  ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}">
+                                  ItemsSource="{x:Bind GroupedMusicCollectionViewSource.View,Mode=OneWay}" SelectedItem="{x:Bind _playerViewModel.PlayingMusic,Mode=TwoWay}">
                             <ListView.ItemContainerTransitions>
                                 <TransitionCollection/>
                             </ListView.ItemContainerTransitions>
@@ -170,7 +170,7 @@
                 <SemanticZoom HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SemanticZoom.ZoomedInView>
                         <ListView Padding="4,0,4,8" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                                  ItemsSource="{x:Bind AlbumCollectionViewSource.View,Mode=OneWay}">
+                                  ItemsSource="{x:Bind AlbumCollectionViewSource.View,Mode=OneWay}" SelectedItem="{x:Bind _playerViewModel.PlayingMusic,Mode=TwoWay}">
                             <ListView.ItemContainerTransitions>
                                 <TransitionCollection/>
                             </ListView.ItemContainerTransitions>

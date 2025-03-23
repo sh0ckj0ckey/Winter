@@ -15,9 +15,12 @@ namespace Winter.Views
     {
         private readonly MusicLibraryViewModel _viewModel;
 
+        private readonly MusicPlayerViewModel _playerViewModel;
+
         public MusicLibraryPage()
         {
             _viewModel = App.Current.Services.GetRequiredService<MusicLibraryViewModel>();
+            _playerViewModel = App.Current.Services.GetRequiredService<MusicPlayerViewModel>();
             this.InitializeComponent();
         }
 
