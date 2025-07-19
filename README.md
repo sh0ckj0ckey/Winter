@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="Winter/Assets/Icon/Winter_full.png" alt="logo" height="128" width="128"/>
+    <img src="Winter/Assets/Icons/WinterFullLogo.png" alt="logo" height="128" width="128"/>
 </p>
 
 <h3 align="center">Winter，简单的本地音乐播放器</h3>
