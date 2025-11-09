@@ -2,7 +2,7 @@
     <img src="Winter/Assets/Icons/WinterFullLogo.png" alt="logo" height="128" width="128"/>
 </p>
 
-<h3 align="center">Winter，简单的本地音乐播放器</h3>
+<h3 align="center">Winter，轻便的本地音乐播放器</h3>
 
 如果你只是想简单地听听歌，可以来试一试 Winter。
 
@@ -10,3 +10,4 @@
 
 #### 一睹芳容
 ![Screenshot](Winter/Assets/Store/screenshot.png)
+
